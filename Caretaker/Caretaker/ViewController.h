@@ -16,6 +16,8 @@
     UITableView *pendingReminders;
     AccelerationLogger *accelLoggerPhone;
 
+    int areYouOkayLackOfResponse;
+    NSTimer *areYouOkayTimer;
 }
 @property (nonatomic) IBOutlet  UIView      *overlayView;
 @property (nonatomic)           UIImagePickerController *imagePickerController;
