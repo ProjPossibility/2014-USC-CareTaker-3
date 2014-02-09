@@ -84,6 +84,7 @@ def classify():
             new_Data.frequency = int(tokens[6])
             abnormal_class.data.append(new_Data)
 
+    marker = 0
     # begin classification
     with open(test_filename) as f:
         for line in f:
@@ -93,9 +94,10 @@ def classify():
             tuple_dict = dict()
             test_Data = Data()
     
+            print "MARKER {0}".format(marker)
             # build a dictionary of tuple data to make things accessible for later
             num_tuples = 0
-            for index in range(0,10):
+            for index in range(0,5):
                 num_tuples += 1
                 tuple = tuples[index]
                 vars = tuple.split(',')
@@ -134,8 +136,8 @@ def classify():
                 dot_product = (test_Data.meanX * data.meanX)+(test_Data.meanY * data.meanY)+(test_Data.meanZ * data.meanZ)+(test_Data.varX * data.varX)+(test_Data.varY * data.varY)+(test_Data.varZ * data.varZ)
                 similarity = (dot_product/(magnitude_data * magnitude_data_c))
                 print "Similarity {0}".format(similarity)
-                print "dot {0}".format(dot_product)
-                print "mag1 = {0} mag2 = {1}".format(magnitude_data, magnitude_data_c)
+                #print "dot {0}".format(dot_product)
+                #print "mag1 = {0} mag2 = {1}".format(magnitude_data, magnitude_data_c)
                 
                 # update the similarity if we see a greater similarity
                 if similarity > max_normal_similarity:
@@ -150,15 +152,15 @@ def classify():
                 dot_product = (test_Data.meanX * data.meanX)+(test_Data.meanY * data.meanY)+(test_Data.meanZ * data.meanZ)+(test_Data.varX * data.varX)+(test_Data.varY * data.varY)+(test_Data.varZ * data.varZ)
                 similarity = (dot_product/(magnitude_data * magnitude_data_c))
                 print "Similarity {0}".format(similarity)
-                print "dot {0}".format(dot_product)
-                print "mag1 = {0} mag2 = {1}".format(magnitude_data, magnitude_data_c)
+                #print "dot {0}".format(dot_product)
+                #print "mag1 = {0} mag2 = {1}".format(magnitude_data, magnitude_data_c)
     
                 # update the similarity if we see a greater similarity
                 if similarity > max_abnormal_similarity:
                     max_abnormal_similarity = similarity
                     max_abnormal_similarity_index = index
     
-            # what to even do here
+            '''# what to even do here
             p_class = 0.5
             p_not_class = 1 - p_class
             p_data_given_class = 0
@@ -167,7 +169,7 @@ def classify():
             p_abnormal = 0
     
             # use a totally arbitrary value of similarity
-            if max_normal_similarity < 0.5:
+            if max_normal_similarity < 0.9:
                 p_data_given_class = (1/normal_class.frequency + 1)
             else:
                 p_data_given_class = (normal_class.data[max_normal_similarity_index].frequency + 1)/(normal_class.frequency + 1)
@@ -175,10 +177,11 @@ def classify():
             p_data_given_not_class = (normal_class.frequency + 1)/(normal_class.frequency+ abnormal_class.frequency + 1)
     
             # calculate probability for this class
-            p_normal = 1 - ((p_class * p_data_given_class)/((p_class * p_data_given_class) + (p_not_class * p_data_given_not_class)))
-                
+            #p_normal = 1 - ((p_class * p_data_given_class)/((p_class * p_data_given_class) + (p_not_class * p_data_given_not_class)))
+            p_normal = (p_class * p_data_given_class)
+            print "NORMAL {0}".format(p_normal)
             # use a totally arbitrary value of similarity
-            if max_abnormal_similarity < 0.5:
+            if max_abnormal_similarity < 0.95:
                 p_data_given_class = (1/(abnormal_class.frequency + 1))
             else:
                 p_data_given_class = (abnormal_class.data[max_abnormal_similarity_index].frequency + 1)/(abnormal_class.frequency + 1)
@@ -186,12 +189,20 @@ def classify():
             p_data_given_not_class = (abnormal_class.frequency + 1)/(normal_class.frequency+ abnormal_class.frequency + 1)
 
             # calculate probability for this class
-            p_abnormal = 1 - ((p_class * p_data_given_class)/((p_class * p_data_given_class) + (p_not_class * p_data_given_not_class)))
-
-
+            #p_abnormal = 1 - ((p_class * p_data_given_class)/((p_class * p_data_given_class) + (p_not_class * p_data_given_not_class)))
+            p_abnormal = (p_class * p_data_given_class)
+            print "ABNORMAL {0}".format(p_abnormal)
+            
             if p_normal > p_abnormal:
                 print normal_class.name
             else:
+                print abnormal_class.name'''
+
+            if max_normal_similarity > max_abnormal_similarity:
+                print normal_class.name
+            else:
                 print abnormal_class.name
+
+            marker += 1
 
 classify()
