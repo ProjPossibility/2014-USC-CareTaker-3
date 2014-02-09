@@ -19,7 +19,6 @@
     //newViewController.parentNavigationController = self.navigationController;
     self.navigationController = [[UINavigationController alloc]
                             initWithRootViewController:newViewController];
-    newViewController.rootNavigationController = self.navigationController;
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     return YES;

@@ -15,7 +15,7 @@
 {
     self = [super init];
     if (self) {
-        nextYCoordForView = 20;
+        nextYCoordForView = 0;
     }
     return self;
 }
@@ -23,7 +23,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    mCellSelectionStatus = [[NSMutableDictionary alloc] init];
+    repeatDaily = YES;
+    self.navigationItem.leftBarButtonItem = nil;
     [self setupControls];
     
 }
@@ -36,15 +37,10 @@
 
 -(UIButton *)addButtonWithAttributes:(NSString *)title withTarget:(id)target withSelector:(SEL)selector with:(CGSize)bounds
 {
-    NSDictionary *defaultFontAttributeDic =[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Helvetica" size:34.0f] forKey:NSFontAttributeName];
-    CGSize stringSize = [title sizeWithAttributes:defaultFontAttributeDic];
     UIButton *newButton = [[UIButton alloc] initWithFrame:[self placeViewInScene:bounds]];
     [newButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     [newButton setTitle:title forState:UIControlStateNormal];
-    //[newButton setBackgroundColor:[UIColor colorWithRed:0.760784314f green:0.905882353f blue:1.0f alpha:1.0f]];
     [newButton layer].cornerRadius = 4;
-    //[newButton layer].borderWidth = 1;
-    //[newButton layer].borderColor = [UIColor colorWithRed:0.8f green:0.8f blue:0.8f alpha:1.0f].CGColor;
     [newButton setTitleColor:[UIColor colorWithRed:0.7f green:0.7f blue:0.7f alpha:1.0f] forState:UIControlStateNormal];
     return newButton;
 }
@@ -79,51 +75,62 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    photoUid = [info valueForKey:UIImagePickerControllerReferenceURL];
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 240), NO, 0.0);
     [image drawInRect:CGRectMake(0, 0, 320, 240)];
     image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-//    photoPreviewer = [[UIImageView alloc] initWithImage:image];
-    [choosePhotoButton setBackgroundImage:image forState:UIControlStateNormal];
+    UIImageView *newImageView = [[UIImageView alloc] initWithImage:image];
+    [self.medicineReminder.mImages setObject:newImageView forKey:photoUid];
+    //photoPreviewer = [[UIImageView alloc] initWithImage:image];
+    [choosePhotoButton setBackgroundImage:newImageView.image forState:UIControlStateNormal];
     [controlSubView addSubview:photoPreviewer];
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
--(void) dismissView:(id)sender
+-(void) displayWarning:(NSString *)warningText
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    UILocalNotification *notification = [[UILocalNotification alloc] init];
+    notification.alertBody = warningText;
+    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
+    notification.timeZone = [NSTimeZone defaultTimeZone];
+    notification.hasAction = NO;
+    
+    [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 
--(void) pushNewView:(id)sender
+-(void) confirmFields:(id)sender
 {
-    UIViewController *newUIView = [[UIViewController alloc] init];
-    newUIView.view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
-    newUIView.view.backgroundColor = [UIColor blackColor];
-    [self.rootNavigationController pushViewController:newUIView animated:YES];
+    if([nameInput.text length] == 0)
+    {
+        [self displayWarning:@"No name was entered"];
+        return;
+    }
+    if([amountInput.text length] == 0)
+    {
+        [self displayWarning:@"No quantity was entered"];
+        return;
+    }
+    
+    //do something with the values
+    [self.medicineReminder addReminderWith:nameInput.text and:[amountInput.text intValue] and:datePicker.date and:repeatDaily and:photoUid];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
-
 -(void) setupControls
 {
     controlSubView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     controlSubView.backgroundColor = [UIColor whiteColor];
     
-    
-    topBar = [[UINavigationBar alloc] initWithFrame:[self placeViewInScene:CGSizeMake(320, 44)]];
-    topBar.backgroundColor = [UIColor whiteColor];
-    UINavigationItem *uiNavItem = [[UINavigationItem alloc] init];
-    UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithTitle:@"Cancel" style:UIBarButtonItemStylePlain target:self action:@selector(dismissView:)];
-    [uiNavItem setLeftBarButtonItem:backButton];
-    NSArray *uiNavItems = [[NSArray alloc] initWithObjects:uiNavItem, nil];
-    [topBar setItems:uiNavItems animated:YES];
-    
     [controlSubView addSubview:topBar];
     
-    mTableView = [[UITableView alloc] initWithFrame:[self placeViewInScene:[UIScreen mainScreen].bounds.size]];
+    mTableView = [[UITableView alloc] initWithFrame:[self placeViewInScene:CGSizeMake([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)]];
     mTableView.dataSource = self;
     mTableView.delegate = self;
     mTableView.separatorStyle = UITableViewCellSeparatorStyleSingleLine;
     [controlSubView addSubview: mTableView];
-
+    UIBarButtonItem *confirmButton = [[UIBarButtonItem alloc] initWithTitle:@"Confirm" style:UIBarButtonItemStylePlain target:self action:@selector(confirmFields:)];
+    self.navigationItem.rightBarButtonItem = confirmButton;
+    
     [self.view addSubview:controlSubView];
     
 }
@@ -139,7 +146,7 @@
     return @"";
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+    return 6;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -150,69 +157,108 @@
 {
     switch([indexPath row])
     {
-        case 0:
-            return 44;
-        case 1:
-            return 44;
         case 2:
             return 240;
         case 3:
-            return 300;
+            return 250;
         default:
             return 44;
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if([indexPath row] == 4)
+    {
+        repeatDaily = !repeatDaily;
+    }
+    [mTableView reloadData];
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    static NSString *CellIdentifier = @"OptionCell";
+    NSString *CellIdentifier = [NSString stringWithFormat:@"OptionCell%d", indexPath.row];
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(!cell){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+    if(cell == nil){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
+        switch (indexPath.row) {
+            case 0:
+            {
+                nameInput = [[UITextField alloc] initWithFrame:CGRectMake(5, 0, 315, 44)];
+                [nameInput setPlaceholder:@"Name of medication"];
+                [cell.contentView addSubview:nameInput];
+                break;
+            }
+            case 1:
+                amountInput = [[UITextField alloc] initWithFrame:CGRectMake(5, 0, 315, 44)];
+                amountInput.keyboardType = UIKeyboardTypeDecimalPad;
+                [amountInput setPlaceholder:@"Quantity"];
+                //amountInput.borderStyle = UITextBorderStyleRoundedRect
+                [cell.contentView addSubview:amountInput];
+                break;
+                
+            case 2:
+            {
+                nextYCoordForView = 0;
+                choosePhotoButton = [self addButtonWithAttributes:@"Choose Picture" withTarget:self withSelector:@selector(showImagePickerForSourceType:) with:CGSizeMake(320, 240)];
+                [cell.contentView addSubview:choosePhotoButton];
+                break;
+            }
+                
+            case 3:
+            {
+                UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 315, 35)];
+                dateLabel.text = @"Enter Date";
+                dateLabel.textColor =[UIColor colorWithRed:0.7f green:0.7f blue:0.7f alpha:1.0f];
+
+                datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 35, 320, 216)];
+                [cell.contentView addSubview:dateLabel];
+                [cell.contentView addSubview:datePicker];
+                break;
+            }
+            case 4:
+                cell.frame = CGRectMake(0, 0, self.view.bounds.size.width, 44);
+                cell.textLabel.text = @"Repeat Daily";
+                cell.textLabel.textColor =[UIColor colorWithRed:0.7f green:0.7f blue:0.7f alpha:1.0f];
+                cell.accessoryType = repeatDaily ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+                [cell.contentView addSubview:reminderFreqButton];
+                break;
+            default:
+                break;
+                
+                
+        }
     }
-    UISwitch *toggleSwitch = [[UISwitch alloc] init];
-    
     switch (indexPath.row) {
         case 0:
         {
-            nameInput = [[UITextField alloc] initWithFrame:CGRectMake(5, 0, 315, 44)];
-            [nameInput setPlaceholder:@"Name"];
-            //nameInput.borderStyle = UITextBorderStyleRoundedRect;
-            [cell.contentView addSubview:nameInput];
             break;
         }
         case 1:
-            amountInput = [[UITextField alloc] initWithFrame:CGRectMake(5, 0, 315, 44)];
-            amountInput.keyboardType = UIKeyboardTypeDecimalPad;
-            [amountInput setPlaceholder:@"Quantity"];
-            //amountInput.borderStyle = UITextBorderStyleRoundedRect;
-            [cell.contentView addSubview:amountInput];
             break;
             
         case 2:
         {
-            nextYCoordForView = 0;
-            choosePhotoButton = [self addButtonWithAttributes:@"Choose Photo" withTarget:self withSelector:@selector(showImagePickerForSourceType:) with:CGSizeMake(320, 240)];
-            [cell.contentView addSubview:choosePhotoButton];
             break;
         }
             
         case 3:
         {
-            UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 315, 35)];
-            dateLabel.text = @"Enter Date";
-            datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 35, 320, 216)];
-            [cell.contentView addSubview:dateLabel];
-            [cell.contentView addSubview:datePicker];
             break;
         }
+        case 4:
+            cell.accessoryType = repeatDaily ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
+            break;
+        default:
+            break;
+            
             
     }
+
     return cell;
 }
-
 
 
 

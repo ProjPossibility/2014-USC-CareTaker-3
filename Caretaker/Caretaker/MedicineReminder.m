@@ -7,6 +7,7 @@
 //
 
 #import "MedicineReminder.h"
+#import "Reminder.h"
 
 @implementation MedicineReminder
 
@@ -14,39 +15,59 @@
 {
     self = [super init];
     if (self) {
-        [self showReminder:@"JAJA"];
+        mReminders = [[NSMutableArray alloc] init];
+        self.mImages = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
-- (void)showReminder:(NSString *)text
+- (void)showReminder:(id)sender
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Reminder" message:text delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
-    
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 220, 137)];
-    
-    UIImage *image= [UIImage imageNamed:@"pills.png"];
-    [imageView setImage:image];
-    
-    [alertView setValue:imageView forKey:@"accessoryView"];
-    
-    [alertView addSubview:imageView];
-    
+    Reminder *reminder = (Reminder *)[sender userInfo];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Reminder" message:[NSString stringWithFormat:@"Don't forget to take:\n%d %@(s)", reminder.mQuantity, reminder.mName] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+    alertView.delegate = self;
+    [alertView setValue:reminder.mImage forKey:@"accessoryView"];
+    [alertView addSubview:reminder.mImage];
     [alertView show];
+    
+    if(!reminder.mRepeat)
+    {
+        [mReminders removeObject: reminder];
+    }
+    else
+    {
+        //86400 seconds in day
+        reminder.mTimer = [NSTimer timerWithTimeInterval:10.0f target:self selector:@selector(showReminder:) userInfo:reminder repeats:NO];
+        [[NSRunLoop currentRunLoop] addTimer:reminder.mTimer forMode:NSRunLoopCommonModes];
+    }
 }
 
--(void)timerEvent
+-(void) alertView: ( UIAlertView *) alertView clickedButtonAtIndex: ( NSInteger ) buttonIndex
 {
-    
-    UILocalNotification *notification = [[UILocalNotification alloc] init];
-    notification.alertBody = @"AHHHHHHHH A NOTIFICATION!";
-    notification.fireDate = [NSDate dateWithTimeIntervalSinceNow:5];
-    notification.timeZone = [NSTimeZone defaultTimeZone];
-    notification.hasAction = NO;
-    
-    [[UIApplication sharedApplication] scheduleLocalNotification:notification];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"reload" object:self];
-
+    switch(buttonIndex)
+    {
+        case 0:
+            break;
+        default:
+            NSLog(@"THIS SHOUL NEVER EVER EVER HAPPEN");
+            break;
+    }
 }
 
+-(void)addReminderWith:(NSString *)name and:(int)quantity and:(NSDate *)date and:(BOOL)repeat and:(NSString *)imageUid
+{
+    Reminder *newReminder = [[Reminder alloc] init];
+    newReminder.mName = name;
+    newReminder.mQuantity = quantity;
+    newReminder.mDate = date;
+    newReminder.mRepeat = repeat;
+    newReminder.mImage = [self.mImages objectForKey:imageUid];
+    
+    
+    [mReminders addObject:newReminder];
+    NSTimer *newTimer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(showReminder:) userInfo:newReminder repeats:NO];
+    newReminder.mTimer = newTimer;
+    [[NSRunLoop currentRunLoop] addTimer:newTimer forMode:NSRunLoopCommonModes];
+    //[self showReminder:newReminder];
+    
+}
 @end
