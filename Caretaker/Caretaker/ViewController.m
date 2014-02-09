@@ -94,30 +94,14 @@
 -(void)showAddReminder:(id)sender
 {
     AddReminderView *addReminderView = [[AddReminderView alloc] init];
-    addReminderView.rootNavigationController = self.rootNavigationController;
-    [self presentViewController:addReminderView animated:YES completion:nil];
-    //navigationController = [[UINavigationController alloc] initWithRootViewController:addReminderView];
-    //[self presentViewController:navigationController animated:YES completion:nil];
-//    [navigationController pushViewController:addReminderView animated:YES];
-    //[self.view addSubview:addReminderView];
-}
+    CATransition* transition = [CATransition animation];
+    transition.duration = 0.3;
+    transition.type = kCATransitionFromTop;
+    transition.subtype = kCATransitionFromTop;
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
 
-// This method is called when an image has been chosen from the library or taken from the camera.
-/*
- - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
- {
- UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
- 
- [self.capturedImages addObject:image];
- 
- if ([self.cameraTimer isValid])
- {
- return;
- }
- 
- [self finishAndUpdate];
- }
- */
+   [self.navigationController pushViewController:addReminderView animated:YES];
+}
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {

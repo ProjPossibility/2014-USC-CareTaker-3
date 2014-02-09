@@ -23,6 +23,10 @@
 		C9E0D14E18A6CD8400A78BC1 /* MedicineReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */; };
 		C9E0D15018A6DC2600A78BC1 /* Pills.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E0D14F18A6DC2600A78BC1 /* Pills.png */; };
 		C9E0D15618A6FA2E00A78BC1 /* AddReminderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D15518A6FA2E00A78BC1 /* AddReminderView.m */; };
+		C9E0D15D18A7B16F00A78BC1 /* RepeatSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D15C18A7B16F00A78BC1 /* RepeatSelectorViewController.m */; };
+		C9E0D15E18A7B16F00A78BC1 /* RepeatSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D15C18A7B16F00A78BC1 /* RepeatSelectorViewController.m */; };
+		C9E0D16118A7C37B00A78BC1 /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D16018A7C37B00A78BC1 /* Reminder.m */; };
+		C9E0D16218A7C37B00A78BC1 /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D16018A7C37B00A78BC1 /* Reminder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +63,10 @@
 		C9E0D14F18A6DC2600A78BC1 /* Pills.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pills.png; sourceTree = "<group>"; };
 		C9E0D15418A6FA2E00A78BC1 /* AddReminderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReminderView.h; sourceTree = "<group>"; };
 		C9E0D15518A6FA2E00A78BC1 /* AddReminderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReminderView.m; sourceTree = "<group>"; };
+		C9E0D15B18A7B16F00A78BC1 /* RepeatSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RepeatSelectorViewController.h; sourceTree = "<group>"; };
+		C9E0D15C18A7B16F00A78BC1 /* RepeatSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RepeatSelectorViewController.m; sourceTree = "<group>"; };
+		C9E0D15F18A7C37B00A78BC1 /* Reminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reminder.h; sourceTree = "<group>"; };
+		C9E0D16018A7C37B00A78BC1 /* Reminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reminder.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -129,6 +137,10 @@
 				C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */,
 				C9E0D15418A6FA2E00A78BC1 /* AddReminderView.h */,
 				C9E0D15518A6FA2E00A78BC1 /* AddReminderView.m */,
+				C9E0D15B18A7B16F00A78BC1 /* RepeatSelectorViewController.h */,
+				C9E0D15C18A7B16F00A78BC1 /* RepeatSelectorViewController.m */,
+				C9E0D15F18A7C37B00A78BC1 /* Reminder.h */,
+				C9E0D16018A7C37B00A78BC1 /* Reminder.m */,
 			);
 			path = Caretaker;
 			sourceTree = "<group>";
@@ -263,7 +275,9 @@
 				C9E0D14E18A6CD8400A78BC1 /* MedicineReminder.m in Sources */,
 				1D8EDF7618A6C708009C81ED /* AppDelegate.m in Sources */,
 				C9E0D15618A6FA2E00A78BC1 /* AddReminderView.m in Sources */,
+				C9E0D15D18A7B16F00A78BC1 /* RepeatSelectorViewController.m in Sources */,
 				1D8EDF7218A6C708009C81ED /* main.m in Sources */,
+				C9E0D16118A7C37B00A78BC1 /* Reminder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +285,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9E0D15E18A7B16F00A78BC1 /* RepeatSelectorViewController.m in Sources */,
+				C9E0D16218A7C37B00A78BC1 /* Reminder.m in Sources */,
 				1D8EDF9118A6C709009C81ED /* CaretakerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

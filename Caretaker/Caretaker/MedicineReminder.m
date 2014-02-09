@@ -7,6 +7,7 @@
 //
 
 #import "MedicineReminder.h"
+#import "Reminder.h"
 
 @implementation MedicineReminder
 
@@ -14,24 +15,26 @@
 {
     self = [super init];
     if (self) {
-        [self showReminder:@"JAJA"];
+        mReminders = [[NSMutableArray alloc] init];
+        mTimers = [[NSMutableArray alloc] init];
     }
     return self;
 }
-- (void)showReminder:(NSString *)text
+- (void)showReminder:(id)sender
 {
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Reminder" message:text delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+    Reminder *reminder = (Reminder *)[sender userInfo];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Reminder" message:[NSString stringWithFormat:@"%@\n%d", reminder.mName, reminder.mQuantity] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
     
-    UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 10, 220, 137)];
+    [alertView setValue:reminder.mPicture forKey:@"accessoryView"];
     
-    UIImage *image= [UIImage imageNamed:@"pills.png"];
-    [imageView setImage:image];
-    
-    [alertView setValue:imageView forKey:@"accessoryView"];
-    
-    [alertView addSubview:imageView];
+    [alertView addSubview:reminder.mPicture];
     
     [alertView show];
+    
+    if(!reminder.mRepeat)
+    {
+        [mReminders removeObject: reminder];
+    }
 }
 
 -(void)timerEvent
@@ -48,5 +51,18 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reload" object:self];
 
 }
-
+-(void)addReminderWith:(NSString *)name and:(int)quantity and:(NSDate *)date and:(BOOL)repeat and:(UIImageView *)imageView
+{
+    Reminder *newReminder = [[Reminder alloc] init];
+    newReminder.mName = name;
+    newReminder.mQuantity = quantity;
+    newReminder.mDate = date;
+    newReminder.mRepeat = repeat;
+    newReminder.mPicture = imageView;
+    
+    [mReminders addObject:newReminder];
+    NSTimer *newTimer = [NSTimer timerWithTimeInterval:10.0f target:self selector:@selector(showReminder:) userInfo:newReminder repeats:YES];
+    [mTimers addObject:newTimer];
+    
+}
 @end
