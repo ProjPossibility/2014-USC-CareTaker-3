@@ -35,11 +35,15 @@
 
 -(void)setupControls
 {
-    self.controlView = [[UIView alloc] initWithFrame:CGRectMake(0, 50, [[UIScreen mainScreen] bounds].size.width, 100)];
+    self.controlView = [[UIView alloc] initWithFrame:CGRectMake(0, 65, [[UIScreen mainScreen] bounds].size.width, 100)];
     
     //add show notification button
-    self.showNotificationButton = [self addButtonWithAttributes:@"ADD NEW REMINDER" withTarget:self withSelector:@selector(showAddReminder:) with:self.view.bounds.size];
+    self.showNotificationButton = [self addButtonWithAttributes:@"ADD NEW REMINDER" withTarget:self withSelector:@selector(showAddReminder:) with:CGSizeMake(320, 44)];
     [self.controlView addSubview:self.showNotificationButton];
+    pendingReminders = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, 320, 421) style:UITableViewStylePlain];
+    [self.controlView addSubview:pendingReminders];
+    pendingReminders.delegate = self;
+    pendingReminders.dataSource = self;
     
     
     //add the view to the viewcontroller
@@ -51,6 +55,8 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    
 
     medicineReminder = [[MedicineReminder alloc] init];
     [self setupControls];
@@ -108,6 +114,50 @@
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
+
+#pragma mark - Table View
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"";
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [medicineReminder.mImages count];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch([indexPath row])
+    {
+        default:
+            return 44;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *CellIdentifier = [NSString stringWithFormat:@"OptionCell%d", indexPath.row];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if(cell == nil){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        UIView *reminderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        [reminderView addSubview: [medicineReminder.mReminders objectAtIndex:[indexPath row]]];
+        [cell.contentView addSubview:reminderView];
+    }
+    
+    return cell;
+}
+
 
 
 
