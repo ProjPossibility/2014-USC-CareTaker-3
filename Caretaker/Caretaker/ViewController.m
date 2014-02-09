@@ -51,6 +51,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+
     //medicineReminder = [[MedicineReminder alloc] init];
     [self setupControls];
     
@@ -93,7 +94,11 @@
 -(void)showAddReminder:(id)sender
 {
     AddReminderView *addReminderView = [[AddReminderView alloc] init];
-    [self.navigationController pushViewController:addReminderView animated:YES];
+    addReminderView.rootNavigationController = self.rootNavigationController;
+    [self presentViewController:addReminderView animated:YES completion:nil];
+    //navigationController = [[UINavigationController alloc] initWithRootViewController:addReminderView];
+    //[self presentViewController:navigationController animated:YES completion:nil];
+//    [navigationController pushViewController:addReminderView animated:YES];
     //[self.view addSubview:addReminderView];
 }
 

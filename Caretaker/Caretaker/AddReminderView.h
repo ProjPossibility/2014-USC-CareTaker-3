@@ -8,17 +8,23 @@
 
 #import <UIKit/UIKit.h>
 
-@interface AddReminderView : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface AddReminderView : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
+    UINavigationBar *topBar;
+    UITableView *mTableView;
     UIScrollView *controlSubView;
+    UITextField *nameInput;
+    UITextField *amountInput;
     UIDatePicker *datePicker;
     UIButton *choosePhotoButton;
     UIButton *takePhotoButton;
     UIImageView *photoPreviewer;
+    NSMutableDictionary *mCellSelectionStatus;
     int nextYCoordForView;
 }
 @property (nonatomic) IBOutlet UIView *overlayView;
 @property (nonatomic) UIImagePickerController *imagePickerController;
+@property (nonatomic) UINavigationController *rootNavigationController;
 -(void)setupControls;
 -(void)showImagePickerForSourceType:(id)sender;
 
