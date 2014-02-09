@@ -23,7 +23,7 @@
 {
     NSDictionary *defaultFontAttributeDic =[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Helvetica" size:34.0f] forKey:NSFontAttributeName];
     CGSize stringSize = [title sizeWithAttributes:defaultFontAttributeDic];
-    UIButton *newButton = [[UIButton alloc] initWithFrame:CGRectMake((bounds.width - stringSize.width)/2, 50, stringSize.width, stringSize.height)];
+    UIButton *newButton = [[UIButton alloc] initWithFrame:CGRectMake((bounds.width - stringSize.width)/2, 0, stringSize.width, bounds.height)];
     [newButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     [newButton setTitle:title forState:UIControlStateNormal];
     [newButton setBackgroundColor:[UIColor colorWithRed:0.760784314f green:0.905882353f blue:1.0f alpha:1.0f]];
@@ -52,7 +52,7 @@
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
 
-    //medicineReminder = [[MedicineReminder alloc] init];
+    medicineReminder = [[MedicineReminder alloc] init];
     [self setupControls];
     
 	// Do any additional setup after loading the view, typically from a nib.
@@ -94,6 +94,7 @@
 -(void)showAddReminder:(id)sender
 {
     AddReminderView *addReminderView = [[AddReminderView alloc] init];
+    addReminderView.medicineReminder = medicineReminder;
     CATransition* transition = [CATransition animation];
     transition.duration = 0.3;
     transition.type = kCATransitionFromTop;

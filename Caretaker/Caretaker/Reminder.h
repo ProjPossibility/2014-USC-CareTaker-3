@@ -10,10 +10,11 @@
 
 @interface Reminder : NSObject
 
+@property (nonatomic) NSTimer *mTimer;
 @property (nonatomic, strong) NSString *mName;
 @property (nonatomic) int mQuantity;
 @property (nonatomic) NSDate *mDate;
-@property (nonatomic, strong) UIImageView *mPicture;
+@property (nonatomic) UIImageView *mImage;
 @property (nonatomic) BOOL mRepeat;
 
 @end

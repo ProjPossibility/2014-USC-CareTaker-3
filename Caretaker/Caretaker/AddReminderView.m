@@ -8,7 +8,6 @@
 
 #import "AddReminderView.h"
 #import "ViewController.h"
-#import "RepeatSelectorViewController.h"
 
 @implementation AddReminderView
 
@@ -41,10 +40,7 @@
     UIButton *newButton = [[UIButton alloc] initWithFrame:[self placeViewInScene:bounds]];
     [newButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     [newButton setTitle:title forState:UIControlStateNormal];
-    //[newButton setBackgroundColor:[UIColor colorWithRed:0.760784314f green:0.905882353f blue:1.0f alpha:1.0f]];
     [newButton layer].cornerRadius = 4;
-    //[newButton layer].borderWidth = 1;
-    //[newButton layer].borderColor = [UIColor colorWithRed:0.8f green:0.8f blue:0.8f alpha:1.0f].CGColor;
     [newButton setTitleColor:[UIColor colorWithRed:0.7f green:0.7f blue:0.7f alpha:1.0f] forState:UIControlStateNormal];
     return newButton;
 }
@@ -79,19 +75,17 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    photoUid = [info valueForKey:UIImagePickerControllerReferenceURL];
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 240), NO, 0.0);
     [image drawInRect:CGRectMake(0, 0, 320, 240)];
     image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    //    photoPreviewer = [[UIImageView alloc] initWithImage:image];
-    [choosePhotoButton setBackgroundImage:image forState:UIControlStateNormal];
+    UIImageView *newImageView = [[UIImageView alloc] initWithImage:image];
+    [self.medicineReminder.mImages setObject:newImageView forKey:photoUid];
+    //photoPreviewer = [[UIImageView alloc] initWithImage:image];
+    [choosePhotoButton setBackgroundImage:newImageView.image forState:UIControlStateNormal];
     [controlSubView addSubview:photoPreviewer];
     [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
--(void) dismissView:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 -(void) displayWarning:(NSString *)warningText
@@ -105,7 +99,7 @@
     [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
 }
 
--(void) confirmFields:(id)sensor
+-(void) confirmFields:(id)sender
 {
     if([nameInput.text length] == 0)
     {
@@ -119,15 +113,9 @@
     }
     
     //do something with the values
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self.medicineReminder addReminderWith:nameInput.text and:[amountInput.text intValue] and:datePicker.date and:repeatDaily and:photoUid];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
-
--(void) pushNewView:(id)sender
-{
-    RepeatSelectorViewController *newUIView = [[RepeatSelectorViewController alloc] init];
-    [self.navigationController pushViewController:newUIView animated:YES];
-}
-
 -(void) setupControls
 {
     controlSubView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];

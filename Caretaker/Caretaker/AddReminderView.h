@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MedicineReminder.h"
 
 @interface AddReminderView : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
@@ -19,11 +20,13 @@
     UIButton *choosePhotoButton;
     UIButton *reminderFreqButton;
     UIImageView *photoPreviewer;
+    NSString *photoUid;
     int nextYCoordForView;
     BOOL repeatDaily;
 }
 @property (nonatomic) IBOutlet UIView *overlayView;
 @property (nonatomic) UIImagePickerController *imagePickerController;
+@property (nonatomic) MedicineReminder *medicineReminder;
 //@property (nonatomic)
 
 -(void)setupControls;

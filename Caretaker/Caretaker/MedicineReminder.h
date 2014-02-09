@@ -10,11 +10,12 @@
 
 @interface MedicineReminder : NSObject
 {
-    NSTimer *tempTimer;
-    NSMutableArray *mReminders, *mTimers;
+    NSMutableArray *mReminders;
 }
 
+@property (nonatomic, strong) NSMutableDictionary *mImages;
+
 -(void)timerEvent;
--(void)addReminderWith:(NSString *)name and:(int)quantity and:(NSDate *)date and:(BOOL)repeat and:(UIImageView *)imageView;
+-(void)addReminderWith:(NSString *)name and:(int)quantity and:(NSDate *)date and:(BOOL)repeat and:(NSString *)imageUid;
 
 @end
