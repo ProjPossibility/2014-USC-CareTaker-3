@@ -13,7 +13,6 @@
 		1D8EDF7018A6C708009C81ED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D8EDF6E18A6C708009C81ED /* InfoPlist.strings */; };
 		1D8EDF7218A6C708009C81ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8EDF7118A6C708009C81ED /* main.m */; };
 		1D8EDF7618A6C708009C81ED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8EDF7518A6C708009C81ED /* AppDelegate.m */; };
-		1D8EDF7918A6C708009C81ED /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1D8EDF7718A6C708009C81ED /* Main.storyboard */; };
 		1D8EDF7C18A6C708009C81ED /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8EDF7B18A6C708009C81ED /* ViewController.m */; };
 		1D8EDF7E18A6C708009C81ED /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1D8EDF7D18A6C708009C81ED /* Images.xcassets */; };
 		1D8EDF8518A6C709009C81ED /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8EDF8418A6C709009C81ED /* XCTest.framework */; };
@@ -21,6 +20,9 @@
 		1D8EDF8718A6C709009C81ED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8EDF6918A6C708009C81ED /* UIKit.framework */; };
 		1D8EDF8F18A6C709009C81ED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D8EDF8D18A6C709009C81ED /* InfoPlist.strings */; };
 		1D8EDF9118A6C709009C81ED /* CaretakerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8EDF9018A6C709009C81ED /* CaretakerTests.m */; };
+		C9E0D14E18A6CD8400A78BC1 /* MedicineReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */; };
+		C9E0D15018A6DC2600A78BC1 /* Pills.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E0D14F18A6DC2600A78BC1 /* Pills.png */; };
+		C9E0D15618A6FA2E00A78BC1 /* AddReminderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D15518A6FA2E00A78BC1 /* AddReminderView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,7 +46,6 @@
 		1D8EDF7318A6C708009C81ED /* Caretaker-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Caretaker-Prefix.pch"; sourceTree = "<group>"; };
 		1D8EDF7418A6C708009C81ED /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D8EDF7518A6C708009C81ED /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		1D8EDF7818A6C708009C81ED /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1D8EDF7A18A6C708009C81ED /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		1D8EDF7B18A6C708009C81ED /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		1D8EDF7D18A6C708009C81ED /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -53,6 +54,11 @@
 		1D8EDF8C18A6C709009C81ED /* CaretakerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CaretakerTests-Info.plist"; sourceTree = "<group>"; };
 		1D8EDF8E18A6C709009C81ED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1D8EDF9018A6C709009C81ED /* CaretakerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaretakerTests.m; sourceTree = "<group>"; };
+		C9E0D14C18A6CD8400A78BC1 /* MedicineReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MedicineReminder.h; sourceTree = "<group>"; };
+		C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MedicineReminder.m; sourceTree = "<group>"; };
+		C9E0D14F18A6DC2600A78BC1 /* Pills.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pills.png; sourceTree = "<group>"; };
+		C9E0D15418A6FA2E00A78BC1 /* AddReminderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReminderView.h; sourceTree = "<group>"; };
+		C9E0D15518A6FA2E00A78BC1 /* AddReminderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReminderView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +88,7 @@
 		1D8EDF5918A6C708009C81ED = {
 			isa = PBXGroup;
 			children = (
+				C9E0D14F18A6DC2600A78BC1 /* Pills.png */,
 				1D8EDF6B18A6C708009C81ED /* Caretaker */,
 				1D8EDF8A18A6C709009C81ED /* CaretakerTests */,
 				1D8EDF6418A6C708009C81ED /* Frameworks */,
@@ -114,11 +121,14 @@
 			children = (
 				1D8EDF7418A6C708009C81ED /* AppDelegate.h */,
 				1D8EDF7518A6C708009C81ED /* AppDelegate.m */,
-				1D8EDF7718A6C708009C81ED /* Main.storyboard */,
 				1D8EDF7A18A6C708009C81ED /* ViewController.h */,
 				1D8EDF7B18A6C708009C81ED /* ViewController.m */,
 				1D8EDF7D18A6C708009C81ED /* Images.xcassets */,
 				1D8EDF6C18A6C708009C81ED /* Supporting Files */,
+				C9E0D14C18A6CD8400A78BC1 /* MedicineReminder.h */,
+				C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */,
+				C9E0D15418A6FA2E00A78BC1 /* AddReminderView.h */,
+				C9E0D15518A6FA2E00A78BC1 /* AddReminderView.m */,
 			);
 			path = Caretaker;
 			sourceTree = "<group>";
@@ -228,9 +238,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9E0D15018A6DC2600A78BC1 /* Pills.png in Resources */,
 				1D8EDF7E18A6C708009C81ED /* Images.xcassets in Resources */,
 				1D8EDF7018A6C708009C81ED /* InfoPlist.strings in Resources */,
-				1D8EDF7918A6C708009C81ED /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -250,7 +260,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D8EDF7C18A6C708009C81ED /* ViewController.m in Sources */,
+				C9E0D14E18A6CD8400A78BC1 /* MedicineReminder.m in Sources */,
 				1D8EDF7618A6C708009C81ED /* AppDelegate.m in Sources */,
+				C9E0D15618A6FA2E00A78BC1 /* AddReminderView.m in Sources */,
 				1D8EDF7218A6C708009C81ED /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -280,14 +292,6 @@
 				1D8EDF6F18A6C708009C81ED /* en */,
 			);
 			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
-		1D8EDF7718A6C708009C81ED /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				1D8EDF7818A6C708009C81ED /* Base */,
-			);
-			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		1D8EDF8D18A6C709009C81ED /* InfoPlist.strings */ = {
@@ -502,6 +506,7 @@
 				1D8EDF9618A6C709009C81ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		1D8EDF9718A6C709009C81ED /* Build configuration list for PBXNativeTarget "CaretakerTests" */ = {
 			isa = XCConfigurationList;
@@ -510,6 +515,7 @@
 				1D8EDF9918A6C709009C81ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

@@ -6,15 +6,22 @@
 //  Copyright (c) 2014 WirelessWizards. All rights reserved.
 //
 
-#import "AbstractPythonClass.h"
 #import "AppDelegate.h"
-#include <Python.h>
+#import "ViewController.h"
 
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    ViewController *newViewController = [[ViewController alloc] init];
+    //newViewController.parentNavigationController = self.navigationController;
+    self.navigationController = [[UINavigationController alloc]
+                            initWithRootViewController:newViewController];
+    newViewController.rootNavigationController = self.navigationController;
+    self.window.rootViewController = self.navigationController;
+    [self.window makeKeyAndVisible];
     return YES;
 }
 							
@@ -43,6 +50,18 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateActive)
+    {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reminder" message:notification.alertBody delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadData" object:self];
 }
 
 @end
