@@ -31,6 +31,7 @@
 		53322ACD18A8435D008D39A2 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322ACC18A8435D008D39A2 /* ExternalAccessory.framework */; };
 		53322AD018A843CB008D39A2 /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322ACE18A843CB008D39A2 /* PebbleKit.framework */; };
 		53322AD118A843CB008D39A2 /* PebbleVendor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322ACF18A843CB008D39A2 /* PebbleVendor.framework */; };
+		53322AD318A84D01008D39A2 /* AccelViz.py in Resources */ = {isa = PBXBuildFile; fileRef = 53322AD218A84D01008D39A2 /* AccelViz.py */; };
 		C9E0D14E18A6CD8400A78BC1 /* MedicineReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */; };
 		C9E0D15018A6DC2600A78BC1 /* Pills.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E0D14F18A6DC2600A78BC1 /* Pills.png */; };
 		C9E0D15618A6FA2E00A78BC1 /* AddReminderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D15518A6FA2E00A78BC1 /* AddReminderView.m */; };
@@ -80,6 +81,7 @@
 		53322ACC18A8435D008D39A2 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		53322ACE18A843CB008D39A2 /* PebbleKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PebbleKit.framework; path = "../../../../pebble-dev/PebbleSDK-2.0-BETA7/PebbleKit-iOS/PebbleKit.framework"; sourceTree = "<group>"; };
 		53322ACF18A843CB008D39A2 /* PebbleVendor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PebbleVendor.framework; path = "../../../../pebble-dev/PebbleSDK-2.0-BETA7/PebbleKit-iOS/PebbleVendor.framework"; sourceTree = "<group>"; };
+		53322AD218A84D01008D39A2 /* AccelViz.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = AccelViz.py; sourceTree = "<group>"; };
 		C9E0D14C18A6CD8400A78BC1 /* MedicineReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MedicineReminder.h; sourceTree = "<group>"; };
 		C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MedicineReminder.m; sourceTree = "<group>"; };
 		C9E0D14F18A6DC2600A78BC1 /* Pills.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pills.png; sourceTree = "<group>"; };
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				C9E0D14F18A6DC2600A78BC1 /* Pills.png */,
+				53322AD218A84D01008D39A2 /* AccelViz.py */,
 				1D8EDF6B18A6C708009C81ED /* Caretaker */,
 				1D8EDF8A18A6C709009C81ED /* CaretakerTests */,
 				1D8EDF6418A6C708009C81ED /* Frameworks */,
@@ -291,6 +294,7 @@
 			files = (
 				C9E0D15018A6DC2600A78BC1 /* Pills.png in Resources */,
 				1D8EDF7E18A6C708009C81ED /* Images.xcassets in Resources */,
+				53322AD318A84D01008D39A2 /* AccelViz.py in Resources */,
 				1D8EDF7018A6C708009C81ED /* InfoPlist.strings in Resources */,
 				53322ABB18A83F56008D39A2 /* Main.storyboard in Resources */,
 			);
