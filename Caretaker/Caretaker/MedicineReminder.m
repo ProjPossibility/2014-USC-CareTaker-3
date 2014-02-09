@@ -25,8 +25,9 @@
     Reminder *reminder = (Reminder *)[sender userInfo];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Reminder" message:[NSString stringWithFormat:@"Don't forget to take:\n%d %@(s)", reminder.mQuantity, reminder.mName] delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil];
     alertView.delegate = self;
+    alertView.frame = CGRectMake(0, 0, 320, 480);
+    reminder.mImage.frame = CGRectMake(0, 0, 240, 180);
     [alertView setValue:reminder.mImage forKey:@"accessoryView"];
-    [alertView addSubview:reminder.mImage];
     [alertView show];
     
     if(!reminder.mRepeat)
@@ -36,7 +37,7 @@
     else
     {
         //86400 seconds in day
-        reminder.mTimer = [NSTimer timerWithTimeInterval:10.0f target:self selector:@selector(showReminder:) userInfo:reminder repeats:NO];
+        reminder.mTimer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(showReminder:) userInfo:reminder repeats:NO];
         [[NSRunLoop currentRunLoop] addTimer:reminder.mTimer forMode:NSRunLoopCommonModes];
     }
 }
@@ -63,10 +64,17 @@
     newReminder.mImage = [self.mImages objectForKey:imageUid];
     
     
+    UIBackgroundTaskIdentifier bgTask =0;
+    UIApplication  *app = [UIApplication sharedApplication];
+    bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
+        [app endBackgroundTask:bgTask];
+    }];
+    
     [mReminders addObject:newReminder];
-    NSTimer *newTimer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(showReminder:) userInfo:newReminder repeats:NO];
+    NSTimeInterval blah = [newReminder.mDate timeIntervalSinceDate:[NSDate date]];
+    NSTimer *newTimer = [NSTimer timerWithTimeInterval:blah target:self selector:@selector(showReminder:) userInfo:newReminder repeats:NO];
     newReminder.mTimer = newTimer;
-    [[NSRunLoop currentRunLoop] addTimer:newTimer forMode:NSRunLoopCommonModes];
+    [[NSRunLoop currentRunLoop] addTimer:newReminder.mTimer forMode:NSRunLoopCommonModes];
     //[self showReminder:newReminder];
     
 }
