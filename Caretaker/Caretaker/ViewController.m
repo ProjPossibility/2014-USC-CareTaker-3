@@ -68,6 +68,19 @@
     [self.pendingReminders reloadData];
 }
 
+-(void)reEvaluateLackOfResponse
+{
+    switch(areYouOkayLackOfResponse)
+    {
+        case 1:
+            //AudioServicesPlayAlertSound);
+            break;
+        case 2:
+            break;
+
+    }
+}
+
 -(void)incrementLackOfResponse:(id)sender
 {
     areYouOkayLackOfResponse++;
@@ -98,7 +111,7 @@
     alertView.delegate = self;
     [alertView show];
     NSTimer *newTimer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(incrementLackOfResponse:) userInfo:Nil repeats:NO];
-    //[[]]
+    [[NSRunLoop currentRunLoop] addTimer:newTimer forMode:NSRunLoopCommonModes];
     
 }
 

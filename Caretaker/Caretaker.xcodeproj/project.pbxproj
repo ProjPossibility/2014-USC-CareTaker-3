@@ -20,6 +20,7 @@
 		1D8EDF8718A6C709009C81ED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8EDF6918A6C708009C81ED /* UIKit.framework */; };
 		1D8EDF8F18A6C709009C81ED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D8EDF8D18A6C709009C81ED /* InfoPlist.strings */; };
 		1D8EDF9118A6C709009C81ED /* CaretakerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8EDF9018A6C709009C81ED /* CaretakerTests.m */; };
+		C9A8AD5F18A84B6500EE30BF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9A8AD5E18A84B6500EE30BF /* AudioToolbox.framework */; };
 		C9E0D14E18A6CD8400A78BC1 /* MedicineReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */; };
 		C9E0D15018A6DC2600A78BC1 /* Pills.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E0D14F18A6DC2600A78BC1 /* Pills.png */; };
 		C9E0D15618A6FA2E00A78BC1 /* AddReminderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D15518A6FA2E00A78BC1 /* AddReminderView.m */; };
@@ -56,6 +57,7 @@
 		1D8EDF8C18A6C709009C81ED /* CaretakerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CaretakerTests-Info.plist"; sourceTree = "<group>"; };
 		1D8EDF8E18A6C709009C81ED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1D8EDF9018A6C709009C81ED /* CaretakerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaretakerTests.m; sourceTree = "<group>"; };
+		C9A8AD5E18A84B6500EE30BF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		C9E0D14C18A6CD8400A78BC1 /* MedicineReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MedicineReminder.h; sourceTree = "<group>"; };
 		C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MedicineReminder.m; sourceTree = "<group>"; };
 		C9E0D14F18A6DC2600A78BC1 /* Pills.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pills.png; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9A8AD5F18A84B6500EE30BF /* AudioToolbox.framework in Frameworks */,
 				1D8EDF6818A6C708009C81ED /* CoreGraphics.framework in Frameworks */,
 				1D8EDF6A18A6C708009C81ED /* UIKit.framework in Frameworks */,
 				1D8EDF6618A6C708009C81ED /* Foundation.framework in Frameworks */,
@@ -112,6 +115,7 @@
 		1D8EDF6418A6C708009C81ED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C9A8AD5E18A84B6500EE30BF /* AudioToolbox.framework */,
 				1D8EDF6518A6C708009C81ED /* Foundation.framework */,
 				1D8EDF6718A6C708009C81ED /* CoreGraphics.framework */,
 				1D8EDF6918A6C708009C81ED /* UIKit.framework */,
