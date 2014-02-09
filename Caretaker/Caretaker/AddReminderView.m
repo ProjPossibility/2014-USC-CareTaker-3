@@ -46,10 +46,6 @@
     return newButton;
 }
 
--(void)something:(id)sender
-{
-    
-}
 
 - (void)showImagePickerForSourceType:(id)sender
 {
@@ -66,13 +62,25 @@
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
+{
+    UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    UIGraphicsBeginImageContextWithOptions(CGSizeMake(300, 300), NO, 0.0);
+    [image drawInRect:CGRectMake(0, 0, 300, 300)];
+    image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    photoPreviewer = [[UIImageView alloc] initWithImage:image];
+    [controlSubView addSubview:photoPreviewer];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 
 -(void) setupControls
 {
-    controlSubView = [[UITableView alloc] initWithFrame:CGRectMake((self.view.bounds.size.width - self.view.bounds.size.width * 0.85)/2, (self.view.bounds.size.height - self.view.bounds.size.height * 0.85)/2, self.view.bounds.size.width * 0.85, self.view.bounds.size.height * 0.85)];
-    [self.view addSubview:controlSubView];
+    controlSubView = [[UITableView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     self.choosePhotoButton = [self addButtonWithAttributes:@"Choose Photo" withTarget:self withSelector:@selector(showImagePickerForSourceType:) with:controlSubView.bounds.size];
     [controlSubView addSubview:self.choosePhotoButton];
+    [self.view addSubview:controlSubView];
+
 }
 
 

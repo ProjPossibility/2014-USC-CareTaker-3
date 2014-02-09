@@ -18,6 +18,7 @@
 @property (nonatomic, strong)   UIView      *controlView;
 @property (nonatomic, strong)   UIButton    *choosePictureButton;
 @property (nonatomic, strong)   UIButton    *showNotificationButton;
+@property (nonatomic, strong)   UINavigationController *parentNavigationController;
 
 -(void)setupControls;
 

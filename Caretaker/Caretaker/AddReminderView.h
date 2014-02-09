@@ -11,7 +11,6 @@
 @interface AddReminderView : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
     UITableView *controlSubView;
-   //UIButton *choosePhotoButton;
     UIButton *takePhotoButton;
     UIImageView *photoPreviewer;
 }

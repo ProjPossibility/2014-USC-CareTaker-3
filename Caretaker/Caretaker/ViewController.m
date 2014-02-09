@@ -35,7 +35,7 @@
 
 -(void)setupControls
 {
-    self.controlView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [[UIScreen mainScreen] bounds].size.width, 100)];
+    self.controlView = [[UIView alloc] initWithFrame:CGRectMake(0, 50, [[UIScreen mainScreen] bounds].size.width, 100)];
     
     //add show notification button
     self.showNotificationButton = [self addButtonWithAttributes:@"SHOW NEW VIEW" withTarget:self withSelector:@selector(showAddReminder:) with:self.view.bounds.size];
@@ -93,7 +93,8 @@
 -(void)showAddReminder:(id)sender
 {
     AddReminderView *addReminderView = [[AddReminderView alloc] init];
-    [self.view addSubview:addReminderView.view];
+    [self.navigationController pushViewController:addReminderView animated:YES];
+    //[self.view addSubview:addReminderView];
 }
 
 // This method is called when an image has been chosen from the library or taken from the camera.
