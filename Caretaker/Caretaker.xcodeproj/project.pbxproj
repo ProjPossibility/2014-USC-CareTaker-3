@@ -380,6 +380,27 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Caretaker/Caretaker-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
+					"-fno-strict-aliasing",
+					"-fno-common",
+					"-dynamic",
+					"-isysroot",
+					/Developer/SDKs/MacOSX10.6.sdk,
+					"-arch",
+					i386,
+					"-arch",
+					x86_64,
+					"-g",
+					"-DNDEBUG",
+					"-g",
+					"-fwrapv",
+					"-O3",
+					"-Wall",
+					"-Wstrict-prototypes",
+				);
 				INFOPLIST_FILE = "Caretaker/Caretaker-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -393,6 +414,27 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Caretaker/Caretaker-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					/Library/Frameworks/Python.framework/Versions/2.7/include/python2.7,
+					"-fno-strict-aliasing",
+					"-fno-common",
+					"-dynamic",
+					"-isysroot",
+					/Developer/SDKs/MacOSX10.6.sdk,
+					"-arch",
+					i386,
+					"-arch",
+					x86_64,
+					"-g",
+					"-DNDEBUG",
+					"-g",
+					"-fwrapv",
+					"-O3",
+					"-Wall",
+					"-Wstrict-prototypes",
+				);
 				INFOPLIST_FILE = "Caretaker/Caretaker-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
