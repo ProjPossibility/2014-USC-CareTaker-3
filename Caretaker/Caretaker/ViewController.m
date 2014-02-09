@@ -10,6 +10,7 @@
 #import "AddReminderView.h"
 #import "AppDelegate.h"
 #import <CoreMotion/CoreMotion.h>
+#import "Reminder.h"
 
 
 @interface ViewController ()
