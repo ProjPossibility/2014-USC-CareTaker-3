@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 WirelessWizards. All rights reserved.
 //
 
+#import "AbstractPythonClass.h"
 #import "AppDelegate.h"
 #include <Python.h>
 
