@@ -12,13 +12,13 @@
 @interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     MedicineReminder *medicineReminder;
-    UITableView *pendingReminders;
 }
 @property (nonatomic) IBOutlet  UIView      *overlayView;
 @property (nonatomic)           UIImagePickerController *imagePickerController;
 @property (nonatomic, strong)   UIView      *controlView;
 @property (nonatomic, strong)   UIButton    *choosePictureButton;
 @property (nonatomic, strong)   UIButton    *showNotificationButton;
+@property (nonatomic, strong)   UITableView *pendingReminders;
 
 -(void)setupControls;
 
