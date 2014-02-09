@@ -10,10 +10,11 @@
 
 @interface MedicineReminder : NSObject
 {
-    NSMutableArray *mReminders;
 }
 
 @property (nonatomic, strong) NSMutableDictionary *mImages;
+@property (nonatomic, strong) NSMutableArray *mReminders;
+
 
 -(void)addReminderWith:(NSString *)name and:(int)quantity and:(NSDate *)date and:(BOOL)repeat and:(NSString *)imageUid;
 

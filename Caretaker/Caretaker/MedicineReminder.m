@@ -15,7 +15,7 @@
 {
     self = [super init];
     if (self) {
-        mReminders = [[NSMutableArray alloc] init];
+        self.mReminders = [[NSMutableArray alloc] init];
         self.mImages = [[NSMutableDictionary alloc] init];
     }
     return self;
@@ -32,7 +32,7 @@
     
     if(!reminder.mRepeat)
     {
-        [mReminders removeObject: reminder];
+        [self.mReminders removeObject: reminder];
     }
     else
     {
@@ -70,7 +70,7 @@
         [app endBackgroundTask:bgTask];
     }];
     
-    [mReminders addObject:newReminder];
+    [self.mReminders addObject:newReminder];
     NSTimeInterval blah = [newReminder.mDate timeIntervalSinceDate:[NSDate date]];
     NSTimer *newTimer = [NSTimer timerWithTimeInterval:blah target:self selector:@selector(showReminder:) userInfo:newReminder repeats:NO];
     newReminder.mTimer = newTimer;

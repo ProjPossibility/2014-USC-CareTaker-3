@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "AddReminderView.h"
 #import "AppDelegate.h"
+#import "Reminder.h"
 
 @interface ViewController ()
 
@@ -35,22 +36,32 @@
 
 -(void)setupControls
 {
-    self.controlView = [[UIView alloc] initWithFrame:CGRectMake(0, 50, [[UIScreen mainScreen] bounds].size.width, 100)];
+    self.controlView = [[UIView alloc] initWithFrame:CGRectMake(0, 65, [[UIScreen mainScreen] bounds].size.width, 100)];
     
     //add show notification button
-    self.showNotificationButton = [self addButtonWithAttributes:@"ADD NEW REMINDER" withTarget:self withSelector:@selector(showAddReminder:) with:self.view.bounds.size];
+    self.showNotificationButton = [self addButtonWithAttributes:@"ADD NEW REMINDER" withTarget:self withSelector:@selector(showAddReminder:) with:CGSizeMake(320, 44)];
     [self.controlView addSubview:self.showNotificationButton];
+    self.pendingReminders = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, 320, 421) style:UITableViewStylePlain];
+    [self.controlView addSubview:self.pendingReminders];
+    self.pendingReminders.delegate = self;
+    self.pendingReminders.dataSource = self;
     
     
     //add the view to the viewcontroller
     [self.view addSubview: self.controlView];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.pendingReminders reloadData];
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
+    
+    
 
     medicineReminder = [[MedicineReminder alloc] init];
     [self setupControls];
@@ -108,6 +119,60 @@
 {
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
+
+#pragma mark - Table View
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    return @"";
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return [medicineReminder.mImages count];
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    switch([indexPath row])
+    {
+        default:
+            return 64;
+    }
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString *CellIdentifier = [NSString stringWithFormat:@"OptionCell%d", indexPath.row];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    if(cell == nil){
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell.selectionStyle = UITableViewCellSelectionStyleNone;
+        
+        UIView *reminderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+        Reminder *currentReminder = [medicineReminder.mReminders objectAtIndex:[indexPath row]];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 320, 44)];
+        nameLabel.text = currentReminder.mName;
+        nameLabel.font = [UIFont fontWithName:@"Helvetica" size:20];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"MM/dd HH:mm"];
+        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, 24, 320, 44)];
+        dateLabel.text = [formatter stringFromDate:currentReminder.mDate];
+        dateLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
+        [reminderView addSubview: nameLabel];
+        [reminderView addSubview: dateLabel];
+        [cell.contentView addSubview:reminderView];
+    }
+    
+    return cell;
+}
+
 
 
 

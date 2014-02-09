@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MedicineReminder.h"
 
-@interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
     MedicineReminder *medicineReminder;
 }
@@ -18,6 +18,7 @@
 @property (nonatomic, strong)   UIView      *controlView;
 @property (nonatomic, strong)   UIButton    *choosePictureButton;
 @property (nonatomic, strong)   UIButton    *showNotificationButton;
+@property (nonatomic, strong)   UITableView *pendingReminders;
 
 -(void)setupControls;
 
