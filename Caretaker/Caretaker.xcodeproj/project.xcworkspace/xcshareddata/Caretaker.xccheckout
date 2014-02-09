@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>47150BBA-CF45-468D-8711-9576AD6ABEFF</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Caretaker</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>D5EAEFEB-4218-41DD-8DF2-1014EA952DB4</key>
+		<string>https://github.com/ProjPossibility/2014-USC-CareTaker-3.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Caretaker/Caretaker.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>D5EAEFEB-4218-41DD-8DF2-1014EA952DB4</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/ProjPossibility/2014-USC-CareTaker-3.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>D5EAEFEB-4218-41DD-8DF2-1014EA952DB4</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>D5EAEFEB-4218-41DD-8DF2-1014EA952DB4</string>
+			<key>IDESourceControlWCCName</key>
+			<string>2014-USC-CareTaker-3</string>
+		</dict>
+	</array>
+</dict>
+</plist>

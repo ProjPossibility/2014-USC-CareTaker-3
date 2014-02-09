@@ -7,7 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MedicineReminder.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+{
+    MedicineReminder *medicineReminder;
+}
+@property (nonatomic) IBOutlet  UIView      *overlayView;
+@property (nonatomic)           UIImagePickerController *imagePickerController;
+@property (nonatomic, strong)   UIView      *controlView;
+@property (nonatomic, strong)   UIButton    *choosePictureButton;
+@property (nonatomic, strong)   UIButton    *showNotificationButton;
+
+-(void)setupControls;
 
 @end
