@@ -43,10 +43,22 @@
     //add show notification button
     self.showNotificationButton = [self addButtonWithAttributes:@"ADD NEW REMINDER" withTarget:self withSelector:@selector(showAddReminder:) with:CGSizeMake(320, 44)];
     [self.controlView addSubview:self.showNotificationButton];
-    self.pendingReminders = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, 320, 421) style:UITableViewStylePlain];
+    self.pendingReminders = [[UITableView alloc] initWithFrame:CGRectMake(0, 88, 320, 377) style:UITableViewStylePlain];
     [self.controlView addSubview:self.pendingReminders];
+    
+    NSString *areYouOkayButtonText = @"Display Warning";
+    UIButton *newButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 44, 320, 44)];
+    [newButton addTarget:self action:@selector(showAreYouOkay:) forControlEvents:UIControlEventTouchUpInside];
+    [newButton setTitle:areYouOkayButtonText forState:UIControlStateNormal];
+    [newButton setBackgroundColor:[UIColor colorWithRed:0.760784314f green:0.905882353f blue:1.0f alpha:1.0f]];
+    [newButton layer].cornerRadius = 4;
+    [newButton layer].borderWidth = 1;
+    [newButton layer].borderColor = [UIColor colorWithRed:0.360784314f green:0.605882353f blue:1.0f alpha:1.0f].CGColor;
+    [self.controlView addSubview:newButton];
     self.pendingReminders.delegate = self;
     self.pendingReminders.dataSource = self;
+    
+    areYouOkayLackOfResponse = 0;
     
     
     //add the view to the viewcontroller

@@ -42,8 +42,6 @@ def train():
     normal_class = Classification("NOR")
     abnormal_class = Classification("ABN")
     is_normal = True
-    total_unique_data = 0 # number of "unique" tuples in the training set
-    total_data = 0 # number of tuples in the training set
 
     print "Beginning training..."
     with open(training_filename) as f:
@@ -70,12 +68,14 @@ def train():
 
             # build a dictionary of tuple data to make things accessible for later
             num_tuples = 0
-            for (index, tuple) in enumerate(tuples):
+            for index in range(0,5):
+                tuple = tuples[index]
                 num_tuples += 1
                 vars = tuple.split(',')
-                tuple_dict["x{0}".format(index)] = int(vars[0])
-                tuple_dict["y{0}".format(index)] = int(vars[1])
-                tuple_dict["z{0}".format(index)] = int(vars[2])
+                #print "x = {0} y = {1} z = {2}".format(vars[0], vars[1], vars[2])
+                tuple_dict["x{0}".format(index)] = float(vars[0])
+                tuple_dict["y{0}".format(index)] = float(vars[1])
+                tuple_dict["z{0}".format(index)] = float(vars[2])
                 
                 '''print "datax{0} = {1}".format(index, tuple_dict["x{0}".format(index)])
                 print "datay{0} = {1}".format(index, tuple_dict["y{0}".format(index)])
@@ -86,20 +86,20 @@ def train():
                 new_Data.meanZ += tuple_dict["z{0}".format(index)]
 
             # calculate the mean of each dimension
-            print "tuples = {0}".format(num_tuples)
+            '''print "tuples = {0}".format(num_tuples)
             print "meanX = {0}".format(new_Data.meanX)
             print "meanY = {0}".format(new_Data.meanY)
-            print "meanZ = {0}".format(new_Data.meanZ)
+            print "meanZ = {0}".format(new_Data.meanZ)'''
             new_Data.meanX = (new_Data.meanX/num_tuples)
             new_Data.meanY = (new_Data.meanY/num_tuples)
             new_Data.meanZ = (new_Data.meanZ/num_tuples)
-            print "meanX = {0}".format(new_Data.meanX)
+            '''print "meanX = {0}".format(new_Data.meanX)
             print "meanY = {0}".format(new_Data.meanY)
-            print "meanZ = {0}".format(new_Data.meanZ)
+            print "meanZ = {0}".format(new_Data.meanZ)'''
             
 
             # calculate the variance of each direction
-            for index in range(1, num_tuples):
+            for index in range(0, num_tuples):
                 new_Data.varX += math.pow((new_Data.meanX - tuple_dict["x{0}".format(index)]), 2)
                 new_Data.varY += math.pow((new_Data.meanY - tuple_dict["y{0}".format(index)]), 2)
                 new_Data.varZ += math.pow((new_Data.meanZ - tuple_dict["z{0}".format(index)]), 2)
@@ -115,18 +115,18 @@ def train():
                 class_type = abnormal_class
 
             # calculate the magnitude of the vector of data we just generated
-            magnitude_data = math.sqrt(math.pow(new_Data.meanX, 2) + math.pow(new_Data.meanY, 2) + math.pow(new_Data.meanZ, 2))
+            magnitude_data = math.sqrt(math.pow(new_Data.meanX, 2) + math.pow(new_Data.meanY, 2) + math.pow(new_Data.meanZ, 2) + math.pow(new_Data.varX, 2) + math.pow(new_Data.varY, 2) + math.pow(new_Data.varZ, 2))
 
             # calculate the similarity between the new vector and the existing data vectors
             max_similarity = -2
             max_similarity_index = -1
             for (index, data) in enumerate(class_type.data):
-                magnitude_data_c = math.sqrt(math.pow(data.meanX, 2) + math.pow(data.meanY, 2) + math.pow(data.meanZ, 2))
-                dot_product =(new_Data.meanX * data.meanX)+(new_Data.meanY * data.meanY)+(new_Data.meanZ * data.meanZ)
+                magnitude_data_c = math.sqrt(math.pow(data.meanX, 2) + math.pow(data.meanY, 2) + math.pow(data.meanZ, 2) + math.pow(data.varX, 2) + math.pow(data.varY, 2) + math.pow(data.varZ, 2))
+                dot_product = (new_Data.meanX * data.meanX)+(new_Data.meanY * data.meanY)+(new_Data.meanZ * data.meanZ)+(new_Data.varX * data.varX)+(new_Data.varY * data.varY)+(new_Data.varZ * data.varZ)
                 similarity = (dot_product/(magnitude_data * magnitude_data_c))
                 print "Similarity {0}".format(similarity)
-                print "dot {0}".format(dot_product)
-                print "mag1 = {0} mag2 = {1}".format(magnitude_data, magnitude_data_c)
+                '''print "dot {0}".format(dot_product)
+                print "mag1 = {0} mag2 = {1}".format(magnitude_data, magnitude_data_c)'''
 
                 # update the similarity if we see a greater similarity
                 if similarity > max_similarity:
@@ -134,7 +134,7 @@ def train():
                     max_similarity_index = index
 
             # use a totally arbitrary value of similarity
-            if max_similarity > 0.5:
+            if max_similarity > 0.95:
                 class_type.data[max_similarity_index].incr_frequency()
             else:
                 class_type.data.append(new_Data)
