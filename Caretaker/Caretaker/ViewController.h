@@ -13,6 +13,7 @@
 {
     MedicineReminder *medicineReminder;
     int areYouOkayLackOfResponse;
+    NSTimer *areYouOkayTimer;
 }
 @property (nonatomic) IBOutlet  UIView      *overlayView;
 @property (nonatomic)           UIImagePickerController *imagePickerController;

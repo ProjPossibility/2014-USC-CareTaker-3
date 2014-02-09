@@ -110,8 +110,8 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"Are you okay?"] delegate:self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
     alertView.delegate = self;
     [alertView show];
-    NSTimer *newTimer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(incrementLackOfResponse:) userInfo:Nil repeats:NO];
-    [[NSRunLoop currentRunLoop] addTimer:newTimer forMode:NSRunLoopCommonModes];
+    areYouOkayTimer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(incrementLackOfResponse:) userInfo:Nil repeats:NO];
+    [[NSRunLoop currentRunLoop] addTimer:areYouOkayTimer forMode:NSRunLoopCommonModes];
     
 }
 
@@ -121,8 +121,10 @@
     switch(buttonIndex)
     {
         case 0:
+            [areYouOkayTimer invalidate];
             break;
         case 1:
+            [areYouOkayTimer invalidate];
             break;
         default:
             NSLog(@"THIS SHOUL NEVER EVER EVER HAPPEN");
