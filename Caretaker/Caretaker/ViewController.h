@@ -22,6 +22,7 @@
 @property (nonatomic, strong)   UIView      *controlView;
 @property (nonatomic, strong)   UIButton    *choosePictureButton;
 @property (nonatomic, strong)   UIButton    *showNotificationButton;
+@property (nonatomic, strong)   UITableView *pendingReminders;
 
 -(void)setupControls;
 -(void) startMotionDetect;

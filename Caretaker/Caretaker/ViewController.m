@@ -42,16 +42,20 @@
     //add show notification button
     self.showNotificationButton = [self addButtonWithAttributes:@"ADD NEW REMINDER" withTarget:self withSelector:@selector(showAddReminder:) with:CGSizeMake(320, 44)];
     [self.controlView addSubview:self.showNotificationButton];
-    pendingReminders = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, 320, 421) style:UITableViewStylePlain];
-    [self.controlView addSubview:pendingReminders];
-    pendingReminders.delegate = self;
-    pendingReminders.dataSource = self;
+    self.pendingReminders = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, 320, 421) style:UITableViewStylePlain];
+    [self.controlView addSubview:self.pendingReminders];
+    self.pendingReminders.delegate = self;
+    self.pendingReminders.dataSource = self;
     
     
     //add the view to the viewcontroller
     [self.view addSubview: self.controlView];
 }
 
+-(void)viewDidAppear:(BOOL)animated
+{
+    [self.pendingReminders reloadData];
+}
 
 - (void)viewDidLoad
 {
@@ -193,7 +197,7 @@
     switch([indexPath row])
     {
         default:
-            return 44;
+            return 64;
     }
 }
 
@@ -206,7 +210,17 @@
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         
         UIView *reminderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-        [reminderView addSubview: [medicineReminder.mReminders objectAtIndex:[indexPath row]]];
+        Reminder *currentReminder = [medicineReminder.mReminders objectAtIndex:[indexPath row]];
+        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 320, 44)];
+        nameLabel.text = currentReminder.mName;
+        nameLabel.font = [UIFont fontWithName:@"Helvetica" size:20];
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"MM/dd HH:mm"];
+        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, 24, 320, 44)];
+        dateLabel.text = [formatter stringFromDate:currentReminder.mDate];
+        dateLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
+        [reminderView addSubview: nameLabel];
+        [reminderView addSubview: dateLabel];
         [cell.contentView addSubview:reminderView];
     }
     
