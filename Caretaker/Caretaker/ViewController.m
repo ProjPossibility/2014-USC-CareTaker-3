@@ -38,7 +38,7 @@
     self.controlView = [[UIView alloc] initWithFrame:CGRectMake(0, 50, [[UIScreen mainScreen] bounds].size.width, 100)];
     
     //add show notification button
-    self.showNotificationButton = [self addButtonWithAttributes:@"SHOW NEW VIEW" withTarget:self withSelector:@selector(showAddReminder:) with:self.view.bounds.size];
+    self.showNotificationButton = [self addButtonWithAttributes:@"ADD NEW REMINDER" withTarget:self withSelector:@selector(showAddReminder:) with:self.view.bounds.size];
     [self.controlView addSubview:self.showNotificationButton];
     
     

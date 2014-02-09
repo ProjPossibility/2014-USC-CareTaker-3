@@ -10,13 +10,15 @@
 
 @interface AddReminderView : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
-    UITableView *controlSubView;
+    UIScrollView *controlSubView;
+    UIDatePicker *datePicker;
+    UIButton *choosePhotoButton;
     UIButton *takePhotoButton;
     UIImageView *photoPreviewer;
+    int nextYCoordForView;
 }
 @property (nonatomic) IBOutlet UIView *overlayView;
 @property (nonatomic) UIImagePickerController *imagePickerController;
-@property (nonatomic, strong) UIButton *choosePhotoButton;
 -(void)setupControls;
 -(void)showImagePickerForSourceType:(id)sender;
 
