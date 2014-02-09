@@ -20,6 +20,17 @@
 		1D8EDF8718A6C709009C81ED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8EDF6918A6C708009C81ED /* UIKit.framework */; };
 		1D8EDF8F18A6C709009C81ED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 1D8EDF8D18A6C709009C81ED /* InfoPlist.strings */; };
 		1D8EDF9118A6C709009C81ED /* CaretakerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D8EDF9018A6C709009C81ED /* CaretakerTests.m */; };
+		53322ABB18A83F56008D39A2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 53322AB918A83F56008D39A2 /* Main.storyboard */; };
+		53322ABE18A84094008D39A2 /* AccelerationLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = 53322ABD18A84094008D39A2 /* AccelerationLogger.m */; };
+		53322AC118A841CA008D39A2 /* QuietLog.m in Sources */ = {isa = PBXBuildFile; fileRef = 53322AC018A841CA008D39A2 /* QuietLog.m */; };
+		53322AC318A84335008D39A2 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322AC218A84335008D39A2 /* MessageUI.framework */; };
+		53322AC518A8433C008D39A2 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322AC418A8433C008D39A2 /* CFNetwork.framework */; };
+		53322AC718A84345008D39A2 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322AC618A84345008D39A2 /* CoreMotion.framework */; };
+		53322AC918A8434C008D39A2 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322AC818A8434C008D39A2 /* CoreBluetooth.framework */; };
+		53322ACB18A84353008D39A2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322ACA18A84353008D39A2 /* libz.dylib */; };
+		53322ACD18A8435D008D39A2 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322ACC18A8435D008D39A2 /* ExternalAccessory.framework */; };
+		53322AD018A843CB008D39A2 /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322ACE18A843CB008D39A2 /* PebbleKit.framework */; };
+		53322AD118A843CB008D39A2 /* PebbleVendor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322ACF18A843CB008D39A2 /* PebbleVendor.framework */; };
 		C9E0D14E18A6CD8400A78BC1 /* MedicineReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */; };
 		C9E0D15018A6DC2600A78BC1 /* Pills.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E0D14F18A6DC2600A78BC1 /* Pills.png */; };
 		C9E0D15618A6FA2E00A78BC1 /* AddReminderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D15518A6FA2E00A78BC1 /* AddReminderView.m */; };
@@ -56,6 +67,19 @@
 		1D8EDF8C18A6C709009C81ED /* CaretakerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "CaretakerTests-Info.plist"; sourceTree = "<group>"; };
 		1D8EDF8E18A6C709009C81ED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		1D8EDF9018A6C709009C81ED /* CaretakerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CaretakerTests.m; sourceTree = "<group>"; };
+		53322ABA18A83F56008D39A2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		53322ABC18A84094008D39A2 /* AccelerationLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccelerationLogger.h; sourceTree = "<group>"; };
+		53322ABD18A84094008D39A2 /* AccelerationLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccelerationLogger.m; sourceTree = "<group>"; };
+		53322ABF18A841CA008D39A2 /* QuietLog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = QuietLog.h; sourceTree = "<group>"; };
+		53322AC018A841CA008D39A2 /* QuietLog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = QuietLog.m; sourceTree = "<group>"; };
+		53322AC218A84335008D39A2 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		53322AC418A8433C008D39A2 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		53322AC618A84345008D39A2 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
+		53322AC818A8434C008D39A2 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		53322ACA18A84353008D39A2 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		53322ACC18A8435D008D39A2 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
+		53322ACE18A843CB008D39A2 /* PebbleKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PebbleKit.framework; path = "../../../../pebble-dev/PebbleSDK-2.0-BETA7/PebbleKit-iOS/PebbleKit.framework"; sourceTree = "<group>"; };
+		53322ACF18A843CB008D39A2 /* PebbleVendor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PebbleVendor.framework; path = "../../../../pebble-dev/PebbleSDK-2.0-BETA7/PebbleKit-iOS/PebbleVendor.framework"; sourceTree = "<group>"; };
 		C9E0D14C18A6CD8400A78BC1 /* MedicineReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MedicineReminder.h; sourceTree = "<group>"; };
 		C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MedicineReminder.m; sourceTree = "<group>"; };
 		C9E0D14F18A6DC2600A78BC1 /* Pills.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pills.png; sourceTree = "<group>"; };
@@ -70,7 +94,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				53322AD018A843CB008D39A2 /* PebbleKit.framework in Frameworks */,
+				53322AD118A843CB008D39A2 /* PebbleVendor.framework in Frameworks */,
 				1D8EDF6818A6C708009C81ED /* CoreGraphics.framework in Frameworks */,
+				53322ACD18A8435D008D39A2 /* ExternalAccessory.framework in Frameworks */,
+				53322ACB18A84353008D39A2 /* libz.dylib in Frameworks */,
+				53322AC918A8434C008D39A2 /* CoreBluetooth.framework in Frameworks */,
+				53322AC718A84345008D39A2 /* CoreMotion.framework in Frameworks */,
+				53322AC518A8433C008D39A2 /* CFNetwork.framework in Frameworks */,
+				53322AC318A84335008D39A2 /* MessageUI.framework in Frameworks */,
 				1D8EDF6A18A6C708009C81ED /* UIKit.framework in Frameworks */,
 				1D8EDF6618A6C708009C81ED /* Foundation.framework in Frameworks */,
 			);
@@ -112,6 +144,14 @@
 		1D8EDF6418A6C708009C81ED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				53322ACE18A843CB008D39A2 /* PebbleKit.framework */,
+				53322ACF18A843CB008D39A2 /* PebbleVendor.framework */,
+				53322ACC18A8435D008D39A2 /* ExternalAccessory.framework */,
+				53322ACA18A84353008D39A2 /* libz.dylib */,
+				53322AC818A8434C008D39A2 /* CoreBluetooth.framework */,
+				53322AC618A84345008D39A2 /* CoreMotion.framework */,
+				53322AC418A8433C008D39A2 /* CFNetwork.framework */,
+				53322AC218A84335008D39A2 /* MessageUI.framework */,
 				1D8EDF6518A6C708009C81ED /* Foundation.framework */,
 				1D8EDF6718A6C708009C81ED /* CoreGraphics.framework */,
 				1D8EDF6918A6C708009C81ED /* UIKit.framework */,
@@ -123,6 +163,9 @@
 		1D8EDF6B18A6C708009C81ED /* Caretaker */ = {
 			isa = PBXGroup;
 			children = (
+				53322ABF18A841CA008D39A2 /* QuietLog.h */,
+				53322AC018A841CA008D39A2 /* QuietLog.m */,
+				53322AB918A83F56008D39A2 /* Main.storyboard */,
 				1D8EDF7418A6C708009C81ED /* AppDelegate.h */,
 				1D8EDF7518A6C708009C81ED /* AppDelegate.m */,
 				1D8EDF7A18A6C708009C81ED /* ViewController.h */,
@@ -135,6 +178,8 @@
 				C9E0D15518A6FA2E00A78BC1 /* AddReminderView.m */,
 				C9E0D15F18A7C37B00A78BC1 /* Reminder.h */,
 				C9E0D16018A7C37B00A78BC1 /* Reminder.m */,
+				53322ABC18A84094008D39A2 /* AccelerationLogger.h */,
+				53322ABD18A84094008D39A2 /* AccelerationLogger.m */,
 			);
 			path = Caretaker;
 			sourceTree = "<group>";
@@ -247,6 +292,7 @@
 				C9E0D15018A6DC2600A78BC1 /* Pills.png in Resources */,
 				1D8EDF7E18A6C708009C81ED /* Images.xcassets in Resources */,
 				1D8EDF7018A6C708009C81ED /* InfoPlist.strings in Resources */,
+				53322ABB18A83F56008D39A2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -270,7 +316,9 @@
 				1D8EDF7618A6C708009C81ED /* AppDelegate.m in Sources */,
 				C9E0D15618A6FA2E00A78BC1 /* AddReminderView.m in Sources */,
 				1D8EDF7218A6C708009C81ED /* main.m in Sources */,
+				53322ABE18A84094008D39A2 /* AccelerationLogger.m in Sources */,
 				C9E0D16118A7C37B00A78BC1 /* Reminder.m in Sources */,
+				53322AC118A841CA008D39A2 /* QuietLog.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +356,14 @@
 				1D8EDF8E18A6C709009C81ED /* en */,
 			);
 			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		53322AB918A83F56008D39A2 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				53322ABA18A83F56008D39A2 /* Base */,
+			);
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -388,8 +444,13 @@
 		1D8EDF9518A6C709009C81ED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Keith/pebble-dev/PebbleSDK-2.0-BETA7/PebbleKit-iOS",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Caretaker/Caretaker-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -414,6 +475,7 @@
 					"-Wstrict-prototypes",
 				);
 				INFOPLIST_FILE = "Caretaker/Caretaker-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -422,8 +484,13 @@
 		1D8EDF9618A6C709009C81ED /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/Keith/pebble-dev/PebbleSDK-2.0-BETA7/PebbleKit-iOS",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Caretaker/Caretaker-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -448,6 +515,7 @@
 					"-Wstrict-prototypes",
 				);
 				INFOPLIST_FILE = "Caretaker/Caretaker-Info.plist";
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

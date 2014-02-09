@@ -9,6 +9,8 @@
 #import "ViewController.h"
 #import "AddReminderView.h"
 #import "AppDelegate.h"
+#import <CoreMotion/CoreMotion.h>
+
 
 @interface ViewController ()
 
@@ -55,7 +57,7 @@
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
-    
+    accelLoggerPhone = [[AccelerationLogger alloc] initWithFileFlair:@"Phone"];
     
 
     medicineReminder = [[MedicineReminder alloc] init];
@@ -64,11 +66,64 @@
 	// Do any additional setup after loading the view, typically from a nib.
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"VIEW APPEARED!");
+    
+    [super viewDidAppear:animated];
+    
+    [self startMotionDetect];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    [self.motionManager stopAccelerometerUpdates];
+    
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+//Motion
+- (CMMotionManager *)motionManager
+{
+    CMMotionManager *motionManager = nil;
+    
+    id appDelegate = [UIApplication sharedApplication].delegate;
+    
+    if ([appDelegate respondsToSelector:@selector(motionManager)]) {
+        motionManager = [appDelegate motionManager];
+    }
+    
+    return motionManager;
+}
+
+- (void)startMotionDetect
+{
+    
+    self.motionManager.accelerometerUpdateInterval = 0.1f;
+    [self.motionManager
+     startAccelerometerUpdatesToQueue:[[NSOperationQueue alloc] init]
+     withHandler:^(CMAccelerometerData *data, NSError *error)
+     {
+         
+         dispatch_async(dispatch_get_main_queue(),
+                        ^{   //Will be called with data and error
+                            QuietLog(@"PHONE  X: %.2f, Y: %.2f, Z: %.2f", data.acceleration.x, data.acceleration.y, data.acceleration.z);
+                            [accelLoggerPhone logData:data];
+                        }
+                        );
+     }
+     ];
+    
+}
+
+//
 
 - (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
 {
