@@ -53,11 +53,6 @@
     [self.view addSubview: self.controlView];
 }
 
--(void)viewDidAppear:(BOOL)animated
-{
-    [self.pendingReminders reloadData];
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -76,6 +71,7 @@
     NSLog(@"VIEW APPEARED!");
     
     [super viewDidAppear:animated];
+    [self.pendingReminders reloadData];
     
     [self startMotionDetect];
 }
