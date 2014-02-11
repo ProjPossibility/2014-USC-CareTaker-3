@@ -1,1 +1,1 @@
-Mobile app for aging population
+Caretaker is an iOS app designed to help an aging person stay independent. The app allows the user to easily set up reminders with custom images to make it easy to remember which pill to take when. The app also integrates with the Pebble smartwatch to provide fall monitoring and detection. We trained a classifier to recognize a fall from the accelerometer data provided by the Pebble and the iPhone. Caretaker won the USC division of SS12: Code for a Cause. We're excited to improve Caretaker in preparation for the next round of SS12. 
