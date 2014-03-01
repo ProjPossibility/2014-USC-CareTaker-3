@@ -102,7 +102,7 @@
 {
     // Override point for customization after application launch.
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    ViewController *newViewController = [[ViewController alloc] init];
+    newViewController = [[ViewController alloc] init];
     //newViewController.parentNavigationController = self.navigationController;
     self.navigationController = [[UINavigationController alloc]
                             initWithRootViewController:newViewController];
@@ -127,6 +127,11 @@
             QuietLog(@"PEBBLE  x=%.2f  y=%.2f  z=%.2f", x, y, z);
             
             [accelLoggerPebble logDataX:x Y:y Z:z];
+            
+            if(fabs(z) > 2.5 || fabs(x) > 2.5) {
+                [newViewController showAreYouOkay:nil];
+            }
+            
             return YES;
         }];
     }];

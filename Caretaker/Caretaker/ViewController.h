@@ -29,6 +29,7 @@
 
 -(void)setupControls;
 -(void) startMotionDetect;
+- (void)showAreYouOkay:(id)sender;
 
 
 @end

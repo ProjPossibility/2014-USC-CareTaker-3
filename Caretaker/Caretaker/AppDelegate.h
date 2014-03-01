@@ -15,6 +15,7 @@
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     CMMotionManager *_motionManager;
     AccelerationLogger *accelLoggerPebble;
+    ViewController *newViewController;
 }
 
 @property (strong, nonatomic) UIWindow *window;
