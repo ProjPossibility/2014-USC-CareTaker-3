@@ -114,6 +114,15 @@
     
 }
 
+- (void)scheduleNewNotification:(NSString*)notificationMsg After:(NSTimeInterval)seconds
+{
+    
+    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    localNotif.alertBody = notificationMsg;
+    localNotif.fireDate = [NSDate dateWithTimeIntervalSinceNow:seconds];
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -265,7 +274,7 @@
     if(cell == nil){
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        
+        UIButton *reminderViewButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
         UIView *reminderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
         Reminder *currentReminder = [medicineReminder.mReminders objectAtIndex:[indexPath row]];
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 320, 44)];
@@ -278,7 +287,9 @@
         dateLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
         [reminderView addSubview: nameLabel];
         [reminderView addSubview: dateLabel];
-        [cell.contentView addSubview:reminderView];
+        [reminderViewButton addSubview:reminderView];
+        [reminderViewButton addTarget:self action:@selector(showAreYouOkay:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.contentView addSubview:reminderViewButton];
     }
     
     return cell;

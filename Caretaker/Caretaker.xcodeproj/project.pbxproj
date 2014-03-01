@@ -29,9 +29,9 @@
 		53322AC918A8434C008D39A2 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322AC818A8434C008D39A2 /* CoreBluetooth.framework */; };
 		53322ACB18A84353008D39A2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322ACA18A84353008D39A2 /* libz.dylib */; };
 		53322ACD18A8435D008D39A2 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322ACC18A8435D008D39A2 /* ExternalAccessory.framework */; };
-		53322AD018A843CB008D39A2 /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322ACE18A843CB008D39A2 /* PebbleKit.framework */; };
-		53322AD118A843CB008D39A2 /* PebbleVendor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322ACF18A843CB008D39A2 /* PebbleVendor.framework */; };
 		53322AD318A84D01008D39A2 /* AccelViz.py in Resources */ = {isa = PBXBuildFile; fileRef = 53322AD218A84D01008D39A2 /* AccelViz.py */; };
+		C902105718BAE04800C4464D /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C902105518BAE04800C4464D /* PebbleKit.framework */; };
+		C902105818BAE04800C4464D /* PebbleVendor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C902105618BAE04800C4464D /* PebbleVendor.framework */; };
 		C9A8AD5F18A84B6500EE30BF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9A8AD5E18A84B6500EE30BF /* AudioToolbox.framework */; };
 		C9E0D14E18A6CD8400A78BC1 /* MedicineReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */; };
 		C9E0D15018A6DC2600A78BC1 /* Pills.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E0D14F18A6DC2600A78BC1 /* Pills.png */; };
@@ -80,9 +80,9 @@
 		53322AC818A8434C008D39A2 /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		53322ACA18A84353008D39A2 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		53322ACC18A8435D008D39A2 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
-		53322ACE18A843CB008D39A2 /* PebbleKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PebbleKit.framework; path = "../../../../pebble-dev/PebbleSDK-2.0-BETA7/PebbleKit-iOS/PebbleKit.framework"; sourceTree = "<group>"; };
-		53322ACF18A843CB008D39A2 /* PebbleVendor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PebbleVendor.framework; path = "../../../../pebble-dev/PebbleSDK-2.0-BETA7/PebbleKit-iOS/PebbleVendor.framework"; sourceTree = "<group>"; };
 		53322AD218A84D01008D39A2 /* AccelViz.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = AccelViz.py; sourceTree = "<group>"; };
+		C902105518BAE04800C4464D /* PebbleKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PebbleKit.framework; sourceTree = "<group>"; };
+		C902105618BAE04800C4464D /* PebbleVendor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PebbleVendor.framework; sourceTree = "<group>"; };
 		C9A8AD5E18A84B6500EE30BF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		C9E0D14C18A6CD8400A78BC1 /* MedicineReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MedicineReminder.h; sourceTree = "<group>"; };
 		C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MedicineReminder.m; sourceTree = "<group>"; };
@@ -98,18 +98,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				53322AD018A843CB008D39A2 /* PebbleKit.framework in Frameworks */,
-				53322AD118A843CB008D39A2 /* PebbleVendor.framework in Frameworks */,
 				C9A8AD5F18A84B6500EE30BF /* AudioToolbox.framework in Frameworks */,
 				1D8EDF6818A6C708009C81ED /* CoreGraphics.framework in Frameworks */,
 				53322ACD18A8435D008D39A2 /* ExternalAccessory.framework in Frameworks */,
 				53322ACB18A84353008D39A2 /* libz.dylib in Frameworks */,
 				53322AC918A8434C008D39A2 /* CoreBluetooth.framework in Frameworks */,
 				53322AC718A84345008D39A2 /* CoreMotion.framework in Frameworks */,
+				C902105818BAE04800C4464D /* PebbleVendor.framework in Frameworks */,
 				53322AC518A8433C008D39A2 /* CFNetwork.framework in Frameworks */,
 				53322AC318A84335008D39A2 /* MessageUI.framework in Frameworks */,
 				1D8EDF6A18A6C708009C81ED /* UIKit.framework in Frameworks */,
 				1D8EDF6618A6C708009C81ED /* Foundation.framework in Frameworks */,
+				C902105718BAE04800C4464D /* PebbleKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -150,8 +150,8 @@
 		1D8EDF6418A6C708009C81ED /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				53322ACE18A843CB008D39A2 /* PebbleKit.framework */,
-				53322ACF18A843CB008D39A2 /* PebbleVendor.framework */,
+				C902105518BAE04800C4464D /* PebbleKit.framework */,
+				C902105618BAE04800C4464D /* PebbleVendor.framework */,
 				53322ACC18A8435D008D39A2 /* ExternalAccessory.framework */,
 				53322ACA18A84353008D39A2 /* libz.dylib */,
 				53322AC818A8434C008D39A2 /* CoreBluetooth.framework */,
@@ -458,6 +458,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/Keith/pebble-dev/PebbleSDK-2.0-BETA7/PebbleKit-iOS",
+					"./**",
+					"/Users/laurencewong/Documents/School/SS12/2014-USC-CareTaker-3/Caretaker",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Caretaker/Caretaker-Prefix.pch";
@@ -498,6 +500,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/Keith/pebble-dev/PebbleSDK-2.0-BETA7/PebbleKit-iOS",
+					"./**",
+					"/Users/laurencewong/Documents/School/SS12/2014-USC-CareTaker-3/Caretaker",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Caretaker/Caretaker-Prefix.pch";
