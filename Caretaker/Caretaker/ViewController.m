@@ -114,6 +114,15 @@
     
 }
 
+- (void)scheduleNewNotification:(NSString*)notificationMsg After:(NSTimeInterval)seconds
+{
+    
+    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    localNotif.alertBody = notificationMsg;
+    localNotif.fireDate = [NSDate dateWithTimeIntervalSinceNow:seconds];
+    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
