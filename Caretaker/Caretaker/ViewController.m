@@ -74,7 +74,7 @@
             break;
         case 2:
             break;
-
+            
     }
 }
 
@@ -89,7 +89,7 @@
     self.view.backgroundColor = [UIColor whiteColor];
     accelLoggerPhone = [[AccelerationLogger alloc] initWithFileFlair:@"Phone"];
     
-
+    
     medicineReminder = [[MedicineReminder alloc] init];
     [self setupControls];
     
@@ -174,6 +174,9 @@
                         ^{   //Will be called with data and error
                             QuietLog(@"PHONE  X: %.2f, Y: %.2f, Z: %.2f", data.acceleration.x, data.acceleration.y, data.acceleration.z);
                             [accelLoggerPhone logData:data];
+                            if(fabs(data.acceleration.z) > 2.5 || fabs(data.acceleration.x) > 2.5) {
+                                [self showAreYouOkay:nil];
+                            }
                         }
                         );
      }
@@ -219,8 +222,8 @@
     transition.type = kCATransitionFromTop;
     transition.subtype = kCATransitionFromTop;
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-
-   [self.navigationController pushViewController:addReminderView animated:YES];
+    
+    [self.navigationController pushViewController:addReminderView animated:YES];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
