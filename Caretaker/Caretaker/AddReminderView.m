@@ -84,6 +84,7 @@
     [self.medicineReminder.mImages setObject:newImageView forKey:photoUid];
     //photoPreviewer = [[UIImageView alloc] initWithImage:image];
     [choosePhotoButton setBackgroundImage:newImageView.image forState:UIControlStateNormal];
+    [choosePhotoButton setTitle:@"" forState:UIControlStateNormal];
     [controlSubView addSubview:photoPreviewer];
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
