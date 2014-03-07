@@ -10,17 +10,10 @@
 
 @interface NotificationManager ()
 
--(void) cooldownOver;
-
 @end
 
 
 @implementation NotificationManager
-
--(void) cooldownOver
-{
-    self.onAlertCooldown = NO;
-}
 
 - (void)scheduleNewLocalNotification:(NSString*)notificationMsg After:(NSTimeInterval)seconds
 {
@@ -28,6 +21,18 @@
     localNotif.alertBody = notificationMsg;
     localNotif.fireDate = [NSDate dateWithTimeIntervalSinceNow:seconds];
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
+}
+
++ (NotificationManager*) getInstance
+{
+    static NotificationManager *instance;
+    
+    if(!instance)
+    {
+        instance = [[NotificationManager alloc] init];
+    }
+    
+    return instance;
 }
 
 @end

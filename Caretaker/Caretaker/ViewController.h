@@ -17,6 +17,8 @@
 
     int areYouOkayLackOfResponse;
     NSTimer *areYouOkayTimer;
+    
+    BOOL onAlertCooldown;
 }
 @property (nonatomic) IBOutlet  UIView      *overlayView;
 @property (nonatomic)           UIImagePickerController *imagePickerController;

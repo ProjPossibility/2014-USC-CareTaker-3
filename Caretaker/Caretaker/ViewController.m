@@ -11,10 +11,13 @@
 #import "AppDelegate.h"
 #import <CoreMotion/CoreMotion.h>
 #import "Reminder.h"
+#import "NotificationManager.h"
 
 
 @interface ViewController ()
-
+{
+    NSNumber *PHONE_ALERT_COOLDOWN;
+}
 
 @end
 
@@ -59,8 +62,8 @@
     self.pendingReminders.dataSource = self;
     
     areYouOkayLackOfResponse = 0;
-    self.onAlertCooldown = NO;
-    
+    PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:1.5];
+    onAlertCooldown = NO;
     
     //add the view to the viewcontroller
     [self.view addSubview: self.controlView];
@@ -128,7 +131,7 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"Are you okay?"] delegate:self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
     alertView.delegate = self;
     [alertView show];
-    areYouOkayTimer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(incrementLackOfResponse:) userInfo:Nil repeats:NO];
+    areYouOkayTimer = [NSTimer timerWithTimeInterval:[PHONE_ALERT_COOLDOWN floatValue] target:self selector:@selector(incrementLackOfResponse:) userInfo:Nil repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:areYouOkayTimer forMode:NSRunLoopCommonModes];
     
 }
@@ -148,6 +151,11 @@
             NSLog(@"THIS SHOUL NEVER EVER EVER HAPPEN");
             break;
     }
+}
+
+- (void)endCooldown
+{
+    onAlertCooldown = NO;
 }
 
 //Motion
@@ -177,12 +185,12 @@
                         ^{   //Will be called with data and error
                             QuietLog(@"PHONE  X: %.2f, Y: %.2f, Z: %.2f", data.acceleration.x, data.acceleration.y, data.acceleration.z);
                             [accelLoggerPhone logData:data];
-                            if((fabs(data.acceleration.z) > 2.5 || fabs(data.acceleration.x) > 2.5) && !self.onAlertCooldown) {
-                                self.onAlertCooldown = YES;
-                                areYouOkayTimer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(allowAlertsAfterCooldown) userInfo:Nil repeats:NO];
-                                [[NSRunLoop currentRunLoop] addTimer:areYouOkayTimer forMode:NSRunLoopCommonModes];
+                            if((fabs(data.acceleration.z) > 2.5 || fabs(data.acceleration.x) > 2.5) && !onAlertCooldown) {
                                 [self showAreYouOkay:nil];
-                                [self scheduleNewLocalNotification:@"ALERT: PHONE SHAKE!" After:0];
+                                [[NotificationManager getInstance] scheduleNewLocalNotification:@"ALERT: PHONE SHAKE!" After:0];
+                                
+                                NSTimer *cooldownTimer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(endCooldown) userInfo:Nil repeats:NO];
+                                [[NSRunLoop currentRunLoop] addTimer:cooldownTimer forMode:NSRunLoopCommonModes];
                             }
                         }
                         );

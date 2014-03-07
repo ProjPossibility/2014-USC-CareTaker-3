@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface NotificationManager : NSObject
+{
+    NotificationManager *instance;
+}
 
 - (void)scheduleNewLocalNotification:(NSString*)notificationMsg After:(NSTimeInterval)seconds;
-
-@property (nonatomic) BOOL onAlertCooldown;
++ (NotificationManager*) getInstance;
 
 @end
