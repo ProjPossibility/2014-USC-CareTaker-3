@@ -128,8 +128,9 @@
             
             [accelLoggerPebble logDataX:x Y:y Z:z];
             
-            if(fabs(z) > 2.5 || fabs(x) > 2.5) {
+            if((fabs(z) > 2.5 || fabs(x) > 2.5) && !) {
                 [newViewController showAreYouOkay:nil];
+                [self scheduleNewLocalNotification:@"ALERT: PEBBLE SHAKE!" After:0];
             }
             
             return YES;
@@ -186,6 +187,7 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadData" object:self];
 }
+
 
 /*
  *  PBPebbleCentral delegate methods

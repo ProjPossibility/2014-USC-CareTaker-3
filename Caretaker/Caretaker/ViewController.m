@@ -59,6 +59,7 @@
     self.pendingReminders.dataSource = self;
     
     areYouOkayLackOfResponse = 0;
+    self.onAlertCooldown = NO;
     
     
     //add the view to the viewcontroller
@@ -82,6 +83,8 @@
 {
     areYouOkayLackOfResponse++;
 }
+
+
 
 - (void)viewDidLoad
 {
@@ -112,15 +115,6 @@
     
     [self.motionManager stopAccelerometerUpdates];
     
-}
-
-- (void)scheduleNewNotification:(NSString*)notificationMsg After:(NSTimeInterval)seconds
-{
-    
-    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-    localNotif.alertBody = notificationMsg;
-    localNotif.fireDate = [NSDate dateWithTimeIntervalSinceNow:seconds];
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
 }
 
 - (void)didReceiveMemoryWarning
@@ -183,8 +177,12 @@
                         ^{   //Will be called with data and error
                             QuietLog(@"PHONE  X: %.2f, Y: %.2f, Z: %.2f", data.acceleration.x, data.acceleration.y, data.acceleration.z);
                             [accelLoggerPhone logData:data];
-                            if(fabs(data.acceleration.z) > 2.5 || fabs(data.acceleration.x) > 2.5) {
+                            if((fabs(data.acceleration.z) > 2.5 || fabs(data.acceleration.x) > 2.5) && !self.onAlertCooldown) {
+                                self.onAlertCooldown = YES;
+                                areYouOkayTimer = [NSTimer timerWithTimeInterval:1.0f target:self selector:@selector(allowAlertsAfterCooldown) userInfo:Nil repeats:NO];
+                                [[NSRunLoop currentRunLoop] addTimer:areYouOkayTimer forMode:NSRunLoopCommonModes];
                                 [self showAreYouOkay:nil];
+                                [self scheduleNewLocalNotification:@"ALERT: PHONE SHAKE!" After:0];
                             }
                         }
                         );

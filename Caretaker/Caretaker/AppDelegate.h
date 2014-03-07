@@ -25,5 +25,6 @@
 
 + (NSString *) applicationDocumentsDirectory;
 -(void) clearFiles;
+- (void)scheduleNewLocalNotification:(NSString*)notificationMsg After:(NSTimeInterval)seconds;
 
 @end
