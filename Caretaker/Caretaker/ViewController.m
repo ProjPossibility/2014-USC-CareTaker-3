@@ -12,6 +12,7 @@
 #import <CoreMotion/CoreMotion.h>
 #import "Reminder.h"
 #import "NotificationManager.h"
+#import "AddReminderViewPg1.h"
 
 
 @interface ViewController ()
@@ -29,10 +30,10 @@
 {
     NSDictionary *defaultFontAttributeDic =[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Helvetica" size:34.0f] forKey:NSFontAttributeName];
     CGSize stringSize = [title sizeWithAttributes:defaultFontAttributeDic];
-    UIButton *newButton = [[UIButton alloc] initWithFrame:CGRectMake((bounds.width - stringSize.width)/2, 0, stringSize.width, bounds.height)];
+    UIButton *newButton = [[UIButton alloc] initWithFrame:CGRectMake((bounds.width - 280)/2, 0, 300, bounds.height)];
     [newButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     [newButton setTitle:title forState:UIControlStateNormal];
-    [newButton setBackgroundColor:[UIColor colorWithRed:0.760784314f green:0.905882353f blue:1.0f alpha:1.0f]];
+    [newButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
     [newButton layer].cornerRadius = 4;
     [newButton layer].borderWidth = 1;
     [newButton layer].borderColor = [UIColor colorWithRed:0.360784314f green:0.605882353f blue:1.0f alpha:1.0f].CGColor;
@@ -41,29 +42,23 @@
 
 -(void)setupControls
 {
-    self.controlView = [[UIView alloc] initWithFrame:CGRectMake(0, 65, [[UIScreen mainScreen] bounds].size.width, 100)];
+    self.controlView = [[UIView alloc] initWithFrame:CGRectMake(0, 65, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 65)];
     
     //add show notification button
-    self.showNotificationButton = [self addButtonWithAttributes:@"ADD NEW REMINDER" withTarget:self withSelector:@selector(showAddReminder:) with:CGSizeMake(320, 44)];
+    self.showNotificationButton = [self addButtonWithAttributes:@"ADD NEW REMINDER" withTarget:self withSelector:@selector(showAddReminder:) with:CGSizeMake(300, 88)];
     [self.controlView addSubview:self.showNotificationButton];
-    self.pendingReminders = [[UITableView alloc] initWithFrame:CGRectMake(0, 88, 320, 377) style:UITableViewStylePlain];
+    self.pendingReminders = [[UITableView alloc] initWithFrame:CGRectMake(0, 88, 320, 420) style:UITableViewStylePlain];
     [self.controlView addSubview:self.pendingReminders];
     
-    NSString *areYouOkayButtonText = @"Display Warning";
-    UIButton *newButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 44, 320, 44)];
-    [newButton addTarget:self action:@selector(showAreYouOkay:) forControlEvents:UIControlEventTouchUpInside];
-    [newButton setTitle:areYouOkayButtonText forState:UIControlStateNormal];
-    [newButton setBackgroundColor:[UIColor colorWithRed:0.760784314f green:0.905882353f blue:1.0f alpha:1.0f]];
-    [newButton layer].cornerRadius = 4;
-    [newButton layer].borderWidth = 1;
-    [newButton layer].borderColor = [UIColor colorWithRed:0.360784314f green:0.605882353f blue:1.0f alpha:1.0f].CGColor;
-    [self.controlView addSubview:newButton];
     self.pendingReminders.delegate = self;
     self.pendingReminders.dataSource = self;
     
     areYouOkayLackOfResponse = 0;
     PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:1.5];
     onAlertCooldown = NO;
+    
+    //hide the navbar
+    self.navigationController.navigationBarHidden = YES;
     
     //add the view to the viewcontroller
     [self.view addSubview: self.controlView];
@@ -230,15 +225,16 @@
 
 -(void)showAddReminder:(id)sender
 {
-    AddReminderView *addReminderView = [[AddReminderView alloc] init];
+    /*AddReminderView *addReminderView = [[AddReminderView alloc] init];
     addReminderView.medicineReminder = medicineReminder;
     CATransition* transition = [CATransition animation];
     transition.duration = 0.3;
     transition.type = kCATransitionFromTop;
     transition.subtype = kCATransitionFromTop;
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    
-    [self.navigationController pushViewController:addReminderView animated:YES];
+    */
+    BaseAddReminderView *addReminderViewPg1 = [[AddReminderViewPg1 alloc] init];
+    [self.navigationController pushViewController:addReminderViewPg1 animated:YES];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -249,7 +245,7 @@
 #pragma mark - Table View
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return 1;//[[medicineReminder mReminders] count];
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
@@ -257,7 +253,7 @@
     return @"";
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [medicineReminder.mImages count];
+    return [[medicineReminder mReminders] count];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -281,7 +277,6 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UIButton *reminderViewButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-        UIView *reminderView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
         Reminder *currentReminder = [medicineReminder.mReminders objectAtIndex:[indexPath row]];
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 320, 44)];
         nameLabel.text = currentReminder.mName;
@@ -291,9 +286,8 @@
         UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, 24, 320, 44)];
         dateLabel.text = [formatter stringFromDate:currentReminder.mDate];
         dateLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
-        [reminderView addSubview: nameLabel];
-        [reminderView addSubview: dateLabel];
-        [reminderViewButton addSubview:reminderView];
+        [reminderViewButton addSubview: nameLabel];
+        [reminderViewButton addSubview: dateLabel];
         [reminderViewButton addTarget:self action:@selector(showAreYouOkay:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:reminderViewButton];
     }
