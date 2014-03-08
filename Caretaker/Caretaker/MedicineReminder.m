@@ -58,7 +58,7 @@
 {
     Reminder *newReminder = [[Reminder alloc] init];
     newReminder.mName = name;
-    newReminder.mQuantity = quantity;
+    newReminder.mQuantity = [NSString stringWithFormat:@"%d", quantity];
     newReminder.mDate = date;
     newReminder.mRepeat = repeat;
     newReminder.mImage = [self.mImages objectForKey:imageUid];

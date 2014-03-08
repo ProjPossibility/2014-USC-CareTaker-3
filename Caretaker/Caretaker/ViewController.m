@@ -10,7 +10,6 @@
 #import "AddReminderView.h"
 #import "AppDelegate.h"
 #import <CoreMotion/CoreMotion.h>
-#import "Reminder.h"
 #import "NotificationManager.h"
 #import "AddReminderViewPg1.h"
 
@@ -105,6 +104,7 @@
     [self.pendingReminders reloadData];
     
     [self startMotionDetect];
+    NSLog(@"%@\n%@\n%@", newReminder.mName, newReminder.mQuantity, newReminder.mDate);
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -233,7 +233,9 @@
     transition.subtype = kCATransitionFromTop;
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
     */
+    newReminder = [[Reminder alloc] init];
     BaseAddReminderView *addReminderViewPg1 = [[AddReminderViewPg1 alloc] init];
+    addReminderViewPg1.reminder = newReminder;
     [self.navigationController pushViewController:addReminderViewPg1 animated:YES];
 }
 

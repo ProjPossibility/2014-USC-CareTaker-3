@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MedicineReminder.h"
 #import "AccelerationLogger.h"
+#import "Reminder.h"
 
 @interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
@@ -17,6 +18,8 @@
 
     int areYouOkayLackOfResponse;
     NSTimer *areYouOkayTimer;
+    
+    Reminder *newReminder;
     
     BOOL onAlertCooldown;
 }
