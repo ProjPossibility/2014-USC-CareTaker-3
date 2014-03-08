@@ -232,8 +232,9 @@
     transition.type = kCATransitionFromTop;
     transition.subtype = kCATransitionFromTop;
     [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    
-    [self.navigationController pushViewController:addReminderView animated:YES];
+    */
+    BaseAddReminderView *addReminderViewPg1 = [[AddReminderViewPg1 alloc] init];
+    [self.navigationController pushViewController:addReminderViewPg1 animated:YES];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
