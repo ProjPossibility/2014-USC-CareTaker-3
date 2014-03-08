@@ -26,7 +26,6 @@
     repeatDaily = YES;
     self.navigationItem.leftBarButtonItem = nil;
     [self setupControls];
-    
 }
 
 - (void)didReceiveMemoryWarning
@@ -121,8 +120,7 @@
 {
     controlSubView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height)];
     controlSubView.backgroundColor = [UIColor whiteColor];
-    
-    [controlSubView addSubview:topBar];
+
     
     mTableView = [[UITableView alloc] initWithFrame:[self placeViewInScene:CGSizeMake([UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height - 64)]];
     mTableView.dataSource = self;
@@ -136,6 +134,11 @@
     
 }
 
+- (void)goBackButtonAction:(id)sender
+{
+    [self.navigationController popToRootViewControllerAnimated:YES];
+}
+
 #pragma mark - Table View
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -147,7 +150,7 @@
     return @"";
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 6;
+    return 7;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -169,12 +172,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if([indexPath row] == 4)
+    if([indexPath row] == 5)
     {
         repeatDaily = !repeatDaily;
     }
     [mTableView reloadData];
 }
+
+
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     
@@ -187,12 +192,21 @@
         switch (indexPath.row) {
             case 0:
             {
+                goBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 0, 310, 44)];
+                [goBackButton setTitle:@"Go Back" forState:UIControlStateNormal];
+                goBackButton.backgroundColor = [UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f];
+                [goBackButton addTarget:self action:@selector(goBackButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+                [cell.contentView addSubview:goBackButton];
+                break;
+            }
+            case 1:
+            {
                 nameInput = [[UITextField alloc] initWithFrame:CGRectMake(5, 0, 315, 44)];
                 [nameInput setPlaceholder:@"Name of medication"];
                 [cell.contentView addSubview:nameInput];
                 break;
             }
-            case 1:
+            case 2:
                 amountInput = [[UITextField alloc] initWithFrame:CGRectMake(5, 0, 315, 44)];
                 amountInput.keyboardType = UIKeyboardTypeDecimalPad;
                 [amountInput setPlaceholder:@"Quantity"];
@@ -200,7 +214,7 @@
                 [cell.contentView addSubview:amountInput];
                 break;
                 
-            case 2:
+            case 3:
             {
                 nextYCoordForView = 0;
                 choosePhotoButton = [self addButtonWithAttributes:@"Choose Picture" withTarget:self withSelector:@selector(showImagePickerForSourceType:) with:CGSizeMake(320, 240)];
@@ -208,7 +222,7 @@
                 break;
             }
                 
-            case 3:
+            case 4:
             {
                 UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 5, 315, 35)];
                 dateLabel.text = @"Enter Date";
@@ -219,7 +233,7 @@
                 [cell.contentView addSubview:datePicker];
                 break;
             }
-            case 4:
+            case 5:
                 cell.frame = CGRectMake(0, 0, self.view.bounds.size.width, 44);
                 cell.textLabel.text = @"Repeat Daily";
                 cell.textLabel.textColor =[UIColor colorWithRed:0.7f green:0.7f blue:0.7f alpha:1.0f];
@@ -249,7 +263,7 @@
         {
             break;
         }
-        case 4:
+        case 5:
             cell.accessoryType = repeatDaily ? UITableViewCellAccessoryCheckmark : UITableViewCellAccessoryNone;
             break;
         default:
