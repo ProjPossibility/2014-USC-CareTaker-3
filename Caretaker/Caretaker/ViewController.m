@@ -11,11 +11,14 @@
 #import "AppDelegate.h"
 #import <CoreMotion/CoreMotion.h>
 #import "Reminder.h"
+#import "NotificationManager.h"
 #import "AddReminderViewPg1.h"
 
 
 @interface ViewController ()
-
+{
+    NSNumber *PHONE_ALERT_COOLDOWN;
+}
 
 @end
 
@@ -51,6 +54,8 @@
     self.pendingReminders.dataSource = self;
     
     areYouOkayLackOfResponse = 0;
+    PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:1.5];
+    onAlertCooldown = NO;
     
     //hide the navbar
     self.navigationController.navigationBarHidden = YES;
@@ -68,7 +73,7 @@
             break;
         case 2:
             break;
-
+            
     }
 }
 
@@ -77,13 +82,15 @@
     areYouOkayLackOfResponse++;
 }
 
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.view.backgroundColor = [UIColor whiteColor];
     accelLoggerPhone = [[AccelerationLogger alloc] initWithFileFlair:@"Phone"];
     
-
+    
     medicineReminder = [[MedicineReminder alloc] init];
     [self setupControls];
     
@@ -108,15 +115,6 @@
     
 }
 
-- (void)scheduleNewNotification:(NSString*)notificationMsg After:(NSTimeInterval)seconds
-{
-    
-    UILocalNotification *localNotif = [[UILocalNotification alloc] init];
-    localNotif.alertBody = notificationMsg;
-    localNotif.fireDate = [NSDate dateWithTimeIntervalSinceNow:seconds];
-    [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -128,7 +126,7 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"Are you okay?"] delegate:self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
     alertView.delegate = self;
     [alertView show];
-    areYouOkayTimer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(incrementLackOfResponse:) userInfo:Nil repeats:NO];
+    areYouOkayTimer = [NSTimer timerWithTimeInterval:[PHONE_ALERT_COOLDOWN floatValue] target:self selector:@selector(incrementLackOfResponse:) userInfo:Nil repeats:NO];
     [[NSRunLoop currentRunLoop] addTimer:areYouOkayTimer forMode:NSRunLoopCommonModes];
     
 }
@@ -148,6 +146,11 @@
             NSLog(@"THIS SHOUL NEVER EVER EVER HAPPEN");
             break;
     }
+}
+
+- (void)endCooldown
+{
+    onAlertCooldown = NO;
 }
 
 //Motion
@@ -177,6 +180,13 @@
                         ^{   //Will be called with data and error
                             QuietLog(@"PHONE  X: %.2f, Y: %.2f, Z: %.2f", data.acceleration.x, data.acceleration.y, data.acceleration.z);
                             [accelLoggerPhone logData:data];
+                            if((fabs(data.acceleration.z) > 2.5 || fabs(data.acceleration.x) > 2.5) && !onAlertCooldown) {
+                                [self showAreYouOkay:nil];
+                                [[NotificationManager getInstance] scheduleNewLocalNotification:@"ALERT: PHONE SHAKE!" After:0];
+                                
+                                NSTimer *cooldownTimer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(endCooldown) userInfo:Nil repeats:NO];
+                                [[NSRunLoop currentRunLoop] addTimer:cooldownTimer forMode:NSRunLoopCommonModes];
+                            }
                         }
                         );
      }
@@ -221,9 +231,9 @@
     transition.duration = 0.3;
     transition.type = kCATransitionFromTop;
     transition.subtype = kCATransitionFromTop;
-    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];*/
-    BaseAddReminderView *addReminderViewPg1 = [[AddReminderViewPg1 alloc] init];
-   [self.navigationController pushViewController:addReminderViewPg1 animated:YES];
+    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
+    
+    [self.navigationController pushViewController:addReminderView animated:YES];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker

@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ViewController.h"
+#import "NotificationManager.h"
 
 @interface AppDelegate () <PBPebbleCentralDelegate> {
     PBWatch *_targetWatch;
@@ -15,6 +16,8 @@
     NSNumber *CARETAKER_KEY_ACCEL_X;
     NSNumber *CARETAKER_KEY_ACCEL_Y;
     NSNumber *CARETAKER_KEY_ACCEL_Z;
+    
+    NSNumber *PEBBLE_ALERT_COOLDOWN;
 }
 @end
 
@@ -32,6 +35,9 @@
         CARETAKER_KEY_ACCEL_Z = [NSNumber numberWithInt:3];//[NSString stringWithFormat:@"%d", 3];//@(3);//[NSNumber numberWithInt:@(3)];
         
         accelLoggerPebble = [[AccelerationLogger alloc] initWithFileFlair:@"Pebble"];
+        
+        PEBBLE_ALERT_COOLDOWN = [NSNumber numberWithFloat:2.5];
+        onAlertCooldown = NO;
     }
     return self;
 }
@@ -63,6 +69,11 @@
         // Error handling
         NSLog(@"Error Removing Files...");
     }
+}
+
+- (void)endCooldown
+{
+    onAlertCooldown = NO;
 }
 
 - (void)setTargetWatch:(PBWatch*)watch {
@@ -128,8 +139,12 @@
             
             [accelLoggerPebble logDataX:x Y:y Z:z];
             
-            if(fabs(z) > 2.5 || fabs(x) > 2.5) {
+            if((fabs(z) > 2.5 || fabs(x) > 2.5) && !onAlertCooldown) {
                 [newViewController showAreYouOkay:nil];
+                [[NotificationManager getInstance] scheduleNewLocalNotification:@"ALERT: PEBBLE SHAKE!" After:0];
+                
+                NSTimer *cooldownTimer = [NSTimer timerWithTimeInterval:[PEBBLE_ALERT_COOLDOWN floatValue] target:self selector:@selector(endCooldown) userInfo:Nil repeats:NO];
+                [[NSRunLoop currentRunLoop] addTimer:cooldownTimer forMode:NSRunLoopCommonModes];
             }
             
             return YES;
@@ -186,6 +201,7 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadData" object:self];
 }
+
 
 /*
  *  PBPebbleCentral delegate methods

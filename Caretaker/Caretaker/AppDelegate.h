@@ -16,6 +16,8 @@
     CMMotionManager *_motionManager;
     AccelerationLogger *accelLoggerPebble;
     ViewController *newViewController;
+    
+    BOOL onAlertCooldown;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -25,5 +27,6 @@
 
 + (NSString *) applicationDocumentsDirectory;
 -(void) clearFiles;
+
 
 @end

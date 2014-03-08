@@ -30,6 +30,7 @@
 		53322ACB18A84353008D39A2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322ACA18A84353008D39A2 /* libz.dylib */; };
 		53322ACD18A8435D008D39A2 /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53322ACC18A8435D008D39A2 /* ExternalAccessory.framework */; };
 		53322AD318A84D01008D39A2 /* AccelViz.py in Resources */ = {isa = PBXBuildFile; fileRef = 53322AD218A84D01008D39A2 /* AccelViz.py */; };
+		53988DD918C1D15D00B7F0EA /* NotificationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 53988DD818C1D15D00B7F0EA /* NotificationManager.m */; };
 		C902105718BAE04800C4464D /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C902105518BAE04800C4464D /* PebbleKit.framework */; };
 		C902105818BAE04800C4464D /* PebbleVendor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C902105618BAE04800C4464D /* PebbleVendor.framework */; };
 		C93B931318C99F17009E90F0 /* BaseAddReminderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C93B931218C99F17009E90F0 /* BaseAddReminderView.m */; };
@@ -84,6 +85,8 @@
 		53322ACA18A84353008D39A2 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		53322ACC18A8435D008D39A2 /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = System/Library/Frameworks/ExternalAccessory.framework; sourceTree = SDKROOT; };
 		53322AD218A84D01008D39A2 /* AccelViz.py */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.python; path = AccelViz.py; sourceTree = "<group>"; };
+		53988DD718C1D15D00B7F0EA /* NotificationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationManager.h; sourceTree = "<group>"; };
+		53988DD818C1D15D00B7F0EA /* NotificationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationManager.m; sourceTree = "<group>"; };
 		C902105518BAE04800C4464D /* PebbleKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PebbleKit.framework; sourceTree = "<group>"; };
 		C902105618BAE04800C4464D /* PebbleVendor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PebbleVendor.framework; sourceTree = "<group>"; };
 		C93B931118C99F17009E90F0 /* BaseAddReminderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseAddReminderView.h; sourceTree = "<group>"; };
@@ -198,6 +201,8 @@
 				C9E0D16018A7C37B00A78BC1 /* Reminder.m */,
 				53322ABC18A84094008D39A2 /* AccelerationLogger.h */,
 				53322ABD18A84094008D39A2 /* AccelerationLogger.m */,
+				53988DD718C1D15D00B7F0EA /* NotificationManager.h */,
+				53988DD818C1D15D00B7F0EA /* NotificationManager.m */,
 				C93B931118C99F17009E90F0 /* BaseAddReminderView.h */,
 				C93B931218C99F17009E90F0 /* BaseAddReminderView.m */,
 				C96F9B2418C9DD4600EB3BE8 /* AddReminderViewPg2.h */,
@@ -341,6 +346,7 @@
 				1D8EDF7218A6C708009C81ED /* main.m in Sources */,
 				C96F9B2318C9BE8E00EB3BE8 /* AddReminderViewPg1.m in Sources */,
 				53322ABE18A84094008D39A2 /* AccelerationLogger.m in Sources */,
+				53988DD918C1D15D00B7F0EA /* NotificationManager.m in Sources */,
 				C96F9B2618C9DD4600EB3BE8 /* AddReminderViewPg2.m in Sources */,
 				C93B931318C99F17009E90F0 /* BaseAddReminderView.m in Sources */,
 				C9E0D16118A7C37B00A78BC1 /* Reminder.m in Sources */,
