@@ -89,9 +89,8 @@
     self.view.backgroundColor = [UIColor whiteColor];
     accelLoggerPhone = [[AccelerationLogger alloc] initWithFileFlair:@"Phone"];
     
-    
-    medicineReminder = [[MedicineReminder alloc] init];
     [self setupControls];
+    [self startMotionDetect];
     
 	// Do any additional setup after loading the view, typically from a nib.
 }
@@ -103,7 +102,10 @@
     [super viewDidAppear:animated];
     [self.pendingReminders reloadData];
     
-    [self startMotionDetect];
+    if(newReminder)
+    {
+        [[MedicineReminder getInstance] addReminderWith:newReminder];
+    }
     NSLog(@"%@\n%@\n%@", newReminder.mName, newReminder.mQuantity, newReminder.mDate);
 }
 
@@ -255,7 +257,7 @@
     return @"";
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[medicineReminder mReminders] count];
+    return [[[MedicineReminder getInstance] mReminders] count];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -279,7 +281,7 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
         cell.selectionStyle = UITableViewCellSelectionStyleNone;
         UIButton *reminderViewButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-        Reminder *currentReminder = [medicineReminder.mReminders objectAtIndex:[indexPath row]];
+        Reminder *currentReminder = [[MedicineReminder getInstance].mReminders objectAtIndex:[indexPath row]];
         UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 320, 44)];
         nameLabel.text = currentReminder.mName;
         nameLabel.font = [UIFont fontWithName:@"Helvetica" size:20];

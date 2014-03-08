@@ -28,6 +28,12 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+-(void)UpdateSomething
+{
+    [self.reminder.mImage setBounds:CGRectMake(0, 100, 320, 240)];
+    [self.controlView addSubview:self.reminder.mImage];
+}
+
 - (void)nextButtonAction:(id)sender
 {
     self.reminder.mDate = self.datePicker.date;
@@ -50,11 +56,6 @@
 
 - (void)viewDidAppear:(BOOL)animated
 {
-    int a = 0;
-    if(self.reminder.mName)
-    {
-        int b = 10;
-    }
 }
 
 - (void)viewDidLoad

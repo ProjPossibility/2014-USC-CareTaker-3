@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSString *mQuantity;
 @property (nonatomic) NSDate *mDate;
 @property (nonatomic) UIImageView *mImage;
+@property (nonatomic) NSString *mImageUid;
 @property (nonatomic) BOOL mRepeat;
 
 @end

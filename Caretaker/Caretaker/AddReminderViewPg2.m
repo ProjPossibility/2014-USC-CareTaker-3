@@ -8,6 +8,7 @@
 
 #import "AddReminderViewPg2.h"
 #import "AddReminderViewPg3.h"
+#import "MedicineReminder.h"
 
 @interface AddReminderViewPg2 ()
 
@@ -34,6 +35,7 @@
     self.reminder.mImage = self.choosePhotoButton.imageView;
     AddReminderViewPg3 *newReminderViewPg3 = [[AddReminderViewPg3 alloc] init];
     newReminderViewPg3.reminder = self.reminder;
+    [newReminderViewPg3 UpdateSomething];
     [self.navigationController pushViewController:newReminderViewPg3 animated:YES];
 }
 
@@ -68,9 +70,18 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    NSString *photoUid = [info valueForKey:UIImagePickerControllerReferenceURL];
+
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 240), NO, 0.0);
     [image drawInRect:CGRectMake(0, 0, 320, 240)];
     image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    if(![[MedicineReminder getInstance].mImages objectForKey:photoUid])
+    {
+        [[MedicineReminder getInstance].mImages setObject:[[UIImageView alloc] initWithImage:image] forKey:photoUid];
+    }
+    self.reminder.mImageUid = photoUid;
+
     UIGraphicsEndImageContext();
     //photoPreviewer = [[UIImageView alloc] initWithImage:image];
     [self.choosePhotoButton setBackgroundImage:image forState:UIControlStateNormal];

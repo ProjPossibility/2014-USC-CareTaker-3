@@ -13,7 +13,6 @@
 
 @interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
-    MedicineReminder *medicineReminder;
     AccelerationLogger *accelLoggerPhone;
 
     int areYouOkayLackOfResponse;
