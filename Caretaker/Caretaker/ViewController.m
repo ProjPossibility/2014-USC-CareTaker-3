@@ -12,6 +12,7 @@
 #import <CoreMotion/CoreMotion.h>
 #import "NotificationManager.h"
 #import "AddReminderViewPg1.h"
+#import "PendingRemindersView.h"
 
 
 @interface ViewController ()
@@ -25,11 +26,11 @@
 @implementation ViewController
 
 
--(UIButton *)addButtonWithAttributes:(NSString *)title withTarget:(id)target withSelector:(SEL)selector with:(CGSize)bounds
+-(UIButton *)addButtonWithAttributes:(NSString *)title withTarget:(id)target withSelector:(SEL)selector with:(CGRect)bounds
 {
     NSDictionary *defaultFontAttributeDic =[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Helvetica" size:34.0f] forKey:NSFontAttributeName];
     CGSize stringSize = [title sizeWithAttributes:defaultFontAttributeDic];
-    UIButton *newButton = [[UIButton alloc] initWithFrame:CGRectMake((bounds.width - 280)/2, 0, 300, bounds.height)];
+    UIButton *newButton = [[UIButton alloc] initWithFrame:CGRectMake((bounds.size.width - 280)/2, bounds.origin.y, 300, bounds.size.height)];
     [newButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     [newButton setTitle:title forState:UIControlStateNormal];
     [newButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
@@ -44,10 +45,13 @@
     self.controlView = [[UIView alloc] initWithFrame:CGRectMake(0, 65, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 65)];
     
     //add show notification button
-    self.showNotificationButton = [self addButtonWithAttributes:@"ADD NEW REMINDER" withTarget:self withSelector:@selector(showAddReminder:) with:CGSizeMake(300, 88)];
+    self.showNotificationButton = [self addButtonWithAttributes:@"ADD NEW REMINDER" withTarget:self withSelector:@selector(showAddReminder:) with:CGRectMake(0, 0, 300, 88)];
     [self.controlView addSubview:self.showNotificationButton];
     self.pendingReminders = [[UITableView alloc] initWithFrame:CGRectMake(0, 88, 320, 420) style:UITableViewStylePlain];
     [self.controlView addSubview:self.pendingReminders];
+    
+    self.showPendingRemindersButton = [self addButtonWithAttributes:@"SHOW PENDING REMINDERS" withTarget:self withSelector:@selector(showPendingReminders) with:CGRectMake(0, 98, 300, 88)];
+    [self.controlView addSubview:self.showPendingRemindersButton];
     
     self.pendingReminders.delegate = self;
     self.pendingReminders.dataSource = self;
@@ -102,11 +106,10 @@
     [super viewDidAppear:animated];
     [self.pendingReminders reloadData];
     
-    if(newReminder)
+    if(newReminder.mName)
     {
         [[MedicineReminder getInstance] addReminderWith:newReminder];
     }
-    NSLog(@"%@\n%@\n%@", newReminder.mName, newReminder.mQuantity, newReminder.mDate);
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -225,16 +228,14 @@
     [self presentViewController:self.imagePickerController animated:YES completion:nil];
 }
 
+-(void)showPendingReminders
+{
+    PendingRemindersView *newPendingRemindersView = [[PendingRemindersView alloc] init];
+    [self.navigationController pushViewController:newPendingRemindersView animated:YES];
+}
+
 -(void)showAddReminder:(id)sender
 {
-    /*AddReminderView *addReminderView = [[AddReminderView alloc] init];
-    addReminderView.medicineReminder = medicineReminder;
-    CATransition* transition = [CATransition animation];
-    transition.duration = 0.3;
-    transition.type = kCATransitionFromTop;
-    transition.subtype = kCATransitionFromTop;
-    [self.navigationController.view.layer addAnimation:transition forKey:kCATransition];
-    */
     newReminder = [[Reminder alloc] init];
     BaseAddReminderView *addReminderViewPg1 = [[AddReminderViewPg1 alloc] init];
     addReminderViewPg1.reminder = newReminder;

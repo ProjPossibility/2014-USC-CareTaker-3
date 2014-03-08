@@ -7,6 +7,7 @@
 //
 
 #import "MedicineReminder.h"
+#import "NotificationManager.h"
 
 
 @implementation MedicineReminder
@@ -69,6 +70,8 @@
 
 -(void)addReminderWith:(Reminder*)thisReminder
 {
+
+    
     UIBackgroundTaskIdentifier bgTask =0;
     UIApplication  *app = [UIApplication sharedApplication];
     bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
