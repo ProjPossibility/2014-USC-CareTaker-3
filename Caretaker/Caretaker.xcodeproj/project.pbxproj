@@ -466,6 +466,7 @@
 					"/Users/Keith/pebble-dev/PebbleSDK-2.0-BETA7/PebbleKit-iOS",
 					"./**",
 					"/Users/laurencewong/Documents/School/SS12/2014-USC-CareTaker-3/Caretaker",
+					"/Users/Francesca/Documents/caretaker/2014-USC-CareTaker-3/Caretaker",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Caretaker/Caretaker-Prefix.pch";
@@ -508,6 +509,7 @@
 					"/Users/Keith/pebble-dev/PebbleSDK-2.0-BETA7/PebbleKit-iOS",
 					"./**",
 					"/Users/laurencewong/Documents/School/SS12/2014-USC-CareTaker-3/Caretaker",
+					"/Users/Francesca/Documents/caretaker/2014-USC-CareTaker-3/Caretaker",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Caretaker/Caretaker-Prefix.pch";
