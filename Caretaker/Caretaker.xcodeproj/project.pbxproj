@@ -39,6 +39,9 @@
 		C9A8AD5F18A84B6500EE30BF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9A8AD5E18A84B6500EE30BF /* AudioToolbox.framework */; };
 		C9BF7B1818CB043D00D9FAE0 /* AddReminderViewPg3.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BF7B1718CB043D00D9FAE0 /* AddReminderViewPg3.m */; };
 		C9BF7B1B18CB214800D9FAE0 /* PendingRemindersView.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BF7B1A18CB214800D9FAE0 /* PendingRemindersView.m */; };
+		C9BF7B2118CC03DA00D9FAE0 /* UpdateReminderViewPg1.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BF7B2018CC03DA00D9FAE0 /* UpdateReminderViewPg1.m */; };
+		C9BF7B2418CC0AEF00D9FAE0 /* UpdateReminderViewPg2.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BF7B2318CC0AEF00D9FAE0 /* UpdateReminderViewPg2.m */; };
+		C9BF7B2818CC0D2F00D9FAE0 /* UpdateReminderViewPg3.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BF7B2718CC0D2F00D9FAE0 /* UpdateReminderViewPg3.m */; };
 		C9E0D14E18A6CD8400A78BC1 /* MedicineReminder.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */; };
 		C9E0D15018A6DC2600A78BC1 /* Pills.png in Resources */ = {isa = PBXBuildFile; fileRef = C9E0D14F18A6DC2600A78BC1 /* Pills.png */; };
 		C9E0D16118A7C37B00A78BC1 /* Reminder.m in Sources */ = {isa = PBXBuildFile; fileRef = C9E0D16018A7C37B00A78BC1 /* Reminder.m */; };
@@ -101,6 +104,13 @@
 		C9BF7B1718CB043D00D9FAE0 /* AddReminderViewPg3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReminderViewPg3.m; sourceTree = "<group>"; };
 		C9BF7B1918CB214800D9FAE0 /* PendingRemindersView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PendingRemindersView.h; sourceTree = "<group>"; };
 		C9BF7B1A18CB214800D9FAE0 /* PendingRemindersView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PendingRemindersView.m; sourceTree = "<group>"; };
+		C9BF7B1F18CC03D900D9FAE0 /* UpdateReminderViewPg1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateReminderViewPg1.h; sourceTree = "<group>"; };
+		C9BF7B2018CC03DA00D9FAE0 /* UpdateReminderViewPg1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateReminderViewPg1.m; sourceTree = "<group>"; };
+		C9BF7B2218CC0AEF00D9FAE0 /* UpdateReminderViewPg2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateReminderViewPg2.h; sourceTree = "<group>"; };
+		C9BF7B2318CC0AEF00D9FAE0 /* UpdateReminderViewPg2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateReminderViewPg2.m; sourceTree = "<group>"; };
+		C9BF7B2518CC0BB500D9FAE0 /* UpdateReminderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UpdateReminderView.h; sourceTree = "<group>"; };
+		C9BF7B2618CC0D2F00D9FAE0 /* UpdateReminderViewPg3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UpdateReminderViewPg3.h; sourceTree = "<group>"; };
+		C9BF7B2718CC0D2F00D9FAE0 /* UpdateReminderViewPg3.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UpdateReminderViewPg3.m; sourceTree = "<group>"; };
 		C9E0D14C18A6CD8400A78BC1 /* MedicineReminder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MedicineReminder.h; sourceTree = "<group>"; };
 		C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MedicineReminder.m; sourceTree = "<group>"; };
 		C9E0D14F18A6DC2600A78BC1 /* Pills.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pills.png; sourceTree = "<group>"; };
@@ -185,8 +195,6 @@
 		1D8EDF6B18A6C708009C81ED /* Caretaker */ = {
 			isa = PBXGroup;
 			children = (
-				C96F9B2118C9BE8E00EB3BE8 /* AddReminderViewPg1.h */,
-				C96F9B2218C9BE8E00EB3BE8 /* AddReminderViewPg1.m */,
 				53322ABF18A841CA008D39A2 /* QuietLog.h */,
 				53322AC018A841CA008D39A2 /* QuietLog.m */,
 				53322AB918A83F56008D39A2 /* Main.storyboard */,
@@ -206,12 +214,21 @@
 				53988DD818C1D15D00B7F0EA /* NotificationManager.m */,
 				C93B931118C99F17009E90F0 /* BaseAddReminderView.h */,
 				C93B931218C99F17009E90F0 /* BaseAddReminderView.m */,
+				C96F9B2118C9BE8E00EB3BE8 /* AddReminderViewPg1.h */,
+				C96F9B2218C9BE8E00EB3BE8 /* AddReminderViewPg1.m */,
 				C96F9B2418C9DD4600EB3BE8 /* AddReminderViewPg2.h */,
 				C96F9B2518C9DD4600EB3BE8 /* AddReminderViewPg2.m */,
 				C9BF7B1618CB043D00D9FAE0 /* AddReminderViewPg3.h */,
 				C9BF7B1718CB043D00D9FAE0 /* AddReminderViewPg3.m */,
 				C9BF7B1918CB214800D9FAE0 /* PendingRemindersView.h */,
 				C9BF7B1A18CB214800D9FAE0 /* PendingRemindersView.m */,
+				C9BF7B1F18CC03D900D9FAE0 /* UpdateReminderViewPg1.h */,
+				C9BF7B2018CC03DA00D9FAE0 /* UpdateReminderViewPg1.m */,
+				C9BF7B2218CC0AEF00D9FAE0 /* UpdateReminderViewPg2.h */,
+				C9BF7B2318CC0AEF00D9FAE0 /* UpdateReminderViewPg2.m */,
+				C9BF7B2518CC0BB500D9FAE0 /* UpdateReminderView.h */,
+				C9BF7B2618CC0D2F00D9FAE0 /* UpdateReminderViewPg3.h */,
+				C9BF7B2718CC0D2F00D9FAE0 /* UpdateReminderViewPg3.m */,
 			);
 			path = Caretaker;
 			sourceTree = "<group>";
@@ -344,8 +361,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C9BF7B2818CC0D2F00D9FAE0 /* UpdateReminderViewPg3.m in Sources */,
+				C9BF7B2118CC03DA00D9FAE0 /* UpdateReminderViewPg1.m in Sources */,
 				1D8EDF7C18A6C708009C81ED /* ViewController.m in Sources */,
 				C9E0D14E18A6CD8400A78BC1 /* MedicineReminder.m in Sources */,
+				C9BF7B2418CC0AEF00D9FAE0 /* UpdateReminderViewPg2.m in Sources */,
 				1D8EDF7618A6C708009C81ED /* AppDelegate.m in Sources */,
 				1D8EDF7218A6C708009C81ED /* main.m in Sources */,
 				C9BF7B1818CB043D00D9FAE0 /* AddReminderViewPg3.m in Sources */,

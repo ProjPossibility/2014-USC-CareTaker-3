@@ -98,7 +98,7 @@
     
     [super viewDidAppear:animated];
     
-    if(newReminder.mName)
+    if([newReminder.mName length])
     {
         [[MedicineReminder getInstance] addReminderWith:newReminder];
         newReminder = [[Reminder alloc] init];
@@ -203,6 +203,7 @@
     newReminder = [[Reminder alloc] init];
     BaseAddReminderView *addReminderViewPg1 = [[AddReminderViewPg1 alloc] init];
     addReminderViewPg1.reminder = newReminder;
+    addReminderViewPg1.rootView = self;
     [self.navigationController pushViewController:addReminderViewPg1 animated:YES];
 }
 

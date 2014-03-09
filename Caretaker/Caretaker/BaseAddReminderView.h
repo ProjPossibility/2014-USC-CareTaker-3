@@ -20,6 +20,7 @@
 @property (nonatomic, strong) Reminder* reminder;
 @property (nonatomic, strong) UIButton *goBackButton;
 @property (nonatomic, strong) UIButton *nextButton;
+@property (nonatomic, weak) UIViewController *rootView;
 
 -(void) goBackButtonAction:(id)sender;
 -(void) nextButtonAction:(id)sender;

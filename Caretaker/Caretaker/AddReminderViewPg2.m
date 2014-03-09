@@ -44,6 +44,7 @@
 {
     self.reminder.mImage = self.choosePhotoButton.imageView;
     AddReminderViewPg3 *newReminderViewPg3 = [[AddReminderViewPg3 alloc] initWithReminder:self.reminder];
+    newReminderViewPg3.rootView = self.rootView;
     [self.navigationController pushViewController:newReminderViewPg3 animated:YES];
 }
 

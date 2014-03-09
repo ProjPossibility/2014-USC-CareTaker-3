@@ -86,6 +86,7 @@
     self.reminder.mName = self.nameInput.text;
     self.reminder.mQuantity = self.quantityInput.text;
     AddReminderViewPg2 *newView = [[AddReminderViewPg2 alloc] initWithReminder:self.reminder];
+    newView.rootView = self.rootView;
     [self.navigationController pushViewController:newView animated:YES];
 }
 

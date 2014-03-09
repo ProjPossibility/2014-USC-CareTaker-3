@@ -9,7 +9,7 @@
 #import "PendingRemindersView.h"
 #import "MedicineReminder.h"
 #import "EditPendingReminderView.h"
-#import "AddReminderViewPg1.h"
+#import "UpdateReminderViewPg1.h"
 
 @interface PendingRemindersView ()
 
@@ -57,6 +57,12 @@
 	// Do any additional setup after loading the view.
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    NSLog(@"Reloading data");
+    [mPendingReminders reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -69,8 +75,9 @@
     Reminder* reminder = [[MedicineReminder getInstance].mReminders objectAtIndex:reminderViewButton.tag];
     /*EditPendingReminderView *editPendingReminderView = [[EditPendingReminderView alloc] initWithReminder:reminder];
     [self.navigationController pushViewController:editPendingReminderView animated:YES];*/
-    BaseAddReminderView *editReminderView = [[AddReminderViewPg1 alloc] initWithReminder:reminder];
+    UpdateReminderViewPg1 *editReminderView = [[UpdateReminderViewPg1 alloc] initWithReminder:reminder];
     editReminderView.reminder = reminder;
+    editReminderView.rootView = self;
     [self.navigationController pushViewController:editReminderView animated:YES];
 }
 
