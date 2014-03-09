@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "Reminder.h"
 
 @interface MedicineReminder : NSObject
 {
@@ -16,6 +17,7 @@
 @property (nonatomic, strong) NSMutableArray *mReminders;
 
 
--(void)addReminderWith:(NSString *)name and:(int)quantity and:(NSDate *)date and:(BOOL)repeat and:(NSString *)imageUid;
++(MedicineReminder*) getInstance;
+-(void)addReminderWith:(Reminder*)thisReminder;
 
 @end

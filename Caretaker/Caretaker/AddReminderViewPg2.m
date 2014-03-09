@@ -7,6 +7,8 @@
 //
 
 #import "AddReminderViewPg2.h"
+#import "AddReminderViewPg3.h"
+#import "MedicineReminder.h"
 
 @interface AddReminderViewPg2 ()
 
@@ -30,17 +32,24 @@
 
 - (void)nextButtonAction:(id)sender
 {
-    
+    self.reminder.mImage = self.choosePhotoButton.imageView;
+    AddReminderViewPg3 *newReminderViewPg3 = [[AddReminderViewPg3 alloc] init];
+    newReminderViewPg3.reminder = self.reminder;
+    [newReminderViewPg3 UpdateSomething];
+    [self.navigationController pushViewController:newReminderViewPg3 animated:YES];
 }
+
 
 - (void) initControlView
 {
-    self.choosePhotoButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 160, SCWIDTH - 10, SCWIDTH - 10)];
-    [self.choosePhotoButton setTitle:@"Choose A Photo" forState:UIControlStateNormal];
+    
+    self.choosePhotoButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 80, SCWIDTH - 10, SCWIDTH - 10)];
+
     [self.choosePhotoButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
+    [self.choosePhotoButton setTitle:@"Choose A Photo" forState:UIControlStateNormal];
     [self.choosePhotoButton addTarget:self action:@selector(showImagePickerForSourceType:) forControlEvents:UIControlEventTouchUpInside];
     [self.choosePhotoButton layer].borderWidth = 1.0f;
-    [self.view addSubview:self.choosePhotoButton];
+    [self.controlView addSubview:self.choosePhotoButton];
 }
 
 - (void)showImagePickerForSourceType:(id)sender
@@ -61,9 +70,18 @@
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
+    NSString *photoUid = [info valueForKey:UIImagePickerControllerReferenceURL];
+
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 240), NO, 0.0);
     [image drawInRect:CGRectMake(0, 0, 320, 240)];
     image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    if(![[MedicineReminder getInstance].mImages objectForKey:photoUid])
+    {
+        [[MedicineReminder getInstance].mImages setObject:[[UIImageView alloc] initWithImage:image] forKey:photoUid];
+    }
+    self.reminder.mImageUid = photoUid;
+
     UIGraphicsEndImageContext();
     //photoPreviewer = [[UIImageView alloc] initWithImage:image];
     [self.choosePhotoButton setBackgroundImage:image forState:UIControlStateNormal];
@@ -75,6 +93,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+
 	// Do any additional setup after loading the view.
 }
 

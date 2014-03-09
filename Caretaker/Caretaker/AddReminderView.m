@@ -113,7 +113,7 @@
     }
     
     //do something with the values
-    [self.medicineReminder addReminderWith:nameInput.text and:[amountInput.text intValue] and:datePicker.date and:repeatDaily and:photoUid];
+ /*   [self.medicineReminder addReminderWith:nameInput.text and:[amountInput.text intValue] and:datePicker.date and:repeatDaily and:photoUid];*/
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 -(void) setupControls

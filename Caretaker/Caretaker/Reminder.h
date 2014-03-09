@@ -12,9 +12,11 @@
 
 @property (nonatomic) NSTimer *mTimer;
 @property (nonatomic, strong) NSString *mName;
-@property (nonatomic) int mQuantity;
+//@property (nonatomic) int mQuantity;
+@property (nonatomic, strong) NSString *mQuantity;
 @property (nonatomic) NSDate *mDate;
 @property (nonatomic) UIImageView *mImage;
+@property (nonatomic) NSString *mImageUid;
 @property (nonatomic) BOOL mRepeat;
 
 @end

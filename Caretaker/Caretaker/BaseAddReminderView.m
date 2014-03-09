@@ -53,22 +53,24 @@
 
 - (UIView *)initializeControlViewFor:(BaseAddReminderView *)reminderView
 {
-    UIView *newControlView = [[UIView alloc] initWithFrame:CGRectMake(0, 70, SCWIDTH, SCHEIGHT - 70)];
+    UIView *newControlView = [[UIView alloc] initWithFrame:CGRectMake(0, 40, SCWIDTH, SCHEIGHT)];
     [reminderView.view addSubview:newControlView];
     
-    UIButton *goBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 0, SCWIDTH - 10, 60)];
-    [goBackButton setTitle:@"Go Back" forState:UIControlStateNormal];
-    [goBackButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
-    [goBackButton addTarget:reminderView action:@selector(goBackButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [newControlView addSubview:goBackButton];
+    self.goBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 0, SCWIDTH - 10, 60)];
+    [self.goBackButton setTitle:@"Go Back" forState:UIControlStateNormal];
+    [self.goBackButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
+    [self.goBackButton addTarget:reminderView action:@selector(goBackButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [newControlView addSubview:self.goBackButton];
     
-    UIButton *nextButton = [[UIButton alloc] initWithFrame:CGRectMake(5, SCHEIGHT - 150, SCWIDTH - 10, 60)];
-    [nextButton setTitle:@"Next" forState:UIControlStateNormal];
-    [nextButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
-    [nextButton addTarget:reminderView action:@selector(nextButtonAction:) forControlEvents:UIControlEventTouchUpInside];
-    [newControlView addSubview:nextButton];
+    self.nextButton = [[UIButton alloc] initWithFrame:CGRectMake(5, SCHEIGHT - 150, SCWIDTH - 10, 60)];
+    [self.nextButton setTitle:@"Next" forState:UIControlStateNormal];
+    [self.nextButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
+    [self.nextButton addTarget:reminderView action:@selector(nextButtonAction:) forControlEvents:UIControlEventTouchUpInside];
+    [newControlView addSubview:self.nextButton];
     return newControlView;
 }
+
+
 
 - (void)viewDidLoad
 {

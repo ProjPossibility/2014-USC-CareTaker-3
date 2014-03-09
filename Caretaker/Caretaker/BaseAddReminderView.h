@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Reminder.h"
 
 #define SCWIDTH [[UIScreen mainScreen] bounds].size.width
 #define SCHEIGHT [[UIScreen mainScreen] bounds].size.height
@@ -16,6 +17,9 @@
 }
 
 @property (nonatomic, strong) UIView* controlView;
+@property (nonatomic, strong) Reminder* reminder;
+@property (nonatomic, strong) UIButton *goBackButton;
+@property (nonatomic, strong) UIButton *nextButton;
 
 -(void) goBackButtonAction:(id)sender;
 -(void) nextButtonAction:(id)sender;

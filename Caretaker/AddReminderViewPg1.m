@@ -46,7 +46,6 @@
     [self.quantityInput setBorderStyle:UITextBorderStyleLine];
     [self.quantityInput layer].borderWidth = 2;
     self.quantityInput.delegate = self;
-    self.quantityInput.keyboardType = UIKeyboardTypeDecimalPad;
     self.quantityInput.returnKeyType = UIReturnKeyDone;
     [self.quantityInput setFont:[UIFont systemFontOfSize:35]];
     [self.controlView addSubview:self.quantityInput];
@@ -66,13 +65,19 @@
 
 - (void)nextButtonAction:(id)sender
 {
+    self.reminder.mName = self.nameInput.text;
+    self.reminder.mQuantity = self.quantityInput.text;
     AddReminderViewPg2 *newView = [[AddReminderViewPg2 alloc] init];
+    newView.reminder = self.reminder;
     [self.navigationController pushViewController:newView animated:YES];
 }
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+
 	// Do any additional setup after loading the view.
 }
 
