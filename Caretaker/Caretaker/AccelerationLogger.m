@@ -27,7 +27,7 @@
         NSString *logFilename = [NSString stringWithFormat:
         @"AccelerometerLog-%@-%@.txt", flair, dateString];
         NSString *content = [NSString stringWithFormat:
-                             @"AccelerometerLog %@\n", dateString];
+                             @"$AccelerometerLog %@\n", dateString];
         
         //Get the file path
         NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
@@ -47,7 +47,7 @@
 
 -(void) logData:(CMAccelerometerData *)data
 {
-    NSString *content = [NSString stringWithFormat:@"%.3f/%.3f/%.3f/%d\n", data.acceleration.x, data.acceleration.y, data.acceleration.z, seq];
+    NSString *content = [NSString stringWithFormat:@"%d/%.3f/%.3f/%.3f\n", seq, data.acceleration.x, data.acceleration.y, data.acceleration.z];
     seq++;
     
     //append text to file (you'll probably want to add a newline every write)
@@ -59,8 +59,18 @@
 
 -(void) logDataX:(float)x Y:(float)y Z:(float)z
 {
-    NSString *content = [NSString stringWithFormat:@"%.3f/%.3f/%.3f/%d\n", x, y, z, seq];
+    NSString *content = [NSString stringWithFormat:@"%d/%.3f/%.3f/%.3f\n", seq, x, y, z];
     seq++;
+    //append text to file (you'll probably want to add a newline every write)
+    NSFileHandle *file = [NSFileHandle fileHandleForUpdatingAtPath:fileName];
+    [file seekToEndOfFile];
+    [file writeData:[content dataUsingEncoding:NSUTF8StringEncoding]];
+    [file closeFile];
+}
+
+-(void) logString:(NSString *)string
+{
+    NSString *content = [NSString stringWithFormat:@"$%@\n", string];
     //append text to file (you'll probably want to add a newline every write)
     NSFileHandle *file = [NSFileHandle fileHandleForUpdatingAtPath:fileName];
     [file seekToEndOfFile];

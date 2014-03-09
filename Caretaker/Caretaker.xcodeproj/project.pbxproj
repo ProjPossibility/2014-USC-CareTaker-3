@@ -132,8 +132,8 @@
 		1D8EDF5918A6C708009C81ED = {
 			isa = PBXGroup;
 			children = (
+				53F5E51E18C9B5D1006AE4E4 /* Tools */,
 				C9E0D14F18A6DC2600A78BC1 /* Pills.png */,
-				53322AD218A84D01008D39A2 /* AccelViz.py */,
 				1D8EDF6B18A6C708009C81ED /* Caretaker */,
 				1D8EDF8A18A6C709009C81ED /* CaretakerTests */,
 				1D8EDF6418A6C708009C81ED /* Frameworks */,
@@ -223,6 +223,14 @@
 				1D8EDF8D18A6C709009C81ED /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		53F5E51E18C9B5D1006AE4E4 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				53322AD218A84D01008D39A2 /* AccelViz.py */,
+			);
+			name = Tools;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

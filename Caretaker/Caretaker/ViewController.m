@@ -188,6 +188,7 @@
                             if((fabs(data.acceleration.z) > 2.5 || fabs(data.acceleration.x) > 2.5) && !onAlertCooldown) {
                                 [self showAreYouOkay:nil];
                                 [[NotificationManager getInstance] scheduleNewLocalNotification:@"ALERT: PHONE SHAKE!" After:0];
+                                [accelLoggerPhone logString:@"PHONE SHAKE ALERT"];
                                 
                                 NSTimer *cooldownTimer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(endCooldown) userInfo:Nil repeats:NO];
                                 [[NSRunLoop currentRunLoop] addTimer:cooldownTimer forMode:NSRunLoopCommonModes];
