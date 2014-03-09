@@ -61,8 +61,7 @@
     }
     else
     {
-        //86400 seconds in day
-        NSTimeInterval intervalUntilFire = 60.0f;
+        NSTimeInterval intervalUntilFire = [self getTimeIntervalForFrequency:reminder.mRepeatFrequency];
         reminder.mTimer = [NSTimer timerWithTimeInterval:intervalUntilFire target:self selector:@selector(showReminder:) userInfo:reminder repeats:NO];
         reminder.mDate = [NSDate dateWithTimeInterval:intervalUntilFire sinceDate:[NSDate date]];
         [[NSRunLoop currentRunLoop] addTimer:reminder.mTimer forMode:NSRunLoopCommonModes];
@@ -96,6 +95,21 @@
     
     [self addReminderWith:newReminder];
     [self addReminderWith:newReminder1];
+}
+-(NSTimeInterval) getTimeIntervalForFrequency:(RepeatFrequency)frequency
+{
+    //woooo magic numbers
+    switch(frequency)
+    {
+        case REPEAT_FREQUENCY_NONE:
+            return 5;
+        case REPEAT_FREQUENCY_DAILY:
+            return 86400;
+        case REPEAT_FREQUENCY_WEEKLY:
+            return 604800;
+        default:
+            return 5;
+    }
 }
 
 -(void)addReminderWith:(Reminder*)thisReminder

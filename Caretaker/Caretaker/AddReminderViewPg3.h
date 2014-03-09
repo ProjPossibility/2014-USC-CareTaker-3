@@ -8,7 +8,12 @@
 
 #import "BaseAddReminderView.h"
 
-@interface AddReminderViewPg3 : BaseAddReminderView
+@interface AddReminderViewPg3 : BaseAddReminderView <UITableViewDelegate, UITableViewDataSource>
+{
+    NSMutableArray* mRepeatFrequencyData;
+}
 
-@property (nonatomic, strong)     UIDatePicker *datePicker;
+@property (nonatomic, strong)   UIDatePicker *datePicker;
+@property (nonatomic, strong)   UILabel *mCurrentSelectedRepeat;
+@property (nonatomic, strong)   UITableView *mRepeatSelector;
 @end
