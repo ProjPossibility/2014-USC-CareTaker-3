@@ -13,6 +13,7 @@
 #import "NotificationManager.h"
 #import "AddReminderViewPg1.h"
 #import "PendingRemindersView.h"
+#import "AreYouOkayManager.h"
 
 
 @interface ViewController ()
@@ -179,7 +180,8 @@
                             QuietLog(@"PHONE  X: %.2f, Y: %.2f, Z: %.2f", data.acceleration.x, data.acceleration.y, data.acceleration.z);
                             [accelLoggerPhone logData:data];
                             if((fabs(data.acceleration.z) > 2.5 || fabs(data.acceleration.x) > 2.5) && !onAlertCooldown) {
-                                [self showAreYouOkay:nil];
+                                //[self showAreYouOkay:nil];
+                                [[AreYouOkayManager getInstance] scheduleAreYouOkayAfter:0];
                                 [[NotificationManager getInstance] scheduleNewLocalNotification:@"ALERT: PHONE SHAKE!" After:0];
                                 
                                 NSTimer *cooldownTimer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(endCooldown) userInfo:Nil repeats:NO];
