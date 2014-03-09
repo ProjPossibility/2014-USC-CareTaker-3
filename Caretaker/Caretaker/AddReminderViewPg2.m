@@ -52,7 +52,7 @@
 - (void) initControlView
 {
     
-    self.choosePhotoButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 80, SCWIDTH - 10, SCWIDTH - 10)];
+    self.choosePhotoButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 70, SCWIDTH - 10, SCWIDTH - 10)];
     
     
     if(self.reminder.mImageUid)
