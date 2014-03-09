@@ -10,6 +10,7 @@
 
 @interface Reminder : NSObject
 
+@property int mID;
 @property (nonatomic) NSTimer *mTimer;
 @property (nonatomic, strong) NSString *mName;
 //@property (nonatomic) int mQuantity;

@@ -24,6 +24,16 @@
     }
     return self;
 }
+- (id)initWithReminder:(Reminder *)reminder
+{
+    self = [super init];
+    if(self) {
+        self.reminder = reminder;
+        [self initControlView];
+    }
+    return self;
+}
+
 
 - (void)goBackButtonAction:(id)sender
 {
@@ -33,9 +43,7 @@
 - (void)nextButtonAction:(id)sender
 {
     self.reminder.mImage = self.choosePhotoButton.imageView;
-    AddReminderViewPg3 *newReminderViewPg3 = [[AddReminderViewPg3 alloc] init];
-    newReminderViewPg3.reminder = self.reminder;
-    [newReminderViewPg3 UpdateSomething];
+    AddReminderViewPg3 *newReminderViewPg3 = [[AddReminderViewPg3 alloc] initWithReminder:self.reminder];
     [self.navigationController pushViewController:newReminderViewPg3 animated:YES];
 }
 
@@ -44,9 +52,19 @@
 {
     
     self.choosePhotoButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 80, SCWIDTH - 10, SCWIDTH - 10)];
+    
+    
+    if(self.reminder.mImageUid)
+    {
+        UIImageView *reminderImage = [[MedicineReminder getInstance].mImages objectForKey:self.reminder.mImageUid];
+        [self.choosePhotoButton setBackgroundImage:[reminderImage image] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.choosePhotoButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
+        [self.choosePhotoButton setTitle:@"Choose A Photo" forState:UIControlStateNormal];
+    }
 
-    [self.choosePhotoButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
-    [self.choosePhotoButton setTitle:@"Choose A Photo" forState:UIControlStateNormal];
     [self.choosePhotoButton addTarget:self action:@selector(showImagePickerForSourceType:) forControlEvents:UIControlEventTouchUpInside];
     [self.choosePhotoButton layer].borderWidth = 1.0f;
     [self.controlView addSubview:self.choosePhotoButton];
@@ -71,7 +89,7 @@
 {
     UIImage *image = [info valueForKey:UIImagePickerControllerOriginalImage];
     NSString *photoUid = [info valueForKey:UIImagePickerControllerReferenceURL];
-
+    
     UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 240), NO, 0.0);
     [image drawInRect:CGRectMake(0, 0, 320, 240)];
     image = UIGraphicsGetImageFromCurrentImageContext();
@@ -81,7 +99,7 @@
         [[MedicineReminder getInstance].mImages setObject:[[UIImageView alloc] initWithImage:image] forKey:photoUid];
     }
     self.reminder.mImageUid = photoUid;
-
+    
     UIGraphicsEndImageContext();
     //photoPreviewer = [[UIImageView alloc] initWithImage:image];
     [self.choosePhotoButton setBackgroundImage:image forState:UIControlStateNormal];
@@ -93,7 +111,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
 	// Do any additional setup after loading the view.
 }
 

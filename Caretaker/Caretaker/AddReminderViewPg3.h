@@ -11,6 +11,4 @@
 @interface AddReminderViewPg3 : BaseAddReminderView
 
 @property (nonatomic, strong)     UIDatePicker *datePicker;
-
--(void)UpdateSomething;
 @end

@@ -31,9 +31,20 @@
     if (self) {
         self.mReminders = [[NSMutableArray alloc] init];
         self.mImages = [[NSMutableDictionary alloc] init];
+        
+        [self addTempReminders];
     }
     return self;
 }
+
+- (Reminder *)getNewReminder
+{
+    Reminder *newReminder = [[Reminder alloc] init];
+    newReminder.mID = [self.mReminders count];
+    [self.mReminders addObject:newReminder];
+    return newReminder;
+}
+
 - (void)showReminder:(id)sender
 {
     Reminder *reminder = (Reminder *)[sender userInfo];
@@ -68,6 +79,23 @@
     }
 }
 
+#pragma - message ("Adding temp reminders so that I don't have to keep doing it")
+-(void)addTempReminders
+{
+    Reminder *newReminder = [[Reminder alloc] init];
+    newReminder.mName = @"Stuff";
+    newReminder.mQuantity = @"Twenty";
+    newReminder.mDate = [NSDate dateWithTimeIntervalSinceNow:4000];
+    
+    Reminder *newReminder1 = [[Reminder alloc] init];
+    newReminder1.mName = @"OtherStuff";
+    newReminder1.mQuantity = @"1";
+    newReminder1.mDate = [NSDate dateWithTimeIntervalSinceNow:400];
+    
+    [self addReminderWith:newReminder];
+    [self addReminderWith:newReminder1];
+}
+
 -(void)addReminderWith:(Reminder*)thisReminder
 {
 
@@ -78,11 +106,24 @@
         [app endBackgroundTask:bgTask];
     }];
     
-    [self.mReminders addObject:thisReminder];
-    NSTimeInterval blah = [thisReminder.mDate timeIntervalSinceDate:[NSDate date]];
-    NSTimer *newTimer = [NSTimer timerWithTimeInterval:blah target:self selector:@selector(showReminder:) userInfo:thisReminder repeats:NO];
-    thisReminder.mTimer = newTimer;
-    [[NSRunLoop currentRunLoop] addTimer:thisReminder.mTimer forMode:NSRunLoopCommonModes];
+    if(![self.mReminders containsObject:thisReminder])
+    {
+        NSLog(@"New Reminder");
+        [self.mReminders addObject:thisReminder];
+        
+        NSTimeInterval blah = [thisReminder.mDate timeIntervalSinceDate:[NSDate date]];
+        NSTimer *newTimer = [NSTimer timerWithTimeInterval:blah target:self selector:@selector(showReminder:) userInfo:thisReminder repeats:NO];
+        thisReminder.mTimer = newTimer;
+        [[NSRunLoop currentRunLoop] addTimer:thisReminder.mTimer forMode:NSRunLoopCommonModes];
+    }
+    else
+    {
+        NSLog(@"Found reminder");
+        [thisReminder.mTimer invalidate];
+        NSTimeInterval blah = [thisReminder.mDate timeIntervalSinceDate:[NSDate date]];
+        thisReminder.mTimer = [NSTimer timerWithTimeInterval:blah target:self selector:@selector(showReminder:) userInfo:thisReminder repeats:NO];
+        [[NSRunLoop currentRunLoop] addTimer:thisReminder.mTimer forMode:NSRunLoopCommonModes];
+    }
     //[self showReminder:newReminder];
     
 }

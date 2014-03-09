@@ -14,4 +14,5 @@
 }
 @property (nonatomic, strong) UITextField *nameInput;
 @property (nonatomic, strong) UITextField *quantityInput;
+
 @end

@@ -8,6 +8,8 @@
 
 #import "PendingRemindersView.h"
 #import "MedicineReminder.h"
+#import "EditPendingReminderView.h"
+#import "AddReminderViewPg1.h"
 
 @interface PendingRemindersView ()
 
@@ -41,7 +43,6 @@
     [goBackButton setTitle:@"Go Back" forState:UIControlStateNormal];
     [controlView addSubview:goBackButton];
     
-    
     [controlView addSubview:mPendingReminders];
 }
 
@@ -62,6 +63,17 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)selectReminder:(id)sender
+{
+    UIButton *reminderViewButton = (UIButton *)sender;
+    Reminder* reminder = [[MedicineReminder getInstance].mReminders objectAtIndex:reminderViewButton.tag];
+    /*EditPendingReminderView *editPendingReminderView = [[EditPendingReminderView alloc] initWithReminder:reminder];
+    [self.navigationController pushViewController:editPendingReminderView animated:YES];*/
+    BaseAddReminderView *editReminderView = [[AddReminderViewPg1 alloc] initWithReminder:reminder];
+    editReminderView.reminder = reminder;
+    [self.navigationController pushViewController:editReminderView animated:YES];
+}
+
 #pragma mark - Table View
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
@@ -73,7 +85,8 @@
     return @"";
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[[MedicineReminder getInstance] mReminders] count];
+    int count = [[[MedicineReminder getInstance] mReminders] count];
+    return count;
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
@@ -108,7 +121,9 @@
         dateLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
         [reminderViewButton addSubview: nameLabel];
         [reminderViewButton addSubview: dateLabel];
-       // [reminderViewButton addTarget:self action:@selector(showAreYouOkay:) forControlEvents:UIControlEventTouchUpInside];
+        reminderViewButton.tag = [indexPath row];
+        //need to make selectReminder take in a reminder
+        [reminderViewButton addTarget:self action:@selector(selectReminder:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:reminderViewButton];
     }
     

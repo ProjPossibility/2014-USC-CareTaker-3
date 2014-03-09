@@ -23,6 +23,5 @@
 
 -(void) goBackButtonAction:(id)sender;
 -(void) nextButtonAction:(id)sender;
-
-
+- (id)initWithReminder:(Reminder *)reminder;
 @end

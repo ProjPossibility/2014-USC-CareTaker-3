@@ -19,5 +19,6 @@
 
 +(MedicineReminder*) getInstance;
 -(void)addReminderWith:(Reminder*)thisReminder;
+-(Reminder *)getNewReminder;
 
 @end
