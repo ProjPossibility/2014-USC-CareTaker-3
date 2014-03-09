@@ -28,8 +28,6 @@
 
 -(UIButton *)addButtonWithAttributes:(NSString *)title withTarget:(id)target withSelector:(SEL)selector with:(CGRect)bounds
 {
-    NSDictionary *defaultFontAttributeDic =[NSDictionary dictionaryWithObject:[UIFont fontWithName:@"Helvetica" size:34.0f] forKey:NSFontAttributeName];
-    CGSize stringSize = [title sizeWithAttributes:defaultFontAttributeDic];
     UIButton *newButton = [[UIButton alloc] initWithFrame:CGRectMake((bounds.size.width - 280)/2, bounds.origin.y, 300, bounds.size.height)];
     [newButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     [newButton setTitle:title forState:UIControlStateNormal];
@@ -47,14 +45,9 @@
     //add show notification button
     self.showNotificationButton = [self addButtonWithAttributes:@"ADD NEW REMINDER" withTarget:self withSelector:@selector(showAddReminder:) with:CGRectMake(0, 0, 300, 88)];
     [self.controlView addSubview:self.showNotificationButton];
-    self.pendingReminders = [[UITableView alloc] initWithFrame:CGRectMake(0, 88, 320, 420) style:UITableViewStylePlain];
-    [self.controlView addSubview:self.pendingReminders];
     
     self.showPendingRemindersButton = [self addButtonWithAttributes:@"SHOW PENDING REMINDERS" withTarget:self withSelector:@selector(showPendingReminders) with:CGRectMake(0, 98, 300, 88)];
     [self.controlView addSubview:self.showPendingRemindersButton];
-    
-    self.pendingReminders.delegate = self;
-    self.pendingReminders.dataSource = self;
     
     areYouOkayLackOfResponse = 0;
     PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:1.5];
@@ -104,11 +97,11 @@
     NSLog(@"VIEW APPEARED!");
     
     [super viewDidAppear:animated];
-    [self.pendingReminders reloadData];
     
-    if(newReminder.mName)
+    if([newReminder.mName length])
     {
         [[MedicineReminder getInstance] addReminderWith:newReminder];
+        newReminder = [[Reminder alloc] init];
     }
 }
 
@@ -199,35 +192,6 @@
     
 }
 
-//
-
-- (void)showImagePickerForSourceType:(UIImagePickerControllerSourceType)sourceType
-{
-    UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
-    imagePickerController.modalPresentationStyle = UIModalPresentationCurrentContext;
-    imagePickerController.sourceType = sourceType;
-    imagePickerController.delegate = self;
-    
-    if (sourceType == UIImagePickerControllerSourceTypeCamera)
-    {
-        /*
-         The user wants to use the camera interface. Set up our custom overlay view for the camera.
-         */
-        imagePickerController.showsCameraControls = NO;
-        
-        /*
-         Load the overlay view from the OverlayView nib file. Self is the File's Owner for the nib file, so the overlayView outlet is set to the main view in the nib. Pass that view to the image picker controller to use as its overlay view, and set self's reference to the view to nil.
-         */
-        [[NSBundle mainBundle] loadNibNamed:@"OverlayView" owner:self options:nil];
-        self.overlayView.frame = imagePickerController.cameraOverlayView.frame;
-        imagePickerController.cameraOverlayView = self.overlayView;
-        self.overlayView = nil;
-    }
-    
-    self.imagePickerController = imagePickerController;
-    [self presentViewController:self.imagePickerController animated:YES completion:nil];
-}
-
 -(void)showPendingReminders
 {
     PendingRemindersView *newPendingRemindersView = [[PendingRemindersView alloc] init];
@@ -239,68 +203,8 @@
     newReminder = [[Reminder alloc] init];
     BaseAddReminderView *addReminderViewPg1 = [[AddReminderViewPg1 alloc] init];
     addReminderViewPg1.reminder = newReminder;
+    addReminderViewPg1.rootView = self;
     [self.navigationController pushViewController:addReminderViewPg1 animated:YES];
 }
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
-
-#pragma mark - Table View
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;//[[medicineReminder mReminders] count];
-}
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    return @"";
-}
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[[MedicineReminder getInstance] mReminders] count];
-}
-
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return NO;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    switch([indexPath row])
-    {
-        default:
-            return 64;
-    }
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    NSString *CellIdentifier = [NSString stringWithFormat:@"OptionCell%d", indexPath.row];
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
-    if(cell == nil){
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
-        cell.selectionStyle = UITableViewCellSelectionStyleNone;
-        UIButton *reminderViewButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
-        Reminder *currentReminder = [[MedicineReminder getInstance].mReminders objectAtIndex:[indexPath row]];
-        UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(5, 0, 320, 44)];
-        nameLabel.text = currentReminder.mName;
-        nameLabel.font = [UIFont fontWithName:@"Helvetica" size:20];
-        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-        [formatter setDateFormat:@"MM/dd HH:mm"];
-        UILabel *dateLabel = [[UILabel alloc] initWithFrame:CGRectMake(6, 24, 320, 44)];
-        dateLabel.text = [formatter stringFromDate:currentReminder.mDate];
-        dateLabel.font = [UIFont fontWithName:@"Helvetica" size:12];
-        [reminderViewButton addSubview: nameLabel];
-        [reminderViewButton addSubview: dateLabel];
-        [reminderViewButton addTarget:self action:@selector(showAreYouOkay:) forControlEvents:UIControlEventTouchUpInside];
-        [cell.contentView addSubview:reminderViewButton];
-    }
-    
-    return cell;
-}
-
-
-
 
 @end

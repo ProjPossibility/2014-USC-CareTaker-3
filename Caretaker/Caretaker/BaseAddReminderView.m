@@ -36,19 +36,17 @@
     return self;
 }
 
+-(id)initWithReminder:(Reminder *)reminder
+{
+    return self;
+}
+
 - (void)goBackButtonAction:(id)sender
 {
-    //[self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void) nextButtonAction:(id)sender
 {
-    /*
-    AddReminderViewPg1 *newReminderView = [[AddReminderViewPg1 alloc] init];
-    newReminderView.controlView = [self initializeControlViewFor:newReminderView];
-    
-    [self.navigationController pushViewController:newReminderView animated:YES];
-     */
 }
 
 - (UIView *)initializeControlViewFor:(BaseAddReminderView *)reminderView
@@ -62,7 +60,7 @@
     [self.goBackButton addTarget:reminderView action:@selector(goBackButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [newControlView addSubview:self.goBackButton];
     
-    self.nextButton = [[UIButton alloc] initWithFrame:CGRectMake(5, SCHEIGHT - 150, SCWIDTH - 10, 60)];
+    self.nextButton = [[UIButton alloc] initWithFrame:CGRectMake(5, SCHEIGHT - 110, SCWIDTH - 10, 60)];
     [self.nextButton setTitle:@"Next" forState:UIControlStateNormal];
     [self.nextButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
     [self.nextButton addTarget:reminderView action:@selector(nextButtonAction:) forControlEvents:UIControlEventTouchUpInside];

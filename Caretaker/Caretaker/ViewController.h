@@ -11,7 +11,7 @@
 #import "AccelerationLogger.h"
 #import "Reminder.h"
 
-@interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
     AccelerationLogger *accelLoggerPhone;
 
@@ -29,7 +29,6 @@
 @property (nonatomic, strong)   UIButton    *showPendingRemindersButton;
 @property (nonatomic, strong)   UIButton    *showNotificationButton;
 @property (nonatomic, strong)   UIButton    *showAreYouOkay;
-@property (nonatomic, strong)   UITableView *pendingReminders;
 
 -(void)setupControls;
 -(void) startMotionDetect;

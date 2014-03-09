@@ -22,28 +22,37 @@
     }
     return self;
 }
+- (id)initWithReminder:(Reminder *)reminder
+{
+    self = [super init];
+    if(self) {
+        self.reminder = reminder;
+        [self initControlView];
+    }
+    return self;
+}
 
 - (void)goBackButtonAction:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
--(void)UpdateSomething
-{
-    [self.reminder.mImage setBounds:CGRectMake(0, 100, 320, 240)];
-    [self.controlView addSubview:self.reminder.mImage];
-}
-
 - (void)nextButtonAction:(id)sender
 {
     self.reminder.mDate = self.datePicker.date;
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    self.reminder.mRepeat = YES;
+    //[self.navigationController popToRootViewControllerAnimated:YES];
+    [self.navigationController popToViewController:self.rootView animated:YES];
 }
 
 
 - (void) initControlView
 {
     self.datePicker = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 140, 320, 216)];
+    if(self.reminder.mDate)
+    {
+        self.datePicker.date = self.reminder.mDate;
+    }
     [self.controlView addSubview:self.datePicker];
     
     UILabel *enterDateLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 80, 320, 70)];

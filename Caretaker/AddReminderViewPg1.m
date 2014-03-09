@@ -24,6 +24,16 @@
     return self;
 }
 
+- (id)initWithReminder:(Reminder *)reminder
+{
+    self = [super init];
+    if(self) {
+        self.reminder = reminder;
+        [self initControlView];
+    }
+    return self;
+}
+
 - (void) dismissKeyboard
 {
     [self.nameInput resignFirstResponder];
@@ -34,6 +44,10 @@
 {
     self.nameInput = [[UITextField alloc] initWithFrame:CGRectMake(5, 80, SCWIDTH - 10, 120)];
     [self.nameInput setPlaceholder:@"Name of medication"];
+    if(self.reminder.mName)
+    {
+        self.nameInput.text = self.reminder.mName;
+    }
     [self.nameInput setBorderStyle:UITextBorderStyleLine];
     [self.nameInput layer].borderWidth = 2;
     self.nameInput.delegate = self;
@@ -43,6 +57,10 @@
     
     self.quantityInput = [[UITextField alloc] initWithFrame:CGRectMake(5, 210, SCWIDTH - 10, 120)];
     [self.quantityInput setPlaceholder:@"Amount of medication"];
+    if(self.reminder.mQuantity)
+    {
+        self.quantityInput.text = self.reminder.mQuantity;
+    }
     [self.quantityInput setBorderStyle:UITextBorderStyleLine];
     [self.quantityInput layer].borderWidth = 2;
     self.quantityInput.delegate = self;
@@ -67,8 +85,8 @@
 {
     self.reminder.mName = self.nameInput.text;
     self.reminder.mQuantity = self.quantityInput.text;
-    AddReminderViewPg2 *newView = [[AddReminderViewPg2 alloc] init];
-    newView.reminder = self.reminder;
+    AddReminderViewPg2 *newView = [[AddReminderViewPg2 alloc] initWithReminder:self.reminder];
+    newView.rootView = self.rootView;
     [self.navigationController pushViewController:newView animated:YES];
 }
 
