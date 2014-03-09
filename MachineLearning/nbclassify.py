@@ -140,13 +140,13 @@ def classify():
                 # show alert right here, and pause until we get a response
                 # if response says that it wasn't actually a fall, update
                 # otherwise record as fall data
-                response = true
+                response = True
                 if(response):
-                    abn_samples.append(sample)
+                    abn_class.samples.append(sample)
                     abn_class.incr_frequency()
                     classification = "ABN"
                 else:
-                    nor_samples.append(sample)
+                    nor_class.samples.append(sample)
                     nor_class.incr_frequency()
                     classification = "NOR"
 

@@ -1,0 +1,17 @@
+{
+  "uuid": "0385c897-0eb3-4ed8-9162-f68fa6d7a29b",
+  "shortName": "Caretaker",
+  "longName": "Caretaker",
+  "companyName": "MakeAwesomeHappen",
+  "versionCode": 1,
+  "versionLabel": "1.0.0",
+  "watchapp": {
+    "watchface": false
+  },
+  "appKeys": {
+    "dummy": 0
+  },
+  "resources": {
+    "media": []
+  }
+}

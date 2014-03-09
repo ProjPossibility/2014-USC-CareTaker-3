@@ -1,0 +1,8 @@
+argv = ['/Users/Keith/pebble-dev/PebbleSDK-2.0-BETA7/Pebble/waf', 'configure', 'build']
+environ = {'TERM_SESSION_ID': '79E5B2AE-F152-46D1-9C9D-4F4BA7F642D2', 'SSH_AUTH_SOCK': '/tmp/launch-WALiIk/Listeners', 'VERSIONER_PYTHON_PREFER_32_BIT': 'no', 'TERM_PROGRAM_VERSION': '309', 'SHELL': '/bin/bash', 'LOGNAME': 'Keith', 'USER': 'Keith', 'HOME': '/Users/Keith', 'PATH': '/Users/Keith/pebble-dev/PebbleSDK-2.0-BETA7/arm-cs-tools/bin:/Users/Keith/pebble-dev/PebbleSDK-2.0-BETA7/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin', 'DISPLAY': '/tmp/launch-PpnHX7/org.macosforge.xquartz:0', 'TMPDIR': '/var/folders/jc/40qk8m7d10l99dfs2d2bl0k00000gn/T/', 'TERM_PROGRAM': 'Apple_Terminal', 'LANG': 'en_US.UTF-8', 'TERM': 'xterm-256color', 'Apple_PubSub_Socket_Render': '/tmp/launch-PR6tYK/Render', 'VERSIONER_PYTHON_VERSION': '2.7', 'SHLVL': '2', '__CF_USER_TEXT_ENCODING': '0x1F5:0:0', 'Apple_Ubiquity_Message': '/tmp/launch-Rvc50r/Apple_Ubiquity_Message', 'PWD': '/Users/Keith/Desktop/Pebble_Dev/Projects/Caretaker', '_': '/Users/Keith/pebble-dev/PebbleSDK-2.0-BETA7/Pebble/waf', 'COMMAND_MODE': 'unix2003'}
+files = ['/Users/Keith/Desktop/Pebble_Dev/Projects/Caretaker/wscript']
+hash = 4672844372416070989
+options = {'files': '', 'jobs': 4, 'verbose': 0, 'nocache': False, 'progress_bar': 0, 'timestamp': None, 'distcheck_args': None, 'top': '', 'destdir': '', 'keep': 0, 'zones': '', 'debug': False, 'prefix': '/usr/local/', 'download': False, 'force': False, 'targets': '', 'out': ''}
+out_dir = '/Users/Keith/Desktop/Pebble_Dev/Projects/Caretaker/build'
+run_dir = '/Users/Keith/Desktop/Pebble_Dev/Projects/Caretaker'
+top_dir = '/Users/Keith/Desktop/Pebble_Dev/Projects/Caretaker'

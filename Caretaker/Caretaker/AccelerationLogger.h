@@ -20,6 +20,7 @@
 
 -(void) logData:(CMAccelerometerData *)data;
 -(void) logDataX:(float)x Y:(float)y Z:(float)z;
+-(void) logString:(NSString*)string;
 - (id)initWithFileFlair:(NSString*)flair;
 
 

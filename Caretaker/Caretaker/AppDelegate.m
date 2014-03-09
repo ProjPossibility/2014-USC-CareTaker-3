@@ -37,7 +37,7 @@
         
         accelLoggerPebble = [[AccelerationLogger alloc] initWithFileFlair:@"Pebble"];
         
-        PEBBLE_ALERT_COOLDOWN = [NSNumber numberWithFloat:2.5];
+        PEBBLE_ALERT_COOLDOWN = [NSNumber numberWithFloat:2];
         onAlertCooldown = NO;
     }
     return self;
@@ -144,6 +144,8 @@
                 //[newViewController showAreYouOkay:nil];
                 [[AreYouOkayManager getInstance] scheduleAreYouOkayAfter:0];
                 [[NotificationManager getInstance] scheduleNewLocalNotification:@"ALERT: PEBBLE SHAKE!" After:0];
+                [accelLoggerPebble logString:@"PEBBLE SHAKE ALERT"];
+                onAlertCooldown = YES;
                 
                 NSTimer *cooldownTimer = [NSTimer timerWithTimeInterval:[PEBBLE_ALERT_COOLDOWN floatValue] target:self selector:@selector(endCooldown) userInfo:Nil repeats:NO];
                 [[NSRunLoop currentRunLoop] addTimer:cooldownTimer forMode:NSRunLoopCommonModes];
