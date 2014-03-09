@@ -62,7 +62,9 @@
     else
     {
         //86400 seconds in day
-        reminder.mTimer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(showReminder:) userInfo:reminder repeats:NO];
+        NSTimeInterval intervalUntilFire = 60.0f;
+        reminder.mTimer = [NSTimer timerWithTimeInterval:intervalUntilFire target:self selector:@selector(showReminder:) userInfo:reminder repeats:NO];
+        reminder.mDate = [NSDate dateWithTimeInterval:intervalUntilFire sinceDate:[NSDate date]];
         [[NSRunLoop currentRunLoop] addTimer:reminder.mTimer forMode:NSRunLoopCommonModes];
     }
 }
@@ -98,8 +100,6 @@
 
 -(void)addReminderWith:(Reminder*)thisReminder
 {
-
-    
     UIBackgroundTaskIdentifier bgTask =0;
     UIApplication  *app = [UIApplication sharedApplication];
     bgTask = [app beginBackgroundTaskWithExpirationHandler:^{
@@ -124,7 +124,6 @@
         thisReminder.mTimer = [NSTimer timerWithTimeInterval:blah target:self selector:@selector(showReminder:) userInfo:thisReminder repeats:NO];
         [[NSRunLoop currentRunLoop] addTimer:thisReminder.mTimer forMode:NSRunLoopCommonModes];
     }
-    //[self showReminder:newReminder];
     
 }
 @end

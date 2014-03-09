@@ -101,6 +101,7 @@
     if(newReminder.mName)
     {
         [[MedicineReminder getInstance] addReminderWith:newReminder];
+        newReminder = [[Reminder alloc] init];
     }
 }
 

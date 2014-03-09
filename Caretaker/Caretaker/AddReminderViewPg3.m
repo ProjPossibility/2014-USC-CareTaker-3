@@ -40,6 +40,7 @@
 - (void)nextButtonAction:(id)sender
 {
     self.reminder.mDate = self.datePicker.date;
+    self.reminder.mRepeat = YES;
     [self.navigationController popToRootViewControllerAnimated:YES];
 }
 

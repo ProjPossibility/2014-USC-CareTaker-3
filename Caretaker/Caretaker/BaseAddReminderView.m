@@ -36,19 +36,17 @@
     return self;
 }
 
+-(id)initWithReminder:(Reminder *)reminder
+{
+    return self;
+}
+
 - (void)goBackButtonAction:(id)sender
 {
-    //[self.navigationController popViewControllerAnimated:YES];
 }
 
 -(void) nextButtonAction:(id)sender
 {
-    /*
-    AddReminderViewPg1 *newReminderView = [[AddReminderViewPg1 alloc] init];
-    newReminderView.controlView = [self initializeControlViewFor:newReminderView];
-    
-    [self.navigationController pushViewController:newReminderView animated:YES];
-     */
 }
 
 - (UIView *)initializeControlViewFor:(BaseAddReminderView *)reminderView
