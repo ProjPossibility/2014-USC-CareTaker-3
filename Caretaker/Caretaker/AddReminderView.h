@@ -11,7 +11,6 @@
 
 @interface AddReminderView : UIViewController<UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate>
 {
-    UINavigationBar *topBar;
     UITableView *mTableView;
     UIScrollView *controlSubView;
     UITextField *nameInput;
@@ -19,6 +18,7 @@
     UIDatePicker *datePicker;
     UIButton *choosePhotoButton;
     UIButton *reminderFreqButton;
+    UIButton *goBackButton;
     UIImageView *photoPreviewer;
     NSString *photoUid;
     int nextYCoordForView;
@@ -31,5 +31,6 @@
 
 -(void)setupControls;
 -(void)showImagePickerForSourceType:(id)sender;
+//-(void)goBackButtonAction:(id)sender;
 
 @end

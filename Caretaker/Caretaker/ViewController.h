@@ -9,14 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "MedicineReminder.h"
 #import "AccelerationLogger.h"
+#import "Reminder.h"
 
-@interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
-    MedicineReminder *medicineReminder;
     AccelerationLogger *accelLoggerPhone;
 
     int areYouOkayLackOfResponse;
     NSTimer *areYouOkayTimer;
+    
+    Reminder *newReminder;
     
     BOOL onAlertCooldown;
 }
@@ -24,9 +26,9 @@
 @property (nonatomic)           UIImagePickerController *imagePickerController;
 @property (nonatomic, strong)   UIView      *controlView;
 @property (nonatomic, strong)   UIButton    *choosePictureButton;
+@property (nonatomic, strong)   UIButton    *showPendingRemindersButton;
 @property (nonatomic, strong)   UIButton    *showNotificationButton;
 @property (nonatomic, strong)   UIButton    *showAreYouOkay;
-@property (nonatomic, strong)   UITableView *pendingReminders;
 
 -(void)setupControls;
 -(void) startMotionDetect;
