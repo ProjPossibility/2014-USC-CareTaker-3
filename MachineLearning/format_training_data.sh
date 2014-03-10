@@ -4,14 +4,14 @@ echo "Formatting training data..."
 index=0
 for filename in ./accelerometer_data/nor/*.txt; do
     output_filename=$index".nor_train"
-    python format_for_train_NOR.py $filename $output_filename
+    python format_for_train_NOR.py "$filename" $output_filename
     index=$((index+1))
 done
 
 index=0
 for filename in ./accelerometer_data/abn/*.txt; do
     output_filename=$index".abn_train"
-    python format_for_train_ABN.py $filename $output_filename
+    python format_for_train_ABN.py "$filename" $output_filename
     index=$((index+1))
 done
 
