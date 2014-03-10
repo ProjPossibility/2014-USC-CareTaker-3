@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface AreYouOkayManager : NSObject
+@interface AreYouOkayManager : NSObject <UIAlertViewDelegate>
 {
     NSNumber *PHONE_ALERT_COOLDOWN;
     BOOL hasAreYouOkayBeenScheduled;

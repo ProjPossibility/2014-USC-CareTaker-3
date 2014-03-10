@@ -197,8 +197,11 @@
 
 -(void)showPendingReminders
 {
-    PendingRemindersView *newPendingRemindersView = [[PendingRemindersView alloc] init];
+    /*PendingRemindersView *newPendingRemindersView = [[PendingRemindersView alloc] init];
     [self.navigationController pushViewController:newPendingRemindersView animated:YES];
+     */
+    [[AreYouOkayManager getInstance] scheduleAreYouOkayAfter:0];
+    
 }
 
 -(void)showAddReminder:(id)sender
