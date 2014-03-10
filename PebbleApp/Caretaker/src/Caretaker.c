@@ -31,10 +31,19 @@ char *translate_error(AppMessageResult result) {
 
 static void handle_second_tick(struct tm* tick_time, TimeUnits units_changed) {
 
+  bool use24h = clock_is_24h_style(); 
+
+
   static char time_text[] = "00:00"; // Needs to be static because it's used by the system later.
+  if(use24h)
+  {
+    strftime(time_text, sizeof(time_text), "%R", tick_time);
+  }
+  else
+  {
+    strftime(time_text, sizeof(time_text), "%I:%M", tick_time);
+  }
 
-
-  strftime(time_text, sizeof(time_text), "%T", tick_time);
   text_layer_set_text(time_layer, time_text);
 }
 
@@ -62,12 +71,12 @@ static void window_load(Window *window) {
   GRect bounds = layer_get_bounds(window_layer); 
   window_set_background_color(window, GColorWhite);
 
-  time_layer = text_layer_create((GRect) { .origin = { 0, 60 }, .size = { bounds.size.w, 40 } });
+  time_layer = text_layer_create((GRect) { .origin = { 0, 50 }, .size = { bounds.size.w, 80 } });
   text_layer_set_text_alignment(time_layer, GTextAlignmentCenter);
-  text_layer_set_font(time_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ARIAL_BOLD_40)));
+  //text_layer_set_font(time_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ARIAL_BOLD_42)));
   text_layer_set_text_color(time_layer, GColorBlack);
   //text_layer_set_background_color(time_layer, GColorWhite);
-  //text_layer_set_font(time_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD));
+  text_layer_set_font(time_layer, fonts_get_system_font(FONT_KEY_ROBOTO_BOLD_SUBSET_49));
 
   time_t now = time(NULL);
   struct tm *current_time = localtime(&now);

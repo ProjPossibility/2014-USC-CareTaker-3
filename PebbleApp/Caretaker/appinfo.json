@@ -16,7 +16,7 @@
       {
         "characterRegex": "[:0-9]",
         "type": "font",
-        "name": "FONT_ARIAL_BOLD_40",
+        "name": "FONT_ARIAL_BOLD_42",
         "file": "fonts/Arial-Bold.ttf"
       }
     ]
