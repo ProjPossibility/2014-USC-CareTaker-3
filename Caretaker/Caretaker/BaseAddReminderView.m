@@ -16,10 +16,13 @@
 
 @implementation BaseAddReminderView
 
+
+
 - (id)initWithControlView:(UIView*)inControlView
 {
     self = [super init];
     if (self) {
+        careTakerRed = [UIColor colorWithRed:0.729 green:0.243f blue:0.255f alpha:1.0f];
         [self.view setBackgroundColor:[UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f]];
         self.view = inControlView;
     }
@@ -30,6 +33,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        careTakerRed = [UIColor colorWithRed:0.729 green:0.243f blue:0.255f alpha:1.0f];
         [self.view setBackgroundColor:[UIColor colorWithRed:1.0f green:1.0f blue:1.0f alpha:1.0f]];
         self.controlView = [self initializeControlViewFor:self];
     }
@@ -38,6 +42,8 @@
 
 -(id)initWithReminder:(Reminder *)reminder
 {
+    careTakerRed = [UIColor colorWithRed:0.729 green:0.243f blue:0.255f alpha:1.0f];
+
     return self;
 }
 
@@ -56,13 +62,13 @@
     
     self.goBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 0, SCWIDTH - 10, 60)];
     [self.goBackButton setTitle:@"Go Back" forState:UIControlStateNormal];
-    [self.goBackButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
+    [self.goBackButton setBackgroundColor:careTakerRed];
     [self.goBackButton addTarget:reminderView action:@selector(goBackButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [newControlView addSubview:self.goBackButton];
     
     self.nextButton = [[UIButton alloc] initWithFrame:CGRectMake(5, SCHEIGHT - 110, SCWIDTH - 10, 60)];
     [self.nextButton setTitle:@"Next" forState:UIControlStateNormal];
-    [self.nextButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
+    [self.nextButton setBackgroundColor:careTakerRed];
     [self.nextButton addTarget:reminderView action:@selector(nextButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [newControlView addSubview:self.nextButton];
     return newControlView;

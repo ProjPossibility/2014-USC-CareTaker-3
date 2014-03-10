@@ -46,7 +46,7 @@
     
     finishedButton = [[UIButton alloc] initWithFrame:CGRectMake(5, self.nextButton.frame.origin.y - 70, self.nextButton.frame.size.width, self.nextButton.frame.size.height)];
     [finishedButton setTitle:@"Finish" forState:UIControlStateNormal];
-    [finishedButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
+    [finishedButton setBackgroundColor:careTakerRed];
     [finishedButton addTarget:self action:@selector(finishedButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [self.controlView addSubview:finishedButton];
 }

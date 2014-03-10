@@ -14,6 +14,7 @@
 
 @interface BaseAddReminderView : UIViewController <UITextFieldDelegate>
 {
+    UIColor *careTakerRed;
 }
 
 @property (nonatomic, strong) UIView* controlView;

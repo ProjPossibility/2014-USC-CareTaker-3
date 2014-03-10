@@ -32,7 +32,7 @@
     UIButton *newButton = [[UIButton alloc] initWithFrame:CGRectMake((bounds.size.width - 280)/2, bounds.origin.y, 300, bounds.size.height)];
     [newButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     [newButton setTitle:title forState:UIControlStateNormal];
-    [newButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
+    [newButton setBackgroundColor:[UIColor colorWithRed:0.729 green:0.243f blue:0.255f alpha:1.0f]];
     [newButton layer].cornerRadius = 4;
     [newButton layer].borderWidth = 1;
     [newButton layer].borderColor = [UIColor colorWithRed:0.360784314f green:0.605882353f blue:1.0f alpha:1.0f].CGColor;
@@ -197,10 +197,8 @@
 
 -(void)showPendingReminders
 {
-    /*PendingRemindersView *newPendingRemindersView = [[PendingRemindersView alloc] init];
+    PendingRemindersView *newPendingRemindersView = [[PendingRemindersView alloc] init];
     [self.navigationController pushViewController:newPendingRemindersView animated:YES];
-     */
-    [[AreYouOkayManager getInstance] scheduleAreYouOkayAfter:0];
     
 }
 

@@ -38,7 +38,7 @@
     [mPendingReminders setDataSource:self];
     
     goBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 30, 310, 60)];
-    [goBackButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
+    [goBackButton setBackgroundColor:[UIColor colorWithRed:0.729 green:0.243f blue:0.255f alpha:1.0f]];
     [goBackButton addTarget:self action:@selector(goBackButtonAction) forControlEvents:UIControlEventTouchUpInside];
     [goBackButton setTitle:@"Go Back" forState:UIControlStateNormal];
     [controlView addSubview:goBackButton];

@@ -62,7 +62,7 @@
     }
     else
     {
-        [self.choosePhotoButton setBackgroundColor:[UIColor colorWithRed:0.0f green:0.0f blue:1.0f alpha:1.0f]];
+        [self.choosePhotoButton setBackgroundColor:careTakerRed];
         [self.choosePhotoButton setTitle:@"Choose A Photo" forState:UIControlStateNormal];
     }
 
