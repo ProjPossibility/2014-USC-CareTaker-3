@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "NotificationManager.h"
+#import "AreYouOkayManager.h"
 
 @interface AppDelegate () <PBPebbleCentralDelegate> {
     PBWatch *_targetWatch;
@@ -139,8 +140,9 @@
             
             [accelLoggerPebble logDataX:x Y:y Z:z];
             
-            if((fabs(z) > 2.5 || fabs(x) > 2.5  || fabs(y) > 2.5) && !onAlertCooldown) {
-                [newViewController showAreYouOkay:nil];
+            if((fabs(z) > 2.5 || fabs(x) > 2.5) && !onAlertCooldown) {
+                //[newViewController showAreYouOkay:nil];
+                [[AreYouOkayManager getInstance] scheduleAreYouOkayAfter:0];
                 [[NotificationManager getInstance] scheduleNewLocalNotification:@"ALERT: PEBBLE SHAKE!" After:0];
                 [accelLoggerPebble logString:@"PEBBLE SHAKE ALERT"];
                 onAlertCooldown = YES;

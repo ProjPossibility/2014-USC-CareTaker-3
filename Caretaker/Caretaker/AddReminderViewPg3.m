@@ -7,6 +7,7 @@
 //
 
 #import "AddReminderViewPg3.h"
+#import "NotificationManager.h"
 
 @interface AddReminderViewPg3 ()
 
@@ -40,10 +41,23 @@
 
 - (void)nextButtonAction:(id)sender
 {
-    self.reminder.mDate = self.datePicker.date;
-    self.reminder.mRepeat = YES;
-    //[self.navigationController popToRootViewControllerAnimated:YES];
-    [self.navigationController popToViewController:self.rootView animated:YES];
+    if([self validateDate])
+    {
+        self.reminder.mDate = self.datePicker.date;
+        self.reminder.mRepeat = YES;
+        //[self.navigationController popToRootViewControllerAnimated:YES];
+        [self.navigationController popToViewController:self.rootView animated:YES];
+    }
+    else
+    {
+        [[NotificationManager getInstance] scheduleNewLocalNotification:@"Date is too early" After:0];
+    }
+}
+
+- (BOOL)validateDate
+{
+    NSDate *laterDate = [self.datePicker.date laterDate:[NSDate date]];
+    return [self.datePicker.date isEqualToDate:laterDate];
 }
 
 
