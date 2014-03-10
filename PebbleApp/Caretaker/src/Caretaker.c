@@ -1,7 +1,7 @@
 #include <pebble.h>
 
 static Window *window;
-static TextLayer *text_layer;
+static TextLayer *time_layer;
 
 enum {
   CARETAKER_KEY_ACCEL_X = 0x01,
@@ -29,16 +29,26 @@ char *translate_error(AppMessageResult result) {
   }
 }
 
+static void handle_second_tick(struct tm* tick_time, TimeUnits units_changed) {
+
+  static char time_text[] = "00:00"; // Needs to be static because it's used by the system later.
+
+
+  strftime(time_text, sizeof(time_text), "%T", tick_time);
+  text_layer_set_text(time_layer, time_text);
+}
+
+
 static void select_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(text_layer, "Select");
+  //text_layer_set_text(text_layer, "Select");
 }
 
 static void up_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(text_layer, "Up");
+  //text_layer_set_text(text_layer, "Up");
 }
 
 static void down_click_handler(ClickRecognizerRef recognizer, void *context) {
-  text_layer_set_text(text_layer, "Down");
+  //text_layer_set_text(text_layer, "Down");
 }
 
 static void click_config_provider(void *context) {
@@ -49,16 +59,26 @@ static void click_config_provider(void *context) {
 
 static void window_load(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_bounds(window_layer);
+  GRect bounds = layer_get_bounds(window_layer); 
+  window_set_background_color(window, GColorWhite);
 
-  text_layer = text_layer_create((GRect) { .origin = { 0, 72 }, .size = { bounds.size.w, 20 } });
-  text_layer_set_text(text_layer, "Press a button");
-  text_layer_set_text_alignment(text_layer, GTextAlignmentCenter);
-  layer_add_child(window_layer, text_layer_get_layer(text_layer));
+  time_layer = text_layer_create((GRect) { .origin = { 0, 60 }, .size = { bounds.size.w, 40 } });
+  text_layer_set_text_alignment(time_layer, GTextAlignmentCenter);
+  text_layer_set_font(time_layer, fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_ARIAL_BOLD_40)));
+  text_layer_set_text_color(time_layer, GColorBlack);
+  //text_layer_set_background_color(time_layer, GColorWhite);
+  //text_layer_set_font(time_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD));
+
+  time_t now = time(NULL);
+  struct tm *current_time = localtime(&now);
+  handle_second_tick(current_time, SECOND_UNIT);
+  tick_timer_service_subscribe(SECOND_UNIT, &handle_second_tick);
+
+  layer_add_child(window_layer, text_layer_get_layer(time_layer));
 }
 
 static void window_unload(Window *window) {
-  text_layer_destroy(text_layer);
+  text_layer_destroy(time_layer);
 }
 
 static void accel_msg(float x, float y, float z) {
@@ -119,6 +139,7 @@ static void app_message_init(void) {
 
 static void init(void) {
   window = window_create();
+  window_set_fullscreen(window, true);  
   window_set_click_config_provider(window, click_config_provider);
   window_set_window_handlers(window, (WindowHandlers) {
     .load = window_load,

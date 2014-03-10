@@ -12,6 +12,13 @@
     "dummy": 0
   },
   "resources": {
-    "media": []
+    "media": [
+      {
+        "characterRegex": "[:0-9]",
+        "type": "font",
+        "name": "FONT_ARIAL_BOLD_40",
+        "file": "fonts/Arial-Bold.ttf"
+      }
+    ]
   }
 }
