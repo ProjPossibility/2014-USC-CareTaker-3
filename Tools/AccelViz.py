@@ -11,6 +11,8 @@ class Example(Frame):
     canvasWidth = 1280
     canvasHeight = 720
 
+    drawVerticals = False
+
     def __init__(self, parent, filestring):
         Frame.__init__(self, parent)   
          
@@ -45,7 +47,7 @@ class Example(Frame):
             canvas.create_line(graphOriginX + (graphScaleX * i), graphOriginY - int(graphHeight * self.dataXArray[i]), graphOriginX + (graphScaleX * (i + 1)), graphOriginY - int(graphHeight * self.dataXArray[i + 1]), fill="red")
             canvas.create_line(graphOriginX + (graphScaleX * i), graphOriginY - int(graphHeight * self.dataYArray[i]), graphOriginX + (graphScaleX * (i + 1)), graphOriginY - int(graphHeight * self.dataYArray[i + 1]), fill="green")
             canvas.create_line(graphOriginX + (graphScaleX * i), graphOriginY - int(graphHeight * self.dataZArray[i]), graphOriginX + (graphScaleX * (i + 1)), graphOriginY - int(graphHeight * self.dataZArray[i + 1]), fill="blue")
-            if i % 10 == 0:
+            if i % 10 == 0 and self.drawVerticals:
                 canvas.create_line(graphOriginX + (graphScaleX * i), graphOriginY - int(graphHeight), graphOriginX + (graphScaleX * (i)), graphOriginY + int(graphHeight), fill="black")
 
 
@@ -89,6 +91,11 @@ class Example(Frame):
 def main():
 
     filename = sys.argv[1]
+
+    Example.drawVerticals = False
+    if len(sys.argv) == 3:
+        if sys.argv[2] == '-v':
+            Example.drawVerticals = True
   
     root = Tk()
     ex = Example(root, filename)
