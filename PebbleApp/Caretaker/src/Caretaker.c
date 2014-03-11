@@ -44,7 +44,19 @@ static void handle_second_tick(struct tm* tick_time, TimeUnits units_changed) {
     strftime(time_text, sizeof(time_text), "%I:%M", tick_time);
   }
 
-  text_layer_set_text(time_layer, time_text);
+  static char time_copy[5];
+  if(time_text[0] == '0')
+  {
+    for(int index = 0; index < 5; index++)
+    {
+      time_copy[index] = time_text[index + 1];
+    }
+    text_layer_set_text(time_layer, time_copy);
+  }
+  else
+  {
+    text_layer_set_text(time_layer, time_text);
+  }
 }
 
 

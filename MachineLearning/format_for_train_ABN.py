@@ -59,7 +59,7 @@ def format():
         print "Not enough arguments: need an input filename and an output filename. Quitting..."
         sys.exit(0)
 
-    print "Formatting..."
+    print "Formatting ", input_filename, "..."
     output_file = open(output_filename, 'w')
 
     sample = Sample()
@@ -67,12 +67,24 @@ def format():
     with open(input_filename) as f:
         for index in range(0,10):
             line = f.readline()
+            if line[0] == "$":
+                index -= 1
+                print line
+                continue
+
             line = line.rstrip("\n")
             data_arr = line.split('/')
-            new_data = DataPoint(data_arr[0], data_arr[1], data_arr[2])
+            if len(data_arr) < 4:
+                continue
+
+            new_data = DataPoint(data_arr[1], data_arr[2], data_arr[3])
             sample.appendData(new_data)       
 
         for line in f:
+            if line[0] == "$":
+                print line
+                continue
+
             sample.calc()
             output_line = "ABN "      
             output_line += str(sample.avgX)
@@ -91,7 +103,10 @@ def format():
             dummy = sample.data_list.popleft()
             line = line.rstrip("\n")
             data_arr = line.split('/')
-            new_data = DataPoint(data_arr[0], data_arr[1], data_arr[2])
+            if len(data_arr) < 4:
+                continue
+
+            new_data = DataPoint(data_arr[1], data_arr[2], data_arr[3])
             sample.appendData(new_data)         
         
             
