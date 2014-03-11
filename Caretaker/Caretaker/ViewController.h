@@ -33,6 +33,7 @@
 -(void)setupControls;
 -(void) startMotionDetect;
 - (void)showAreYouOkay:(id)sender;
+-(void)writeDataToFile;
 
 
 @end

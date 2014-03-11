@@ -191,6 +191,7 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
         QuietLog(@"XKCVNSFB#*HFOH");
+    [newViewController writeDataToFile];
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 

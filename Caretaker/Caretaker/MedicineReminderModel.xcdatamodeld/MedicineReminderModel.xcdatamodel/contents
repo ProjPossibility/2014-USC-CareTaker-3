@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="3401" systemVersion="13C64" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Reminder" syncable="YES">
+        <attribute name="mDate" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="mImageUid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mLocalNotification" optional="YES" attributeType="Binary" syncable="YES"/>
+        <attribute name="mName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mQuantity" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mRepeatFrequency" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="mTimer" optional="YES" attributeType="Binary" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Reminder" positionX="160" positionY="192" width="128" height="150"/>
+    </elements>
+</model>

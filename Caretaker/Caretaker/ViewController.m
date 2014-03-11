@@ -114,6 +114,15 @@
     
 }
 
+- (void)writeDataToFile
+{
+    QuietLog(@"ViewController is writing out data");
+    
+    [[MedicineReminder getInstance] dumpRemindersToDatabase];
+    
+    QuietLog(@"ViewController finished writing out data");
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -165,6 +174,7 @@
     
     return motionManager;
 }
+
 
 - (void)startMotionDetect
 {
