@@ -50,7 +50,7 @@
     }
     else
     {
-        [[NotificationManager getInstance] scheduleNewLocalNotification:@"Date is too early" After:0];
+        [[NotificationManager getInstance] scheduleNewLocalNotification:@"Error" WithMsg:@"Date is too early" After:0];
     }
 }
 

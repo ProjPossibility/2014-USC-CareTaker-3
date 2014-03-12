@@ -15,20 +15,22 @@
 
 @implementation NotificationManager
 
-- (UILocalNotification *)scheduleNewLocalNotification:(NSString*)notificationMsg After:(NSTimeInterval)seconds
+- (UILocalNotification *)scheduleNewLocalNotification:(NSString *)notificationTitle WithMsg:(NSString*)notificationMsg After:(NSTimeInterval)seconds
 {
     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    localNotif.alertAction = notificationTitle;
     localNotif.alertBody = notificationMsg;
     localNotif.fireDate = [NSDate dateWithTimeIntervalSinceNow:seconds];
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];
     return localNotif;
 }
 
-- (UILocalNotification *)updateLocalNotification:(UILocalNotification *)localNotification WithMsg:(NSString *)notificationMsg After:(NSTimeInterval)seconds
+- (UILocalNotification *)updateLocalNotification:(UILocalNotification *)localNotification WithTitle:(NSString *)notificationTitle WithMsg:(NSString*)notificationMsg After:(NSTimeInterval)seconds
 {
     [[UIApplication sharedApplication] cancelLocalNotification:localNotification];
 
     UILocalNotification *localNotif = [[UILocalNotification alloc] init];
+    localNotif.alertAction = notificationTitle;
     localNotif.alertBody = notificationMsg;
     localNotif.fireDate = [NSDate dateWithTimeIntervalSinceNow:seconds];
     [[UIApplication sharedApplication] scheduleLocalNotification:localNotif];

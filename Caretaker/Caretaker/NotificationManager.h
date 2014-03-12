@@ -13,8 +13,8 @@
     NotificationManager *instance;
 }
 
-- (UILocalNotification *)scheduleNewLocalNotification:(NSString*)notificationMsg After:(NSTimeInterval)seconds;
-- (UILocalNotification *)updateLocalNotification:(UILocalNotification *)localNotification WithMsg:(NSString *)notificationMsg After:(NSTimeInterval)seconds;
+- (UILocalNotification *)scheduleNewLocalNotification:(NSString *)notificationTitle WithMsg:(NSString*)notificationMsg After:(NSTimeInterval)seconds;
+- (UILocalNotification *)updateLocalNotification:(UILocalNotification *)localNotification WithTitle:(NSString *)notificationTitle WithMsg:(NSString*)notificationMsg After:(NSTimeInterval)seconds;
 + (NotificationManager*) getInstance;
 
 @end

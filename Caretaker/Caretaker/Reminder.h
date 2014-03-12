@@ -30,5 +30,6 @@ typedef enum RepeatFrequency
 @property (nonatomic) RepeatFrequency mRepeatFrequency;
 
 +(RepeatFrequency) getRepeatFrequencyFor:(int)index;
++(int) getIndexForRepeatFrequency:(RepeatFrequency)repeatFrequency;
 
 @end

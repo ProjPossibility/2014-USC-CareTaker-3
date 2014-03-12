@@ -89,6 +89,7 @@
     
     [self setupControls];
     [self startMotionDetect];
+    [MedicineReminder getInstance];
     
 	// Do any additional setup after loading the view, typically from a nib.
 }
@@ -192,7 +193,7 @@
                             if((fabs(data.acceleration.z) > 2.5 || fabs(data.acceleration.x) > 2.5) && !onAlertCooldown) {
                                 //[self showAreYouOkay:nil];
                                 [[AreYouOkayManager getInstance] scheduleAreYouOkayAfter:0];
-                                [[NotificationManager getInstance] scheduleNewLocalNotification:@"ALERT: PHONE SHAKE!" After:0];
+                                [[NotificationManager getInstance] scheduleNewLocalNotification:@"Alert!" WithMsg:@"ALERT: PHONE SHAKE!" After:0];
                                 [accelLoggerPhone logString:@"PHONE SHAKE ALERT"];
                                 
                                 NSTimer *cooldownTimer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(endCooldown) userInfo:Nil repeats:NO];

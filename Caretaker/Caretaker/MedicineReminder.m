@@ -58,6 +58,10 @@
     [managedReminderObject setValue:reminder.mDate forKey:@"mDate"];
     NSString *reminderImageUrl = [NSString stringWithFormat:@"%@", reminder.mImageUid];
     [managedReminderObject setValue:reminderImageUrl forKey:@"mImageUid"];
+    NSNumber *repeatFrequencyIndex = [NSNumber numberWithInt:[Reminder getIndexForRepeatFrequency:reminder.mRepeatFrequency]];
+    [managedReminderObject setValue:repeatFrequencyIndex forKey:@"mRepeatFrequency"];
+    //[managedReminderObject setValue:reminder.mNotification forKey:@"mNotification"];
+    
     QuietLog(@"imageURL: %@", reminder.mImageUid);
     NSError *error;
     if (![self.managedObjectContext save:&error]) {
@@ -79,6 +83,9 @@
         newReminder.mQuantity = [info valueForKey:@"mQuantity"];
         newReminder.mImageUid = [info valueForKey:@"mImageUid"];
         newReminder.mDate = [info valueForKey:@"mDate"];
+        NSNumber *reminderRepeatFrequency = [info valueForKey:@"mRepeatFrequency"];
+        newReminder.mRepeatFrequency = [Reminder getRepeatFrequencyFor:[reminderRepeatFrequency integerValue]];
+        //newReminder.mNotification = [info valueForKey:@"mNotificaton"];
         [self fetchUIImageFromAssetLibraryForURL:newReminder.mImageUid];
         //need to do date checking to see which reminders need to be updated
         
@@ -100,7 +107,14 @@
             CGImageRef iref = [rep fullResolutionImage];
             if (iref) {
                 UIImage *largeImage = [UIImage imageWithCGImage:iref];
-                [self.mImages setObject:[[UIImageView alloc]initWithImage:largeImage] forKey:assetURL];
+                UIGraphicsBeginImageContextWithOptions(CGSizeMake(320, 240), NO, 0.0);
+                [largeImage drawInRect:CGRectMake(0, 0, 320, 240)];
+                largeImage = UIGraphicsGetImageFromCurrentImageContext();
+                
+                if(![self.mImages objectForKey:assetURL])
+                {
+                    [self.mImages setObject:[[UIImageView alloc] initWithImage:largeImage] forKey:assetURL];
+                }
                 QuietLog(@"FOUND IMAGE YAYA");
             }
         };
@@ -145,7 +159,7 @@
     {
         NSTimeInterval intervalUntilFire = [self getTimeIntervalForFrequency:reminder.mRepeatFrequency];
         reminder.mTimer = [NSTimer timerWithTimeInterval:intervalUntilFire target:self selector:@selector(showReminder:) userInfo:reminder repeats:NO];
-        reminder.mNotification = [[NotificationManager getInstance] scheduleNewLocalNotification:[NSString stringWithFormat:@"Reminder: Take %@ %@", reminder.mName, reminder.mQuantity] After:intervalUntilFire];
+        reminder.mNotification = [[NotificationManager getInstance] scheduleNewLocalNotification:@"Reminder" WithMsg:[NSString stringWithFormat:@"Reminder: Take %@ %@", reminder.mName, reminder.mQuantity] After:intervalUntilFire];
         reminder.mDate = [NSDate dateWithTimeInterval:intervalUntilFire sinceDate:[NSDate date]];
         [[NSRunLoop currentRunLoop] addTimer:reminder.mTimer forMode:NSRunLoopCommonModes];
     }
@@ -179,6 +193,7 @@
     [self addReminderWith:newReminder];
     [self addReminderWith:newReminder1];
 }
+
 -(NSTimeInterval) getTimeIntervalForFrequency:(RepeatFrequency)frequency
 {
     //woooo magic numbers
@@ -211,7 +226,7 @@
         NSTimeInterval blah = [thisReminder.mDate timeIntervalSinceDate:[NSDate date]];
         NSTimer *newTimer = [NSTimer timerWithTimeInterval:blah target:self selector:@selector(showReminder:) userInfo:thisReminder repeats:NO];
         thisReminder.mTimer = newTimer;
-        thisReminder.mNotification = [[NotificationManager getInstance] scheduleNewLocalNotification:[NSString stringWithFormat:@"Reminder: Take %@ %@", thisReminder.mName, thisReminder.mQuantity] After:blah];
+        thisReminder.mNotification = [[NotificationManager getInstance] scheduleNewLocalNotification:@"Reminder" WithMsg:[NSString stringWithFormat:@"Reminder: Take %@ %@", thisReminder.mName, thisReminder.mQuantity] After:blah];
         [[NSRunLoop currentRunLoop] addTimer:thisReminder.mTimer forMode:NSRunLoopCommonModes];
     }
     else
@@ -220,7 +235,7 @@
         [thisReminder.mTimer invalidate];
         NSTimeInterval blah = [thisReminder.mDate timeIntervalSinceDate:[NSDate date]];
         thisReminder.mTimer = [NSTimer timerWithTimeInterval:blah target:self selector:@selector(showReminder:) userInfo:thisReminder repeats:NO];
-        thisReminder.mNotification = [[NotificationManager getInstance] updateLocalNotification:thisReminder.mNotification WithMsg:[NSString stringWithFormat:@"Reminder: Take %@ %@", thisReminder.mName, thisReminder.mQuantity] After:blah];
+        thisReminder.mNotification = [[NotificationManager getInstance] updateLocalNotification:thisReminder.mNotification WithTitle:@"Reminder" WithMsg:[NSString stringWithFormat:@"Reminder: Take %@ %@", thisReminder.mName, thisReminder.mQuantity] After:blah];
         [[NSRunLoop currentRunLoop] addTimer:thisReminder.mTimer forMode:NSRunLoopCommonModes];
     }
     
@@ -266,29 +281,7 @@
     NSError *error = nil;
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:[self managedObjectModel]];
     if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType configuration:nil URL:storeURL options:nil error:&error]) {
-        /*
-         Replace this implementation with code to handle the error appropriately.
-         
-         abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-         
-         Typical reasons for an error here include:
-         * The persistent store is not accessible;
-         * The schema for the persistent store is incompatible with current managed object model.
-         Check the error message to determine what the actual problem was.
-         
-         
-         If the persistent store is not accessible, there is typically something wrong with the file path. Often, a file URL is pointing into the application's resources directory instead of a writeable directory.
-         
-         If you encounter schema incompatibility errors during development, you can reduce their frequency by:
-         * Simply deleting the existing store:
-         [[NSFileManager defaultManager] removeItemAtURL:storeURL error:nil]
-         
-         * Performing automatic lightweight migration by passing the following dictionary as the options parameter:
-         [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES], NSMigratePersistentStoresAutomaticallyOption, [NSNumber numberWithBool:YES], NSInferMappingModelAutomaticallyOption, nil];
-         
-         Lightweight migration will only work for a limited set of schema changes; consult "Core Data Model Versioning and Data Migration Programming Guide" for details.
-         
-         */
+
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
         abort();
     }

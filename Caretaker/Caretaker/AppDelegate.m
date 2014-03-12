@@ -117,7 +117,7 @@
     newViewController = [[ViewController alloc] init];
     //newViewController.parentNavigationController = self.navigationController;
     self.navigationController = [[UINavigationController alloc]
-                            initWithRootViewController:newViewController];
+                                 initWithRootViewController:newViewController];
     self.window.rootViewController = self.navigationController;
     [self.window makeKeyAndVisible];
     
@@ -143,7 +143,7 @@
             if((fabs(z) > 2.5 || fabs(x) > 2.5) && !onAlertCooldown) {
                 //[newViewController showAreYouOkay:nil];
                 [[AreYouOkayManager getInstance] scheduleAreYouOkayAfter:0];
-                [[NotificationManager getInstance] scheduleNewLocalNotification:@"ALERT: PEBBLE SHAKE!" After:0];
+                [[NotificationManager getInstance] scheduleNewLocalNotification:@"Alert!" WithMsg:@"ALERT: PEBBLE SHAKE!" After:0];
                 [accelLoggerPebble logString:@"PEBBLE SHAKE ALERT"];
                 onAlertCooldown = YES;
                 
@@ -155,13 +155,13 @@
         }];
     }];
     
-
+    
     
     //
     
     return YES;
 }
-							
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     QuietLog(@"I'M NOT A PIRATE GYAHLKSDJFLJ");
@@ -172,7 +172,7 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
     QuietLog(@"GOING INTO BACKGROUND! AHOY! GYARRRRGH!");
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
@@ -184,13 +184,13 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-        QuietLog(@")*HF(*#H(FHOSIDF");
+    QuietLog(@")*HF(*#H(FHOSIDF");
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application
 {
-        QuietLog(@"XKCVNSFB#*HFOH");
+    QuietLog(@"XKCVNSFB#*HFOH");
     [newViewController writeDataToFile];
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
@@ -200,8 +200,13 @@
     UIApplicationState state = [application applicationState];
     if (state == UIApplicationStateActive)
     {
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reminder" message:notification.alertBody delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alert show];
+        
+        if(![notification.alertAction isEqualToString:@"Reminder"])
+        {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:notification.alertAction message:notification.alertBody delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            
+            [alert show];
+        }
     }
     
     [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadData" object:self];

@@ -25,6 +25,21 @@
     }
 }
 
++(int) getIndexForRepeatFrequency:(RepeatFrequency)repeatFrequency
+{
+    switch(repeatFrequency)
+    {
+        case REPEAT_FREQUENCY_NONE:
+            return 0;
+        case REPEAT_FREQUENCY_DAILY:
+            return 1;
+        case REPEAT_FREQUENCY_WEEKLY:
+            return 2;
+        default:
+            return 0;
+    }
+}
+
 - (id)init
 {
     self = [super init];
