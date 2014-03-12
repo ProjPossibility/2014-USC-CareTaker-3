@@ -94,24 +94,24 @@
     {
         QuietLog(@"assetURL = %@", assetURL);
         NSURL *url = [NSURL URLWithString:[assetURL stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        ALAssetsLibraryAssetForURLResultBlock resultblock = ^(ALAsset *myasset)
+        {
+            ALAssetRepresentation *rep = [myasset defaultRepresentation];
+            CGImageRef iref = [rep fullResolutionImage];
+            if (iref) {
+                UIImage *largeImage = [UIImage imageWithCGImage:iref];
+                [self.mImages setObject:[[UIImageView alloc]initWithImage:largeImage] forKey:assetURL];
+                QuietLog(@"FOUND IMAGE YAYA");
+            }
+        };
+        
+        ALAssetsLibraryAccessFailureBlock failureBlock = ^(NSError *myError)
+        {
+            QuietLog(@"Could not access the asset");
+        };
+        
         ALAssetsLibrary *assetLibrary=[[ALAssetsLibrary alloc] init];
-        [assetLibrary assetForURL:url resultBlock:^(ALAsset *asset) {
-            /*
-            ALAssetRepresentation *rep = [asset defaultRepresentation];
-            Byte *buffer = (Byte*)malloc(rep.size);
-            NSUInteger buffered = [rep getBytes:buffer fromOffset:0.0 length:rep.size error:nil];
-             */
-            
-            
-            //NSData *data = [NSData dataWithBytesNoCopy:buffer length:buffered freeWhenDone:YES];
-            //NSData *data = [NSData dataWithContentsOfURL:url];
-            
-            //UIImage *fetchedImage = [UIImage imageWithData:data];
-            //[self.mImages setObject:fetchedImage forKey:assetURL];
-            
-        } failureBlock:^(NSError *err) {
-            NSLog(@"Could not fetch image: %@",[err localizedDescription]);
-        }];
+        [assetLibrary assetForURL:url resultBlock:resultblock failureBlock:failureBlock];
     }
     else
     {
