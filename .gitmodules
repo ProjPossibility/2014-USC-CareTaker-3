@@ -1,0 +1,3 @@
+[submodule "WebStuff/caretakerapp"]
+	path = WebStuff/caretakerapp
+	url = git@heroku.com:caretakerapp.git
