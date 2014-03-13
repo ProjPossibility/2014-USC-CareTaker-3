@@ -233,6 +233,7 @@
     {
         NSLog(@"Found reminder");
         [thisReminder.mTimer invalidate];
+        thisReminder.mTimer = nil;
         NSTimeInterval blah = [thisReminder.mDate timeIntervalSinceDate:[NSDate date]];
         thisReminder.mTimer = [NSTimer timerWithTimeInterval:blah target:self selector:@selector(showReminder:) userInfo:thisReminder repeats:NO];
         thisReminder.mNotification = [[NotificationManager getInstance] updateLocalNotification:thisReminder.mNotification WithTitle:@"Reminder" WithMsg:[NSString stringWithFormat:@"Reminder: Take %@ %@", thisReminder.mName, thisReminder.mQuantity] After:blah];

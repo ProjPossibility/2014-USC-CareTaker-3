@@ -61,6 +61,12 @@
 {
     NSLog(@"Reloading data");
     [mPendingReminders reloadData];
+    if(mEditingReminder)
+    {
+        QuietLog(@"Updating reminder");
+        [[MedicineReminder getInstance] addReminderWith:mEditingReminder];
+        mEditingReminder = nil;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,11 +78,11 @@
 - (void)selectReminder:(id)sender
 {
     UIButton *reminderViewButton = (UIButton *)sender;
-    Reminder* reminder = [[MedicineReminder getInstance].mReminders objectAtIndex:reminderViewButton.tag];
+    mEditingReminder = [[MedicineReminder getInstance].mReminders objectAtIndex:reminderViewButton.tag];
     /*EditPendingReminderView *editPendingReminderView = [[EditPendingReminderView alloc] initWithReminder:reminder];
     [self.navigationController pushViewController:editPendingReminderView animated:YES];*/
-    UpdateReminderViewPg1 *editReminderView = [[UpdateReminderViewPg1 alloc] initWithReminder:reminder];
-    editReminderView.reminder = reminder;
+    UpdateReminderViewPg1 *editReminderView = [[UpdateReminderViewPg1 alloc] initWithReminder:mEditingReminder];
+    editReminderView.reminder = mEditingReminder;
     editReminderView.rootView = self;
     [self.navigationController pushViewController:editReminderView animated:YES];
 }
