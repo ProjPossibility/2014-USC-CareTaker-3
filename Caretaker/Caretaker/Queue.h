@@ -2,12 +2,19 @@
 //  Queue.h
 //  Caretaker
 //
-//  Created by Francesca Nannizzi on 3/13/14.
-//  Copyright (c) 2014 WirelessWizards. All rights reserved.
+// http://www.codeproject.com/Tips/226893/How-to-implement-a-queue-in-Objective-C
 //
 
 #import <Foundation/Foundation.h>
 
-@interface Queue : NSObject
+@interface Queue : NSObject {
+    NSMutableArray* m_array;
+}
+
+- (void)enqueue:(id)anObject;
+- (id)dequeue;
+- (void)clear;
+
+@property (nonatomic, readonly) NSUInteger count;
 
 @end

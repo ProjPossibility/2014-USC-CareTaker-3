@@ -10,11 +10,13 @@
 #import <CoreMotion/CoreMotion.h>
 #import <PebbleKit/PebbleKit.h>
 #import "AccelerationLogger.h"
+#import "ClassificationController.h"
 
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate> {
     CMMotionManager *_motionManager;
     AccelerationLogger *accelLoggerPebble;
+    ClassificationController *classificationController;
     ViewController *newViewController;
     
     BOOL onAlertCooldown;

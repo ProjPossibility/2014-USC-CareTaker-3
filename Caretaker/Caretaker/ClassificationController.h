@@ -7,7 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreMotion/CoreMotion.h>
+#import "Queue.h"
 
-@interface ClassificationController : NSObject
+@interface ClassificationController : NSObject {
+    Queue *dataQueue;
+}
+
+
 
 @end

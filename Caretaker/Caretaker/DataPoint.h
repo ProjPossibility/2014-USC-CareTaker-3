@@ -10,4 +10,6 @@
 
 @interface DataPoint : NSObject
 
+@property (strong, nonatomic) float avg.
+
 @end
