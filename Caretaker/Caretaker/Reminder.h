@@ -18,6 +18,7 @@ typedef enum RepeatFrequency
 } RepeatFrequency;
 
 @property int mID;
+@property UILocalNotification *mNotification;
 @property (nonatomic) NSTimer *mTimer;
 @property (nonatomic, strong) NSString *mName;
 //@property (nonatomic) int mQuantity;
@@ -29,5 +30,6 @@ typedef enum RepeatFrequency
 @property (nonatomic) RepeatFrequency mRepeatFrequency;
 
 +(RepeatFrequency) getRepeatFrequencyFor:(int)index;
++(int) getIndexForRepeatFrequency:(RepeatFrequency)repeatFrequency;
 
 @end

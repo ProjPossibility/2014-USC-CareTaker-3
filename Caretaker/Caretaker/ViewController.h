@@ -18,7 +18,9 @@
     int areYouOkayLackOfResponse;
     NSTimer *areYouOkayTimer;
     
+    NSString *emergencyNumber;
     Reminder *newReminder;
+    NSURLConnection *currentConnection;
     
     BOOL onAlertCooldown;
 }
@@ -29,10 +31,12 @@
 @property (nonatomic, strong)   UIButton    *showPendingRemindersButton;
 @property (nonatomic, strong)   UIButton    *showNotificationButton;
 @property (nonatomic, strong)   UIButton    *showAreYouOkay;
+@property (nonatomic, strong)   UIButton    *sendTextMessageButton;
 
 -(void)setupControls;
 -(void) startMotionDetect;
 - (void)showAreYouOkay:(id)sender;
+-(void)writeDataToFile;
 
 
 @end

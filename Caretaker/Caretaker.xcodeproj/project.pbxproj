@@ -39,6 +39,7 @@
 		C902105718BAE04800C4464D /* PebbleKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C902105518BAE04800C4464D /* PebbleKit.framework */; };
 		C902105818BAE04800C4464D /* PebbleVendor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C902105618BAE04800C4464D /* PebbleVendor.framework */; };
 		C93B931318C99F17009E90F0 /* BaseAddReminderView.m in Sources */ = {isa = PBXBuildFile; fileRef = C93B931218C99F17009E90F0 /* BaseAddReminderView.m */; };
+		C96A446418CED7010085CFC7 /* MedicineReminderModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C96A446218CED7010085CFC7 /* MedicineReminderModel.xcdatamodeld */; };
 		C96F9B2618C9DD4600EB3BE8 /* AddReminderViewPg2.m in Sources */ = {isa = PBXBuildFile; fileRef = C96F9B2518C9DD4600EB3BE8 /* AddReminderViewPg2.m */; };
 		C9A8AD5F18A84B6500EE30BF /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C9A8AD5E18A84B6500EE30BF /* AudioToolbox.framework */; };
 		C9BF7B1818CB043D00D9FAE0 /* AddReminderViewPg3.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BF7B1718CB043D00D9FAE0 /* AddReminderViewPg3.m */; };
@@ -106,6 +107,7 @@
 		C902105618BAE04800C4464D /* PebbleVendor.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = PebbleVendor.framework; sourceTree = "<group>"; };
 		C93B931118C99F17009E90F0 /* BaseAddReminderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseAddReminderView.h; sourceTree = "<group>"; };
 		C93B931218C99F17009E90F0 /* BaseAddReminderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseAddReminderView.m; sourceTree = "<group>"; };
+		C96A446318CED7010085CFC7 /* MedicineReminderModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MedicineReminderModel.xcdatamodel; sourceTree = "<group>"; };
 		C96F9B2418C9DD4600EB3BE8 /* AddReminderViewPg2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddReminderViewPg2.h; sourceTree = "<group>"; };
 		C96F9B2518C9DD4600EB3BE8 /* AddReminderViewPg2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddReminderViewPg2.m; sourceTree = "<group>"; };
 		C9A8AD5E18A84B6500EE30BF /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -229,6 +231,8 @@
 				C9E0D14D18A6CD8400A78BC1 /* MedicineReminder.m */,
 				C9E0D15F18A7C37B00A78BC1 /* Reminder.h */,
 				C9E0D16018A7C37B00A78BC1 /* Reminder.m */,
+				53322ABC18A84094008D39A2 /* AccelerationLogger.h */,
+				53322ABD18A84094008D39A2 /* AccelerationLogger.m */,
 				53988DD718C1D15D00B7F0EA /* NotificationManager.h */,
 				53988DD818C1D15D00B7F0EA /* NotificationManager.m */,
 				C93B931118C99F17009E90F0 /* BaseAddReminderView.h */,
@@ -250,6 +254,7 @@
 				C9BF7B2718CC0D2F00D9FAE0 /* UpdateReminderViewPg3.m */,
 				C9BF7B2C18CC730F00D9FAE0 /* AreYouOkayManager.h */,
 				C9BF7B2D18CC730F00D9FAE0 /* AreYouOkayManager.m */,
+				C96A446218CED7010085CFC7 /* MedicineReminderModel.xcdatamodeld */,
 			);
 			path = Caretaker;
 			sourceTree = "<group>";
@@ -395,6 +400,7 @@
 				C9E0D14E18A6CD8400A78BC1 /* MedicineReminder.m in Sources */,
 				1D68B18F18D26BE6002048BA /* Queue.m in Sources */,
 				1D68B18B18D26A36002048BA /* ClassificationController.m in Sources */,
+				C96A446418CED7010085CFC7 /* MedicineReminderModel.xcdatamodeld in Sources */,
 				C9BF7B2418CC0AEF00D9FAE0 /* UpdateReminderViewPg2.m in Sources */,
 				1D8EDF7618A6C708009C81ED /* AppDelegate.m in Sources */,
 				1D8EDF7218A6C708009C81ED /* main.m in Sources */,
@@ -692,6 +698,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C96A446218CED7010085CFC7 /* MedicineReminderModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C96A446318CED7010085CFC7 /* MedicineReminderModel.xcdatamodel */,
+			);
+			currentVersion = C96A446318CED7010085CFC7 /* MedicineReminderModel.xcdatamodel */;
+			path = MedicineReminderModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1D8EDF5A18A6C708009C81ED /* Project object */;
 }

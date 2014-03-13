@@ -39,6 +39,24 @@
     return newButton;
 }
 
+-(void)sendTextMessageToNumber
+{
+    NSString *restCallString = [NSString stringWithFormat:@"http://caretakerapp.herokuapp.com/helloWorld?number=%@&message=%@", emergencyNumber, @"AAAAAHHH_EMERGENCY_STUFFF_AAAAAHH_CROISSANT"];
+    
+    NSURL *restURL = [NSURL URLWithString:restCallString];
+    NSURLRequest *restRequest = [NSURLRequest requestWithURL:restURL];
+
+    if(currentConnection)
+    {
+        [currentConnection cancel];
+        currentConnection = nil;
+    }
+    
+    currentConnection = [[NSURLConnection alloc] initWithRequest:restRequest delegate:self];
+    
+
+}
+
 -(void)setupControls
 {
     self.controlView = [[UIView alloc] initWithFrame:CGRectMake(0, 65, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 65)];
@@ -50,6 +68,9 @@
     self.showPendingRemindersButton = [self addButtonWithAttributes:@"SHOW PENDING REMINDERS" withTarget:self withSelector:@selector(showPendingReminders) with:CGRectMake(0, 98, 300, 88)];
     [self.controlView addSubview:self.showPendingRemindersButton];
     
+    self.sendTextMessageButton = [self addButtonWithAttributes:@"SEND TEXT MESSAGE" withTarget:self withSelector:@selector(sendTextMessageToNumber) with:CGRectMake(0, 188, 300, 88)];
+    [self.controlView addSubview:self.sendTextMessageButton];
+    
     areYouOkayLackOfResponse = 0;
     PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:1.5];
     onAlertCooldown = NO;
@@ -59,6 +80,8 @@
     
     //add the view to the viewcontroller
     [self.view addSubview: self.controlView];
+    
+    emergencyNumber = @"6263722112";
 }
 
 -(void)reEvaluateLackOfResponse
@@ -89,6 +112,7 @@
     
     [self setupControls];
     [self startMotionDetect];
+    [MedicineReminder getInstance];
     
 	// Do any additional setup after loading the view, typically from a nib.
 }
@@ -112,6 +136,15 @@
     
     [self.motionManager stopAccelerometerUpdates];
     
+}
+
+- (void)writeDataToFile
+{
+    QuietLog(@"ViewController is writing out data");
+    
+    [[MedicineReminder getInstance] dumpRemindersToDatabase];
+    
+    QuietLog(@"ViewController finished writing out data");
 }
 
 - (void)didReceiveMemoryWarning
@@ -166,6 +199,7 @@
     return motionManager;
 }
 
+
 - (void)startMotionDetect
 {
     
@@ -182,7 +216,7 @@
                             if((fabs(data.acceleration.z) > 2.5 || fabs(data.acceleration.x) > 2.5) && !onAlertCooldown) {
                                 //[self showAreYouOkay:nil];
                                 [[AreYouOkayManager getInstance] scheduleAreYouOkayAfter:0];
-                                [[NotificationManager getInstance] scheduleNewLocalNotification:@"ALERT: PHONE SHAKE!" After:0];
+                                [[NotificationManager getInstance] scheduleNewLocalNotification:@"Alert!" WithMsg:@"ALERT: PHONE SHAKE!" After:0];
                                 [accelLoggerPhone logString:@"PHONE SHAKE ALERT"];
                                 
                                 NSTimer *cooldownTimer = [NSTimer timerWithTimeInterval:60.0f target:self selector:@selector(endCooldown) userInfo:Nil repeats:NO];
