@@ -36,7 +36,7 @@
 {
     if(!hasAreYouOkayBeenScheduled)
     {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"Are you okay?"] delegate:self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"Are you okay?"] delegate:self cancelButtonTitle:@"YES, I didn't fall down" otherButtonTitles:@"YES, but I did fall down", @"NO, I'm not okay", nil];
         alertView.delegate = self;
         [alertView show];
         NSTimer *areYouOkayTimer = [NSTimer timerWithTimeInterval:[PHONE_ALERT_COOLDOWN floatValue] target:self selector:@selector(increaseAreYouOkayAlert) userInfo:Nil repeats:NO];
@@ -64,7 +64,7 @@
             QuietLog(@"Clicked YES");
             [self resetPendingNotificationLock];
             break;
-        case 1:
+        case 2:
             QuietLog(@"Clicked NO");
             [self resetPendingNotificationLock];
             break;
