@@ -39,6 +39,24 @@
     return newButton;
 }
 
+-(void)sendTextMessageToNumber
+{
+    NSString *restCallString = [NSString stringWithFormat:@"http://caretakerapp.herokuapp.com/helloWorld?number=%@&message=%@", emergencyNumber, @"AAAAAHHH_EMERGENCY_STUFFF_AAAAAHH_CROISSANT"];
+    
+    NSURL *restURL = [NSURL URLWithString:restCallString];
+    NSURLRequest *restRequest = [NSURLRequest requestWithURL:restURL];
+
+    if(currentConnection)
+    {
+        [currentConnection cancel];
+        currentConnection = nil;
+    }
+    
+    currentConnection = [[NSURLConnection alloc] initWithRequest:restRequest delegate:self];
+    
+
+}
+
 -(void)setupControls
 {
     self.controlView = [[UIView alloc] initWithFrame:CGRectMake(0, 65, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 65)];
@@ -50,6 +68,9 @@
     self.showPendingRemindersButton = [self addButtonWithAttributes:@"SHOW PENDING REMINDERS" withTarget:self withSelector:@selector(showPendingReminders) with:CGRectMake(0, 98, 300, 88)];
     [self.controlView addSubview:self.showPendingRemindersButton];
     
+    self.sendTextMessageButton = [self addButtonWithAttributes:@"SEND TEXT MESSAGE" withTarget:self withSelector:@selector(sendTextMessageToNumber) with:CGRectMake(0, 188, 300, 88)];
+    [self.controlView addSubview:self.sendTextMessageButton];
+    
     areYouOkayLackOfResponse = 0;
     PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:1.5];
     onAlertCooldown = NO;
@@ -59,6 +80,8 @@
     
     //add the view to the viewcontroller
     [self.view addSubview: self.controlView];
+    
+    emergencyNumber = @"6263722112";
 }
 
 -(void)reEvaluateLackOfResponse
