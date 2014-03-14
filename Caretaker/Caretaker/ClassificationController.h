@@ -16,6 +16,6 @@
     NSMutableArray *samples;
 }
 
-- (void) incomingDataMessageX:(float)X Y:(float)Y Z:(float)Z;
+- (void)incomingDataMessageX:(float)X Y:(float)Y Z:(float)Z;
 
 @end

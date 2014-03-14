@@ -14,6 +14,7 @@
 {
     if( self=[super init] )
     {
+        
         self.avgX = 0.0;
         self.avgY = 0.0;
         self.avgZ = 0.0;
@@ -24,6 +25,16 @@
         self.nor_weight = 0;
     }
     return self;
+}
+
+-(float*) avg
+{
+    return mAvg;
+}
+
+-(float*) var
+{
+    return mVar;
 }
 
 - (id)initWithString:(NSString *)str
@@ -58,6 +69,15 @@
         self.abn_weight = [abn intValue];
         NSNumber *nor = [formatter numberFromString:[features objectAtIndex:7]];
         self.nor_weight = [nor intValue];
+        
+        mAvg[0] = self.avgX;
+        mAvg[1] = self.avgY;
+        mAvg[2] = self.avgZ;
+        mVar[0] = self.varX;
+        mVar[1] = self.varY;
+        mVar[2] = self.varZ;
+        
+        
     }
     return self;
 }
