@@ -27,7 +27,8 @@
 {
     self = [super init];
     if (self) {
-        PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:1.5];
+        PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:10.5];
+        mCurrentAlertLevel = 0;
     }
     return self;
 }
@@ -36,23 +37,65 @@
 {
     if(!hasAreYouOkayBeenScheduled)
     {
-        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"Are you okay?"] delegate:self cancelButtonTitle:@"YES, I didn't fall down" otherButtonTitles:@"YES, but I did fall down", @"NO, I'm not okay", nil];
-        alertView.delegate = self;
-        [alertView show];
-        NSTimer *areYouOkayTimer = [NSTimer timerWithTimeInterval:[PHONE_ALERT_COOLDOWN floatValue] target:self selector:@selector(increaseAreYouOkayAlert) userInfo:Nil repeats:NO];
+        areYouOkayTimer = [NSTimer timerWithTimeInterval:0 target:self selector:@selector(increaseAreYouOkayAlert) userInfo:Nil repeats:NO];
         [[NSRunLoop currentRunLoop] addTimer:areYouOkayTimer forMode:NSRunLoopCommonModes];
         
         hasAreYouOkayBeenScheduled = YES;
     }
 }
 
+-(void) contactEmergencyContact
+{
+    QuietLog(@"CONTACTING EMERGENCY CONTACT");
+}
+
 -(void) increaseAreYouOkayAlert
 {
-    
+    if(currentAlertView)
+    {
+        [currentAlertView dismissWithClickedButtonIndex:3 animated:YES];
+        currentAlertView = nil;
+        [areYouOkayTimer invalidate];
+        areYouOkayTimer = nil;
+    }
+    mCurrentAlertLevel++;
+    switch(mCurrentAlertLevel)
+    {
+        case 1:
+        {
+            currentAlertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"Are you okay?"] delegate:self cancelButtonTitle:@"YES, I didn't fall down" otherButtonTitles:@"YES, but I did fall down", @"NO, I'm not okay", nil];
+            currentAlertView.delegate = self;
+            areYouOkayTimer = [NSTimer timerWithTimeInterval:[PHONE_ALERT_COOLDOWN floatValue] target:self selector:@selector(increaseAreYouOkayAlert) userInfo:Nil repeats:NO];
+            [[NSRunLoop currentRunLoop] addTimer:areYouOkayTimer forMode:NSRunLoopCommonModes];
+            [currentAlertView show];
+            break;
+        }
+        case 2:
+        {
+            currentAlertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"Are you okay? 2"] delegate:self cancelButtonTitle:@"YES, I didn't fall down" otherButtonTitles:@"YES, but I did fall down", @"NO, I'm not okay", nil];
+            currentAlertView.delegate = self;
+            areYouOkayTimer = [NSTimer timerWithTimeInterval:[PHONE_ALERT_COOLDOWN floatValue] target:self selector:@selector(increaseAreYouOkayAlert) userInfo:Nil repeats:NO];
+            [[NSRunLoop currentRunLoop] addTimer:areYouOkayTimer forMode:NSRunLoopCommonModes];
+            [currentAlertView show];
+            break;
+        }
+        case 3:
+        {
+            currentAlertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"Are you okay? 3"] delegate:self cancelButtonTitle:@"YES, I didn't fall down" otherButtonTitles:@"YES, but I did fall down", @"NO, I'm not okay", nil];
+            currentAlertView.delegate = self;
+            areYouOkayTimer = [NSTimer timerWithTimeInterval:[PHONE_ALERT_COOLDOWN floatValue] target:self selector:@selector(contactEmergencyContact) userInfo:Nil repeats:NO];
+            [[NSRunLoop currentRunLoop] addTimer:areYouOkayTimer forMode:NSRunLoopCommonModes];
+            [currentAlertView show];
+            break;
+        }
+    }
 }
 
 -(void) resetPendingNotificationLock
 {
+    [areYouOkayTimer invalidate];
+    areYouOkayTimer = nil;
+    mCurrentAlertLevel = 0;
     hasAreYouOkayBeenScheduled = NO;
 }
 

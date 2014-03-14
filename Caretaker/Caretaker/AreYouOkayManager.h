@@ -10,7 +10,10 @@
 
 @interface AreYouOkayManager : NSObject <UIAlertViewDelegate>
 {
+    int mCurrentAlertLevel;
     NSNumber *PHONE_ALERT_COOLDOWN;
+    NSTimer* areYouOkayTimer;
+    UIAlertView *currentAlertView;
     BOOL hasAreYouOkayBeenScheduled;
 }
 

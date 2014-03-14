@@ -80,7 +80,7 @@ typedef struct AccelDataTriplet_t {
     data.x = X;
     data.y = Y;
     data.z = Z;
-    [dataQueue enqueue:data];
+    //[dataQueue enqueue:data];
     [self classify];
     
 }
