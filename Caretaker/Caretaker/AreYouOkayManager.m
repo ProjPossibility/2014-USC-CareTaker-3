@@ -140,6 +140,7 @@
             break;
         case 0:
             QuietLog(@"Clicked NO, I didn't fall down");
+            [self sendTextMessageToNumber];
             [self resetPendingNotificationLock];
             [classificationController messageNo];
             break;
