@@ -86,12 +86,17 @@
     ABMultiValueRef phoneNumbers = ABRecordCopyValue(person,
                                                      kABPersonPhoneProperty);
     if (ABMultiValueGetCount(phoneNumbers) > 0) {
-        phone = (__bridge_transfer NSString*)
-        ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
+        phone = (__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
+        NSString *phoneDigitsOnly = [[phone componentsSeparatedByCharactersInSet:
+                                [[NSCharacterSet decimalDigitCharacterSet] invertedSet]]
+                               componentsJoinedByString:@""];
+        phone = phoneDigitsOnly;
     } else {
         phone = @"[None]";
     }
-        [AreYouOkayManager getInstance].emergencyContactName = phone;
+    
+    
+    [AreYouOkayManager getInstance].emergencyContactPhone = phone;
     CFRelease(phoneNumbers);
     
     QuietLog(@"Emergency Contact set as: %@ with phone: %@", fullName, phone);
@@ -112,14 +117,55 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
-      shouldContinueAfterSelectingPerson:(ABRecordRef)person
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
 {
+    currentPotentialContact = person;
     
-    [self setEmergencyContactPerson:person];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    //Verify selecteion
+    NSString* firstName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+    NSString* lastName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
+    NSString* fullName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+    
+    NSString* phone = nil;
+    ABMultiValueRef phoneNumbers = ABRecordCopyValue(person,
+                                                     kABPersonPhoneProperty);
+    if (ABMultiValueGetCount(phoneNumbers) > 0) {
+        phone = (__bridge_transfer NSString*)
+        ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
+    } else {
+        phone = @"[None]";
+    }
+    CFRelease(phoneNumbers);
+    
+    //Set up alert view
+    UIAlertView *verifyAlertView = [[UIAlertView alloc]
+                                    initWithTitle:@"CONFIRM"
+                                          message:[NSString stringWithFormat:@"Pick %@\n%@\nas your emergency contact?", fullName, phone]
+                                         delegate:self
+                                cancelButtonTitle:@"No"
+                                otherButtonTitles:@"Yes", nil];
+    verifyAlertView.delegate = self;
+    [verifyAlertView show];
     
     return NO;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch(buttonIndex)
+    {
+        case 0:
+            QuietLog(@"Clicked NO");
+            break;
+        case 1:
+            QuietLog(@"Clicked YES");
+            [self setEmergencyContactPerson:currentPotentialContact];
+            currentPotentialContact = nil;
+            [self dismissViewControllerAnimated:YES completion:nil];            
+            break;
+        default:
+            break;
+    }
 }
 
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
@@ -209,22 +255,6 @@
     
 }
 
-
--(void) alertView: ( UIAlertView *) alertView clickedButtonAtIndex: ( NSInteger ) buttonIndex
-{
-    switch(buttonIndex)
-    {
-        case 0:
-            [areYouOkayTimer invalidate];
-            break;
-        case 1:
-            [areYouOkayTimer invalidate];
-            break;
-        default:
-            NSLog(@"THIS SHOUL NEVER EVER EVER HAPPEN");
-            break;
-    }
-}
 
 - (void)endCooldown
 {
