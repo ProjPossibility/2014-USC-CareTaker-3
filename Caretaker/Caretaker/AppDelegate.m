@@ -38,6 +38,10 @@
         accelLoggerPebble = [[AccelerationLogger alloc] initWithFileFlair:@"Pebble"];
         classificationController = [[ClassificationController alloc] init];
         
+        [classificationController incomingDataMessageX:0.5 Y:0.5 Z:0.5];
+        [classificationController incomingDataMessageX:0.5 Y:0.6 Z:0.3];
+        [classificationController incomingDataMessageX:0.5 Y:0.1 Z:0.2];
+        
         PEBBLE_ALERT_COOLDOWN = [NSNumber numberWithFloat:2];
         onAlertCooldown = NO;
     }

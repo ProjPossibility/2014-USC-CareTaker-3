@@ -29,6 +29,8 @@
         self.x = x;
         self.y = y;
         self.z = z;
+        
+        //mValues = (float*)malloc(3*sizeof(float));
         mValues[0] = x;
         mValues[1] = y;
         mValues[2] = z;
@@ -138,7 +140,7 @@ const float SIM_THRESHOLD = 0.98;
     avgY = (avgY/dataQueue.count);
     avgZ = (avgZ/dataQueue.count);
     
-    cblas_sscal(3, dataQueue.count, avg, 1);
+    cblas_sscal(3, 1.0 / dataQueue.count, avg, 1);
 
     for(NSUInteger index = 0; index < dataQueue.count; index++)
     {
@@ -154,7 +156,7 @@ const float SIM_THRESHOLD = 0.98;
         
         for(int i = 0; i < 3; ++i)
         {
-            avg[i] = pow(accelData[i], 2.0);
+            var[i] = pow(accelData[i], 2.0);
         }
     }
     
@@ -162,7 +164,7 @@ const float SIM_THRESHOLD = 0.98;
     varY = (varY/dataQueue.count);
     varZ = (varZ/dataQueue.count);
     
-    cblas_sscal(3, dataQueue.count, var, 1);
+    cblas_sscal(3, 1.0/dataQueue.count, var, 1);
     
     sample.avgX = avgX;
     sample.avgY = avgY;
@@ -196,7 +198,8 @@ const float SIM_THRESHOLD = 0.98;
     float avgVar[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     cblas_scopy(3, [sample avg], 1, avgVar, 1);
     cblas_scopy(3, [sample var], 1, avgVar + 3, 1);
-    return cblas_scnrm2(6, avgVar, 1);
+    float mag =  cblas_snrm2(6, avgVar, 1);
+    return mag;
 }
 
 - (void) classify
@@ -242,8 +245,8 @@ const float SIM_THRESHOLD = 0.98;
         }
     }
     
-    QuietLog(@"Cosine_sim, %@\nCosine_sim_f, %@", cosine_sim, cosine_sim_f);
-    QuietLog(@"Sim_index, %@\nSim_index_f, %@", sim_index, sim_index_f);
+    NSLog(@"Cosine_sim, %f\nCosine_sim_f, %f", cosine_sim, cosine_sim_f);
+    NSLog(@"Sim_index, %f\nSim_index_f, %f", sim_index, sim_index_f);
     
     NSUInteger class = ABN_CLASS;
     
