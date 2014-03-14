@@ -19,6 +19,7 @@
     DataSample *sampleInQuestion;
     DataSample *existingSampleToUpdate;
     float cosine_sim_in_question;
+    NSString *fileName;
 }
 
 + (ClassificationController*) getInstance;
