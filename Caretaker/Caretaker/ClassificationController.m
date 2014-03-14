@@ -229,7 +229,8 @@ const float SIM_THRESHOLD = 0.98;
             sim_index = index;
         }
 
-        float dot_product_f = cblas_sdot(3, [sample avg], 1, [sample var], 1);
+        float dot_product_f = cblas_sdot(3, [sample avg], 1, [sample2 avg], 1);
+        dot_product_f += cblas_sdot(3, [sample var], 1, [sample2 var], 1);
         float magnitude1_f = [self computeMagnitudeOfSample_f:sample];
         float magnitude2_f = [self computeMagnitudeOfSample_f:sample2];
         float test_cosine_sim_f = dot_product_f/(magnitude1_f * magnitude2_f);
@@ -240,6 +241,9 @@ const float SIM_THRESHOLD = 0.98;
             sim_index_f = index;
         }
     }
+    
+    QuietLog(@"Cosine_sim, %@\nCosine_sim_f, %@", cosine_sim, cosine_sim_f);
+    QuietLog(@"Sim_index, %@\nSim_index_f, %@", sim_index, sim_index_f);
     
     NSUInteger class = ABN_CLASS;
     
