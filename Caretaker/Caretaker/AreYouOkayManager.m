@@ -61,6 +61,11 @@
     currentConnection = [[NSURLConnection alloc] initWithRequest:restRequest delegate:self];
 }
 
+-(void) vibratePhone
+{
+    AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
+}
+
 -(void) increaseAreYouOkayAlert
 {
     if(currentAlertView)
@@ -86,8 +91,11 @@
         {
             currentAlertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"ALERT LEVEL 2: Are you okay?"] delegate:self cancelButtonTitle:@"YES, I didn't fall down" otherButtonTitles:@"YES, but I did fall down", @"NO, I'm not okay", nil];
             currentAlertView.delegate = self;
+            
+            vibrateTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(vibratePhone) userInfo:Nil repeats:YES];
             areYouOkayTimer = [NSTimer timerWithTimeInterval:[PHONE_ALERT_COOLDOWN floatValue] target:self selector:@selector(increaseAreYouOkayAlert) userInfo:Nil repeats:NO];
             [[NSRunLoop currentRunLoop] addTimer:areYouOkayTimer forMode:NSRunLoopCommonModes];
+            [[NSRunLoop currentRunLoop] addTimer:vibrateTimer forMode:NSRunLoopCommonModes];
             [currentAlertView show];
             break;
         }
@@ -108,6 +116,8 @@
     [areYouOkayTimer invalidate];
     areYouOkayTimer = nil;
     mCurrentAlertLevel = 0;
+    [vibrateTimer invalidate];
+    vibrateTimer = nil;
     hasAreYouOkayBeenScheduled = NO;
 }
 
