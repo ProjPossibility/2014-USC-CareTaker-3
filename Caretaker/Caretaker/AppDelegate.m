@@ -142,6 +142,7 @@
             
             
             [accelLoggerPebble logDataX:x Y:y Z:z];
+            [classificationController incomingDataMessageX:x Y:y Z:z];
             
             if((fabs(z) > 2.5 || fabs(x) > 2.5) && !onAlertCooldown) {
                 //[newViewController showAreYouOkay:nil];

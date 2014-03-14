@@ -25,6 +25,19 @@
     [m_array addObject:anObject];
     count = m_array.count;
 }
+
+- (id)objectAtIndex:(NSUInteger)index
+{
+    if(index < count)
+    {
+        return [m_array objectAtIndex:index];
+    }
+    else
+    {
+        return NULL;
+    }
+}
+
 - (id)dequeue
 {
     id obj = nil;
