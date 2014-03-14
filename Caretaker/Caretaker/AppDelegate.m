@@ -37,11 +37,7 @@
         
         accelLoggerPebble = [[AccelerationLogger alloc] initWithFileFlair:@"Pebble"];
         classificationController = [ClassificationController getInstance];
-        
-        [classificationController incomingDataMessageX:0.5 Y:0.5 Z:0.5];
-        [classificationController incomingDataMessageX:0.5 Y:0.6 Z:0.3];
-        [classificationController incomingDataMessageX:0.5 Y:0.1 Z:0.2];
-        
+
         PEBBLE_ALERT_COOLDOWN = [NSNumber numberWithFloat:2];
         onAlertCooldown = NO;
     }
@@ -148,16 +144,16 @@
             [accelLoggerPebble logDataX:x Y:y Z:z];
             [classificationController incomingDataMessageX:x Y:y Z:z];
             
-            if((fabs(z) > 2.5 || fabs(x) > 2.5) && !onAlertCooldown) {
+            /*if((fabs(z) > 2.5 || fabs(x) > 2.5) && !onAlertCooldown) {
                 //[newViewController showAreYouOkay:nil];
                 [[AreYouOkayManager getInstance] scheduleAreYouOkayAfter:0];
-                [[NotificationManager getInstance] scheduleNewLocalNotification:@"Alert!" WithMsg:@"ALERT: PEBBLE SHAKE!" After:0];
+                //[[NotificationManager getInstance] scheduleNewLocalNotification:@"Alert!" WithMsg:@"ALERT: PEBBLE SHAKE!" After:0];
                 [accelLoggerPebble logString:@"PEBBLE SHAKE ALERT"];
                 onAlertCooldown = YES;
                 
                 NSTimer *cooldownTimer = [NSTimer timerWithTimeInterval:[PEBBLE_ALERT_COOLDOWN floatValue] target:self selector:@selector(endCooldown) userInfo:Nil repeats:NO];
                 [[NSRunLoop currentRunLoop] addTimer:cooldownTimer forMode:NSRunLoopCommonModes];
-            }
+            }*/
             
             return YES;
         }];

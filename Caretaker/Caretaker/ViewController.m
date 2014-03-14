@@ -33,6 +33,7 @@
     [newButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     [newButton setTitle:title forState:UIControlStateNormal];
     [newButton setBackgroundColor:[UIColor colorWithRed:0.729 green:0.243f blue:0.255f alpha:1.0f]];
+    newButton.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:23.0];
     [newButton layer].cornerRadius = 4;
     [newButton layer].borderWidth = 1;
     [newButton layer].borderColor = [UIColor colorWithRed:0.360784314f green:0.605882353f blue:1.0f alpha:1.0f].CGColor;

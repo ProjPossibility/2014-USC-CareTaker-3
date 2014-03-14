@@ -63,12 +63,14 @@
     self.goBackButton = [[UIButton alloc] initWithFrame:CGRectMake(5, 0, SCWIDTH - 10, 60)];
     [self.goBackButton setTitle:@"Go Back" forState:UIControlStateNormal];
     [self.goBackButton setBackgroundColor:careTakerRed];
+    self.goBackButton.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:23.0];
     [self.goBackButton addTarget:reminderView action:@selector(goBackButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [newControlView addSubview:self.goBackButton];
     
     self.nextButton = [[UIButton alloc] initWithFrame:CGRectMake(5, SCHEIGHT - 110, SCWIDTH - 10, 60)];
     [self.nextButton setTitle:@"Next" forState:UIControlStateNormal];
     [self.nextButton setBackgroundColor:careTakerRed];
+    self.nextButton.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:23.0];
     [self.nextButton addTarget:reminderView action:@selector(nextButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [newControlView addSubview:self.nextButton];
     return newControlView;

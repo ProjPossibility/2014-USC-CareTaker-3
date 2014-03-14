@@ -9,6 +9,7 @@
 #import "AreYouOkayManager.h"
 #import "NotificationManager.h"
 #import "ClassificationController.h"
+#import <AudioToolbox/AudioServices.h>
 
 @implementation AreYouOkayManager
 

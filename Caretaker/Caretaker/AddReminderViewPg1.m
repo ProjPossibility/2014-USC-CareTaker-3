@@ -52,7 +52,7 @@
     [self.nameInput layer].borderWidth = 2;
     self.nameInput.delegate = self;
     self.nameInput.returnKeyType = UIReturnKeyDone;
-    [self.nameInput setFont:[UIFont systemFontOfSize:35]];
+    [self.nameInput setFont:[UIFont systemFontOfSize:28]];
     [self.controlView addSubview:self.nameInput];
     
     self.quantityInput = [[UITextField alloc] initWithFrame:CGRectMake(5, 210, SCWIDTH - 10, 120)];
@@ -65,7 +65,7 @@
     [self.quantityInput layer].borderWidth = 2;
     self.quantityInput.delegate = self;
     self.quantityInput.returnKeyType = UIReturnKeyDone;
-    [self.quantityInput setFont:[UIFont systemFontOfSize:35]];
+    [self.quantityInput setFont:[UIFont systemFontOfSize:28]];
     [self.controlView addSubview:self.quantityInput];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
