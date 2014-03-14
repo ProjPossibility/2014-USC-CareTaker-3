@@ -13,6 +13,7 @@
     UIView* controlView;
     
     UIButton* setName;
+    UILabel* welcomeMessage;
     UITextField* nameField;
     
     ViewController* parentViewController;
