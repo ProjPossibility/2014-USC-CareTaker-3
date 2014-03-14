@@ -14,6 +14,7 @@
 {
     if( self=[super init] )
     {
+        
         self.avgX = 0.0;
         self.avgY = 0.0;
         self.avgZ = 0.0;
@@ -24,6 +25,16 @@
         self.nor_weight = 0;
     }
     return self;
+}
+
+-(float*) avg
+{
+    return mAvg;
+}
+
+-(float*) var
+{
+    return mVar;
 }
 
 - (id)initWithString:(NSString *)str
