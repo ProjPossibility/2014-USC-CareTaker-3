@@ -8,6 +8,7 @@
 
 #import "PendingRemindersView.h"
 #import "MedicineReminder.h"
+#import "NotificationManager.h"
 #import "EditPendingReminderView.h"
 #import "UpdateReminderViewPg1.h"
 
@@ -79,12 +80,57 @@
 {
     UIButton *reminderViewButton = (UIButton *)sender;
     mEditingReminder = [[MedicineReminder getInstance].mReminders objectAtIndex:reminderViewButton.tag];
-    /*EditPendingReminderView *editPendingReminderView = [[EditPendingReminderView alloc] initWithReminder:reminder];
-    [self.navigationController pushViewController:editPendingReminderView animated:YES];*/
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"NOTICE" message:[NSString stringWithFormat:@"Do you want to edit or delete this reminder?"] delegate:self cancelButtonTitle:@"Edit" otherButtonTitles:@"Delete", nil];
+    alertView.delegate = self;
+    [alertView show];
+
+}
+
+- (void)editCurrentmEditingReminder
+{
+    if(mEditingReminder)
+    {
     UpdateReminderViewPg1 *editReminderView = [[UpdateReminderViewPg1 alloc] initWithReminder:mEditingReminder];
-    editReminderView.reminder = mEditingReminder;
-    editReminderView.rootView = self;
-    [self.navigationController pushViewController:editReminderView animated:YES];
+     editReminderView.reminder = mEditingReminder;
+     editReminderView.rootView = self;
+     [self.navigationController pushViewController:editReminderView animated:YES];
+    }
+    else
+    {
+        QuietLog(@"Attempted edit on null mEditingReminder");
+    }
+}
+
+- (void)deleteCurrentmEditingReminder
+{
+    if(mEditingReminder)
+    {
+        [[MedicineReminder getInstance] deleteReminder:mEditingReminder];
+        QuietLog(@"Deleted reminder reference count = %ld", CFGetRetainCount((__bridge CFTypeRef)mEditingReminder));
+        mEditingReminder = nil;
+    }
+    else
+    {
+        QuietLog(@"Attempted delete on null mEditingReminder");
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    QuietLog(@"Clicked on reminder");
+    switch(buttonIndex)
+    {
+        case 0:
+            QuietLog(@"Clicked Edit");
+            [self editCurrentmEditingReminder];
+            break;
+        case 1:
+            QuietLog(@"Clicked Delete");
+            [self deleteCurrentmEditingReminder];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - Table View
@@ -135,6 +181,9 @@
         [reminderViewButton addSubview: nameLabel];
         [reminderViewButton addSubview: dateLabel];
         reminderViewButton.tag = [indexPath row];
+        reminderViewButton.accessibilityLabel = [NSString stringWithFormat:@"Edit %@", currentReminder.mName];
+        reminderViewButton.accessibilityHint = @"Edits the reminder";
+        
         //need to make selectReminder take in a reminder
         [reminderViewButton addTarget:self action:@selector(selectReminder:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:reminderViewButton];

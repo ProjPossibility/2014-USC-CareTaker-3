@@ -40,6 +40,14 @@
 
 - (void)dumpRemindersToDatabase
 {
+    //clears out database before repopulating it
+    [_managedObjectContext lock];
+    NSArray *stores = [_persistentStoreCoordinator persistentStores];
+    for(NSPersistentStore *store in stores) {
+        [_persistentStoreCoordinator removePersistentStore:store error:nil];
+        [[NSFileManager defaultManager] removeItemAtPath:store.URL.path error:nil];
+    }
+    [_managedObjectContext unlock];
     for(Reminder *reminderItr in self.mReminders)
     {
         [self writeReminderToDatabase:reminderItr];
@@ -49,6 +57,8 @@
 
 - (void)writeReminderToDatabase:(Reminder *)reminder
 {
+    NSError *error;
+    
     NSManagedObject *managedReminderObject = [NSEntityDescription
                                               insertNewObjectForEntityForName:@"Reminder"
                                               inManagedObjectContext:self.managedObjectContext];
@@ -63,7 +73,6 @@
     //[managedReminderObject setValue:reminder.mNotification forKey:@"mNotification"];
     
     QuietLog(@"imageURL: %@", reminder.mImageUid);
-    NSError *error;
     if (![self.managedObjectContext save:&error]) {
         NSLog(@"Error saving reminder: %@", [error localizedDescription]);
     }
@@ -151,7 +160,7 @@
     [alertView setValue:[self.mImages objectForKey:reminder.mImageUid] forKey:@"accessoryView"];
     [alertView show];
     
-    if(!reminder.mRepeat)
+    if(reminder.mRepeatFrequency == REPEAT_FREQUENCY_NONE)
     {
         [self.mReminders removeObject: reminder];
     }
@@ -200,14 +209,22 @@
     switch(frequency)
     {
         case REPEAT_FREQUENCY_NONE:
-            return 5;
+            return 10;
         case REPEAT_FREQUENCY_DAILY:
-            return 86400;
+            return 86400; //60s*60m*24h
         case REPEAT_FREQUENCY_WEEKLY:
-            return 604800;
+            return 604800; //60s*60m*24h*7d
         default:
-            return 5;
+            return 10;
     }
+}
+
+-(void)deleteReminder:(Reminder *)inReminder
+{
+    [inReminder.mTimer invalidate];
+    inReminder.mTimer = nil;
+    [[UIApplication sharedApplication] cancelLocalNotification:inReminder.mNotification];
+    [self.mReminders removeObject:inReminder];
 }
 
 -(void)addReminderWith:(Reminder*)thisReminder

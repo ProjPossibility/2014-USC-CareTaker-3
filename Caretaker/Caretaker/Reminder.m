@@ -7,6 +7,7 @@
 //
 
 #import "Reminder.h"
+#import <Accelerate/Accelerate.h>
 
 @implementation Reminder
 
@@ -47,6 +48,12 @@
         self.mRepeatFrequency = REPEAT_FREQUENCY_NONE;
     }
     return self;
+}
+
+- (void)dealloc
+{
+    QuietLog(@"Deleting reminder for %@", self.mName);
+
 }
 
 @end

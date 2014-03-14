@@ -9,17 +9,34 @@
 #import "ClassificationController.h"
 #import "DataSample.h"
 
+//For queueing accel data
+@interface AccelDataTriplet : NSObject
+@property (nonatomic) float x;
+@property (nonatomic) float y;
+@property (nonatomic) float z;
+- (id)initWithX:(float)x Y:(float)y Z:(float)z;
+@end
+
+@implementation AccelDataTriplet : NSObject
+- (id)initWithX:(float)x Y:(float)y Z:(float)z
+{
+    self = [super init];
+    if (self) {
+        self.x = x;
+        self.y = y;
+        self.z = z;
+    }
+    return self;
+}
+@end
+//----
+
 @implementation ClassificationController
 
 const int ABN_CLASS = 1;
 const int NOR_CLASS = 0;
 const float SIM_THRESHOLD = 0.98;
 
-typedef struct AccelDataTriplet_t {
-    float x;
-    float y;
-    float z;
-} AccelDataTriplet;
 
 - (id)init
 {
@@ -76,10 +93,7 @@ typedef struct AccelDataTriplet_t {
         [dataQueue dequeue];
     }
     
-    AccelDataTriplet data;
-    data.x = X;
-    data.y = Y;
-    data.z = Z;
+    AccelDataTriplet *data = [[AccelDataTriplet alloc] initWithX:X Y:Y Z:Z];
     [dataQueue enqueue:data];
     [self classify];
     

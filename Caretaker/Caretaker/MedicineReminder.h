@@ -25,5 +25,6 @@
 -(void)addReminderWith:(Reminder*)thisReminder;
 -(void)dumpRemindersToDatabase;
 -(Reminder *)getNewReminder;
+-(void)deleteReminder:(Reminder*)inReminder;
 
 @end
