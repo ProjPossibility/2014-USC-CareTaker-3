@@ -31,6 +31,8 @@
         self.x = x;
         self.y = y;
         self.z = z;
+        
+        //mValues = (float*)malloc(3*sizeof(float));
         mValues[0] = x;
         mValues[1] = y;
         mValues[2] = z;
@@ -159,7 +161,7 @@ const int PAUSE_DATA = 1;
     avgY = (avgY/dataQueue.count);
     avgZ = (avgZ/dataQueue.count);
     
-    cblas_sscal(3, dataQueue.count, avg, 1);
+    cblas_sscal(3, 1.0 / dataQueue.count, avg, 1);
 
     for(NSUInteger index = 0; index < dataQueue.count; index++)
     {
@@ -175,7 +177,7 @@ const int PAUSE_DATA = 1;
         
         for(int i = 0; i < 3; ++i)
         {
-            avg[i] = pow(accelData[i], 2.0);
+            var[i] = pow(accelData[i], 2.0);
         }
     }
     
@@ -183,7 +185,7 @@ const int PAUSE_DATA = 1;
     varY = (varY/dataQueue.count);
     varZ = (varZ/dataQueue.count);
     
-    cblas_sscal(3, dataQueue.count, var, 1);
+    cblas_sscal(3, 1.0/dataQueue.count, var, 1);
     
     sample.avgX = avgX;
     sample.avgY = avgY;
@@ -217,7 +219,8 @@ const int PAUSE_DATA = 1;
     float avgVar[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
     cblas_scopy(3, [sample avg], 1, avgVar, 1);
     cblas_scopy(3, [sample var], 1, avgVar + 3, 1);
-    return cblas_scnrm2(6, avgVar, 1);
+    float mag =  cblas_snrm2(6, avgVar, 1);
+    return mag;
 }
 
 - (void) classify
@@ -250,7 +253,8 @@ const int PAUSE_DATA = 1;
             sim_index = index;
         }
 
-        float dot_product_f = cblas_sdot(3, [sample avg], 1, [sample var], 1);
+        float dot_product_f = cblas_sdot(3, [sample avg], 1, [sample2 avg], 1);
+        dot_product_f += cblas_sdot(3, [sample var], 1, [sample2 var], 1);
         float magnitude1_f = [self computeMagnitudeOfSample_f:sample];
         float magnitude2_f = [self computeMagnitudeOfSample_f:sample2];
         float test_cosine_sim_f = dot_product_f/(magnitude1_f * magnitude2_f);
@@ -261,6 +265,9 @@ const int PAUSE_DATA = 1;
             sim_index_f = index;
         }
     }
+    
+    NSLog(@"Cosine_sim, %f\nCosine_sim_f, %f", cosine_sim, cosine_sim_f);
+    NSLog(@"Sim_index, %f\nSim_index_f, %f", sim_index, sim_index_f);
     
     NSUInteger class = ABN_CLASS;
     
