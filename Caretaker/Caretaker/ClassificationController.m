@@ -140,7 +140,7 @@ const float SIM_THRESHOLD = 0.98;
     avgY = (avgY/dataQueue.count);
     avgZ = (avgZ/dataQueue.count);
     
-    cblas_sscal(3, 1.0 / dataQueue.count, avg, 1);
+    cblas_sscal(3, 1.0 / (float)dataQueue.count, avg, 1);
 
     for(NSUInteger index = 0; index < dataQueue.count; index++)
     {
@@ -164,7 +164,7 @@ const float SIM_THRESHOLD = 0.98;
     varY = (varY/dataQueue.count);
     varZ = (varZ/dataQueue.count);
     
-    cblas_sscal(3, 1.0/dataQueue.count, var, 1);
+    cblas_sscal(3, 1.0/(float)dataQueue.count, var, 1);
     
     sample.avgX = avgX;
     sample.avgY = avgY;
@@ -173,8 +173,10 @@ const float SIM_THRESHOLD = 0.98;
     sample.varY = varY;
     sample.varZ = varZ;
     
-    cblas_scopy(3, avg, 1, [sample avg], 1);
-    cblas_scopy(3, var, 1, [sample var], 1);
+    //cblas_scopy(3, avg, 1, [sample avg], 1);
+    memcpy([sample avg], avg, 3 * sizeof(float));
+//    cblas_scopy(3, var, 1, [sample var], 1);
+    memcpy([sample var], var, 3 * sizeof(float));
     
     return sample;
 }
@@ -196,8 +198,10 @@ const float SIM_THRESHOLD = 0.98;
 - (float) computeMagnitudeOfSample_f:(DataSample*)sample
 {
     float avgVar[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
-    cblas_scopy(3, [sample avg], 1, avgVar, 1);
-    cblas_scopy(3, [sample var], 1, avgVar + 3, 1);
+//    cblas_scopy(3, [sample avg], 1, avgVar, 1);
+    memcpy(avgVar, [sample avg], 3 * sizeof(float));
+//    cblas_scopy(3, [sample var], 1, avgVar + 3, 1);
+    memcpy(avgVar + 3, [sample var], 3 * sizeof(float));
     float mag =  cblas_snrm2(6, avgVar, 1);
     return mag;
 }

@@ -13,6 +13,7 @@
     int mCurrentAlertLevel;
     NSNumber *PHONE_ALERT_COOLDOWN;
     NSTimer* areYouOkayTimer;
+    NSTimer* vibrateTimer;
     UIAlertView *currentAlertView;
     BOOL hasAreYouOkayBeenScheduled;
     NSURLConnection *currentConnection;
