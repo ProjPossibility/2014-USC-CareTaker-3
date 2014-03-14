@@ -90,6 +90,8 @@ const int PAUSE_DATA = 1;
     if (error)
     {
         NSLog(@"Error reading file: %@", error.localizedDescription);
+        UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"DID NOT READ FILE CORRECTLY"] delegate:self cancelButtonTitle:@"Got it" otherButtonTitles:nil];
+        [alertview show];
     }
     
     // maybe for debugging...
@@ -111,6 +113,12 @@ const int PAUSE_DATA = 1;
         }
     }
     NSLog(@"number of items loaded = %d", [samples count]);
+    UIAlertView *alertview = [[UIAlertView alloc] initWithTitle:@"Update" message:[NSString stringWithFormat:@"Found %d training items", [samples count]] delegate:self cancelButtonTitle:@"Sweet!" otherButtonTitles:nil];
+    [alertview show];
+    
+    //Get the file path
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    fileName = [documentsDirectory stringByAppendingPathComponent:filepath];
 }
 
 
@@ -304,6 +312,7 @@ const int PAUSE_DATA = 1;
     {
         [sampleInQuestion updateWeightsABN];
         [samples addObject:sampleInQuestion];
+        [self writeSampleToModel:sampleInQuestion];
     }
     dataFlowFlag = ACCEPT_DATA;
 }
@@ -316,9 +325,20 @@ const int PAUSE_DATA = 1;
     {
         [sampleInQuestion updateWeightsNOR];
         [samples addObject:sampleInQuestion];
+        [self writeSampleToModel:sampleInQuestion];
     }
     
     dataFlowFlag = ACCEPT_DATA;
+}
+
+- (void)writeSampleToModel:(DataSample *)sample
+{
+    NSString *content = [NSString stringWithFormat:@"%f %f %f %f %f %f %d %d \n", sample.avgX, sample.avgY, sample.avgZ, sample.varX, sample.varY, sample.varZ, sample.nor_weight, sample.abn_weight];
+    //append text to file (you'll probably want to add a newline every write)
+    NSFileHandle *file = [NSFileHandle fileHandleForUpdatingAtPath:fileName];
+    [file seekToEndOfFile];
+    [file writeData:[content dataUsingEncoding:NSUTF8StringEncoding]];
+    [file closeFile];
 }
 
 

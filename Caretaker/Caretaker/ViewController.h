@@ -40,6 +40,9 @@
 @property (nonatomic, strong)   UIButton    *setContactButton;
 @property (nonatomic, strong)   NSString    *myName;
 
+@property (nonatomic, strong)   UILabel    *contactNameLabel;
+@property (nonatomic, strong)   UILabel    *contactPhoneLabel;
+
 -(void) setupControls;
 -(void) startMotionDetect;
 -(void) showAreYouOkay:(id)sender;
