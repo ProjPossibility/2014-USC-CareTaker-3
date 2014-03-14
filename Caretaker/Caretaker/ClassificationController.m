@@ -84,7 +84,6 @@ const float SIM_THRESHOLD = 0.98;
     NSLog(@"number of items loaded = %d", [samples count]);
 }
 
-
 - (void) incomingDataMessageX:(float)X :(float)Y :(float)Z
 {
     

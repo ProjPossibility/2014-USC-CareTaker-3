@@ -13,7 +13,8 @@
 #import "Reminder.h"
 
 @interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate,
-    ABPeoplePickerNavigationControllerDelegate>
+    ABPeoplePickerNavigationControllerDelegate,
+    UIAlertViewDelegate>
 {
     AccelerationLogger *accelLoggerPhone;
 
@@ -24,6 +25,8 @@
     Reminder *newReminder;
     
     BOOL onAlertCooldown;
+    
+    ABRecordRef currentPotentialContact;
 }
 
 @property (nonatomic) IBOutlet  UIView      *overlayView;
