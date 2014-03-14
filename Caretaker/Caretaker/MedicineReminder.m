@@ -104,6 +104,58 @@
     QuietLog(@"Read in all reminders");
 }
 
+-(NSString*)readUserNameFromDatabase
+{
+    NSLog(@"Loading model...");
+    
+    // FIX ME before committing
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *basePath = ([paths count] > 0) ? [paths objectAtIndex:0] : nil;
+    NSLog(@"BasePath: %@", basePath);
+    
+    basePath = [basePath stringByAppendingString:@"/username.txt"];
+    
+    NSError *error;
+    NSString *fileContents = [NSString stringWithContentsOfFile:basePath encoding:NSUTF8StringEncoding error:&error];
+    if (error)
+    {
+        NSLog(@"Error reading file: %@", error.localizedDescription);
+    }
+    
+    // maybe for debugging...
+    //NSLog(@"contents: %@", fileContents);
+    
+    NSArray *listArray = [fileContents componentsSeparatedByString:@"\n"];
+    NSLog(@"number of items in file  = %d", [listArray count]);
+    for(NSUInteger index = 0; index < [listArray count]; index++)
+    {
+        NSString *sampleStr = [listArray objectAtIndex:index];
+        return sampleStr;
+    }
+    return nil;
+}
+
+-(void)writeUserNameToDatabase:(NSString *)userName
+{
+    
+    NSString *logFilename = @"username.txt";
+    NSString *content = userName;
+    
+    //Get the file path
+    NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains (NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
+    NSString* fileName = [documentsDirectory stringByAppendingPathComponent:logFilename];
+    
+    //create file if it doesn't exist
+    if(![[NSFileManager defaultManager] fileExistsAtPath:fileName])
+        [[NSFileManager defaultManager] createFileAtPath:fileName contents:nil attributes:nil];
+    
+     NSFileHandle *logFile = [NSFileHandle fileHandleForUpdatingAtPath:fileName];
+    [logFile seekToEndOfFile];
+    [logFile writeData:[content dataUsingEncoding:NSUTF8StringEncoding]];
+    [logFile closeFile];
+
+}
+
 - (void)fetchUIImageFromAssetLibraryForURL:(NSString *)assetURL
 {
     if(assetURL.length)

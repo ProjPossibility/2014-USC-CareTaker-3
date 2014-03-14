@@ -29,7 +29,7 @@
 {
     self = [super init];
     if (self) {
-        PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:10.5];
+        PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:60];
         mCurrentAlertLevel = 0;
     }
     return self;
@@ -48,7 +48,7 @@
 
 -(void)sendTextMessageToNumber
 {
-    NSString *restCallString = [NSString stringWithFormat:@"http://caretakerapp.herokuapp.com/helloWorld?number=%@&message=%@", self.emergencyContactPhone, @"#dead"];
+    NSString *restCallString = [NSString stringWithFormat:@"http://caretakerapp.herokuapp.com/helloWorld?number=%@&message=%@", self.emergencyContactPhone, @"ALERT FROM CARETAKER APP: Your relative "];
     
     NSURL *restURL = [NSURL URLWithString:restCallString];
     NSURLRequest *restRequest = [NSURLRequest requestWithURL:restURL];
