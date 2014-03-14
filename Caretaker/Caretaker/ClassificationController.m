@@ -96,7 +96,7 @@ const float SIM_THRESHOLD = 0.98;
 }
 
 
-- (void) incomingDataMessageX:(float)X :(float)Y :(float)Z
+- (void) incomingDataMessageX:(float)X Y:(float)Y Z:(float)Z
 {
     
     if (dataQueue.count >= 10)
