@@ -18,7 +18,7 @@
 }
 
 @property (nonatomic, strong) UIView* controlView;
-@property (nonatomic, strong) Reminder* reminder;
+@property (nonatomic, weak) Reminder* reminder;
 @property (nonatomic, strong) UIButton *goBackButton;
 @property (nonatomic, strong) UIButton *nextButton;
 @property (nonatomic, weak) UIViewController *rootView;

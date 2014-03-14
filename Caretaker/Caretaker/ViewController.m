@@ -126,8 +126,8 @@
     if([newReminder.mName length])
     {
         [[MedicineReminder getInstance] addReminderWith:newReminder];
-        newReminder = [[Reminder alloc] init];
     }
+    newReminder = nil;
 }
 
 - (void)viewDidDisappear:(BOOL)animated
