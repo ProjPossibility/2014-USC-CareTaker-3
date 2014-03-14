@@ -41,7 +41,7 @@
 
 -(void)sendTextMessageToNumber
 {
-    NSString *restCallString = [NSString stringWithFormat:@"http://caretakerapp.herokuapp.com/helloWorld?number=%@&message=%@", emergencyNumber, @"AAAAAHHH_EMERGENCY_STUFFF_AAAAAHH_CROISSANT"];
+    NSString *restCallString = [NSString stringWithFormat:@"http://caretakerapp.herokuapp.com/helloWorld?number=%@&message=%@", [AreYouOkayManager getInstance].emergencyContactPhone, @"#dead"];
     
     NSURL *restURL = [NSURL URLWithString:restCallString];
     NSURLRequest *restRequest = [NSURLRequest requestWithURL:restURL];
@@ -53,8 +53,6 @@
     }
     
     currentConnection = [[NSURLConnection alloc] initWithRequest:restRequest delegate:self];
-    
-
 }
 
 -(void)setupControls
@@ -62,14 +60,17 @@
     self.controlView = [[UIView alloc] initWithFrame:CGRectMake(0, 65, [[UIScreen mainScreen] bounds].size.width, [[UIScreen mainScreen] bounds].size.height - 65)];
     
     //add show notification button
-    self.showNotificationButton = [self addButtonWithAttributes:@"ADD NEW REMINDER" withTarget:self withSelector:@selector(showAddReminder:) with:CGRectMake(0, 0, 300, 88)];
+    self.showNotificationButton = [self addButtonWithAttributes:@"Add New Reminder" withTarget:self withSelector:@selector(showAddReminder:) with:CGRectMake(0, 0, 300, 88)];
     [self.controlView addSubview:self.showNotificationButton];
     
-    self.showPendingRemindersButton = [self addButtonWithAttributes:@"SHOW PENDING REMINDERS" withTarget:self withSelector:@selector(showPendingReminders) with:CGRectMake(0, 98, 300, 88)];
+    self.showPendingRemindersButton = [self addButtonWithAttributes:@"Show Pending Reminders" withTarget:self withSelector:@selector(showPendingReminders) with:CGRectMake(0, 98, 300, 88)];
     [self.controlView addSubview:self.showPendingRemindersButton];
     
-    self.sendTextMessageButton = [self addButtonWithAttributes:@"SEND TEXT MESSAGE" withTarget:self withSelector:@selector(sendTextMessageToNumber) with:CGRectMake(0, 188, 300, 88)];
+    self.sendTextMessageButton = [self addButtonWithAttributes:@"Send Text Message" withTarget:self withSelector:@selector(sendTextMessageToNumber) with:CGRectMake(0, 196, 300, 88)];
     [self.controlView addSubview:self.sendTextMessageButton];
+
+    self.setContactButton = [self addButtonWithAttributes:@"Set Emergency Contact" withTarget:self withSelector:@selector(showPersonPicker:) with:CGRectMake(0, 294, 300, 88)];
+    [self.controlView addSubview:self.setContactButton];
     
     areYouOkayLackOfResponse = 0;
     PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:1.5];
@@ -82,6 +83,62 @@
     [self.view addSubview: self.controlView];
     
     emergencyNumber = @"6263722112";
+}
+
+- (void)setEmergencyContactPerson:(ABRecordRef)person
+{
+    NSString* firstName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+    NSString* lastName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
+    NSString* fullName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+    
+    [AreYouOkayManager getInstance].emergencyContactName = fullName;
+    
+    NSString* phone = nil;
+    ABMultiValueRef phoneNumbers = ABRecordCopyValue(person,
+                                                     kABPersonPhoneProperty);
+    if (ABMultiValueGetCount(phoneNumbers) > 0) {
+        phone = (__bridge_transfer NSString*)
+        ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
+    } else {
+        phone = @"[None]";
+    }
+        [AreYouOkayManager getInstance].emergencyContactName = phone;
+    CFRelease(phoneNumbers);
+    
+    QuietLog(@"Emergency Contact set as: %@ with phone: %@", fullName, phone);
+}
+
+- (void)showPersonPicker:(id)sender
+{
+    ABPeoplePickerNavigationController *picker =
+    [[ABPeoplePickerNavigationController alloc] init];
+    picker.peoplePickerDelegate = self;
+    
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+- (void)peoplePickerNavigationControllerDidCancel:
+(ABPeoplePickerNavigationController *)peoplePicker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person
+{
+    
+    [self setEmergencyContactPerson:person];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    return NO;
+}
+
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
+      shouldContinueAfterSelectingPerson:(ABRecordRef)person
+                                property:(ABPropertyID)property
+                              identifier:(ABMultiValueIdentifier)identifier
+{
+    return NO;
 }
 
 -(void)reEvaluateLackOfResponse
