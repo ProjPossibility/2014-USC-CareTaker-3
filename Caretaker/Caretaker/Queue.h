@@ -14,6 +14,7 @@
 - (void)enqueue:(id)anObject;
 - (id)dequeue;
 - (void)clear;
+- (id)objectAtIndex:(NSUInteger)index;
 
 @property (nonatomic, readonly) NSUInteger count;
 
