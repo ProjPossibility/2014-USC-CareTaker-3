@@ -129,6 +129,9 @@
         [reminderViewButton addSubview: nameLabel];
         [reminderViewButton addSubview: dateLabel];
         reminderViewButton.tag = [indexPath row];
+        reminderViewButton.accessibilityLabel = [NSString stringWithFormat:@"Edit %@", currentReminder.mName];
+        reminderViewButton.accessibilityHint = @"Edits the reminder";
+        
         //need to make selectReminder take in a reminder
         [reminderViewButton addTarget:self action:@selector(selectReminder:) forControlEvents:UIControlEventTouchUpInside];
         [cell.contentView addSubview:reminderViewButton];

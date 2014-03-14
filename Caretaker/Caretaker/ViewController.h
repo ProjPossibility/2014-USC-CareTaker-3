@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AddressBookUI/AddressBookUI.h>
 #import "MedicineReminder.h"
 #import "AccelerationLogger.h"
 #import "Reminder.h"
 
-@interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface ViewController : UIViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate,
+    ABPeoplePickerNavigationControllerDelegate>
 {
     AccelerationLogger *accelLoggerPhone;
 
@@ -24,6 +26,7 @@
     
     BOOL onAlertCooldown;
 }
+
 @property (nonatomic) IBOutlet  UIView      *overlayView;
 @property (nonatomic)           UIImagePickerController *imagePickerController;
 @property (nonatomic, strong)   UIView      *controlView;
@@ -32,11 +35,12 @@
 @property (nonatomic, strong)   UIButton    *showNotificationButton;
 @property (nonatomic, strong)   UIButton    *showAreYouOkay;
 @property (nonatomic, strong)   UIButton    *sendTextMessageButton;
+@property (nonatomic, strong)   UIButton    *setContactButton;
 
--(void)setupControls;
+-(void) setupControls;
 -(void) startMotionDetect;
-- (void)showAreYouOkay:(id)sender;
--(void)writeDataToFile;
+-(void) showAreYouOkay:(id)sender;
+-(void) writeDataToFile;
 
 
 @end

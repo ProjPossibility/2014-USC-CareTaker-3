@@ -18,4 +18,7 @@
 -(void) scheduleAreYouOkayAfter:(NSTimeInterval)after;
 -(void) resetPendingNotificationLock;
 
+@property (nonatomic) NSString *emergencyContactName;
+@property (nonatomic) NSString *emergencyContactPhone;
+
 @end
