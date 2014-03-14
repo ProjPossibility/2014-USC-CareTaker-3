@@ -10,9 +10,10 @@
 #import <Accelerate/Accelerate.h>
 
 @interface DataSample : NSObject
-
-@property vFloat vAvg;
-@property vFloat vVar;
+{
+    float mAvg[3];
+    float mVar[3];
+}
 
 @property float avgX;
 @property float avgY;
@@ -26,5 +27,7 @@
 - (id)initWithString:(NSString *)str;
 - (void)updateWeightsNOR;
 - (void)updateWeightsABN;
+- (float*)avg;
+- (float*)var;
 
 @end

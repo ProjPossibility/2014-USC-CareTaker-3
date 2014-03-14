@@ -11,10 +11,14 @@
 
 //For queueing accel data
 @interface AccelDataTriplet : NSObject
+{
+    float mValues[3];
+}
 @property (nonatomic) float x;
 @property (nonatomic) float y;
 @property (nonatomic) float z;
 - (id)initWithX:(float)x Y:(float)y Z:(float)z;
+- (float*)values;
 @end
 
 @implementation AccelDataTriplet : NSObject
@@ -25,8 +29,15 @@
         self.x = x;
         self.y = y;
         self.z = z;
+        mValues[0] = x;
+        mValues[1] = y;
+        mValues[2] = z;
     }
     return self;
+}
+-(float*)values
+{
+    return mValues;
 }
 @end
 //----
@@ -109,31 +120,49 @@ const float SIM_THRESHOLD = 0.98;
     float varY = 0.0;
     float varZ = 0.0;
     
+    float avg[3] = {0.0, 0.0, 0.0};
+    float var[3] = {0.0, 0.0, 0.0};
+    
     for(NSUInteger index = 0; index < dataQueue.count; index++)
     {
-        CMAccelerometerData *data = [dataQueue objectAtIndex:index];
+        AccelDataTriplet *data = [dataQueue objectAtIndex:index];
         
-        avgX += data.acceleration.x;
-        avgY += data.acceleration.y;
-        avgZ += data.acceleration.z;
+        avgX += data.x;
+        avgY += data.y;
+        avgZ += data.z;
+    
+        cblas_saxpy(3, 1.0, [data values], 1, avg, 1);
     }
     
     avgX = (avgX/dataQueue.count);
     avgY = (avgY/dataQueue.count);
     avgZ = (avgZ/dataQueue.count);
+    
+    cblas_sscal(3, dataQueue.count, avg, 1);
 
     for(NSUInteger index = 0; index < dataQueue.count; index++)
     {
-        CMAccelerometerData *data = [dataQueue objectAtIndex:index];
+        AccelDataTriplet *data = [dataQueue objectAtIndex:index];
         
-        varX += pow((data.acceleration.x - avgX), 2);
-        varY += pow((data.acceleration.y - avgY), 2);
-        varZ += pow((data.acceleration.z - avgZ), 2);
+        varX += pow((data.x - avgX), 2);
+        varY += pow((data.y - avgY), 2);
+        varZ += pow((data.z - avgZ), 2);
+        
+        float accelData[3] = {0.0, 0.0, 0.0};
+        cblas_scopy(3, [data values], 1, accelData, 1);
+        cblas_saxpy(3, -1.0, avg, 1, accelData, 1);
+        
+        for(int i = 0; i < 3; ++i)
+        {
+            avg[i] = pow(accelData[i], 2.0);
+        }
     }
     
     varX = (varX/dataQueue.count);
     varY = (varY/dataQueue.count);
     varZ = (varZ/dataQueue.count);
+    
+    cblas_sscal(3, dataQueue.count, var, 1);
     
     sample.avgX = avgX;
     sample.avgY = avgY;
@@ -141,6 +170,9 @@ const float SIM_THRESHOLD = 0.98;
     sample.varX = varX;
     sample.varY = varY;
     sample.varZ = varZ;
+    
+    cblas_scopy(3, avg, 1, [sample avg], 1);
+    cblas_scopy(3, var, 1, [sample var], 1);
     
     return sample;
 }
@@ -159,6 +191,14 @@ const float SIM_THRESHOLD = 0.98;
     return magnitude;
 }
 
+- (float) computeMagnitudeOfSample_f:(DataSample*)sample
+{
+    float avgVar[6] = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+    cblas_scopy(3, [sample avg], 1, avgVar, 1);
+    cblas_scopy(3, [sample var], 1, avgVar + 3, 1);
+    return cblas_scnrm2(6, avgVar, 1);
+}
+
 - (void) classify
 {
     if( dataQueue.count > 10)
@@ -172,6 +212,9 @@ const float SIM_THRESHOLD = 0.98;
     float cosine_sim = -1.0;
     float sim_index = -1;
     
+    float cosine_sim_f = -1.0;
+    float sim_index_f = -1;
+    
     for (NSUInteger index = 0; index < [samples count]; index++)
     {
         DataSample *sample2 = [samples objectAtIndex:index];
@@ -179,10 +222,22 @@ const float SIM_THRESHOLD = 0.98;
         float magnitude1 = [self computeMagnitudeOfSample:sample];
         float magnitude2 = [self computeMagnitudeOfSample:sample2];
         float test_cosine_sim = dot_product/(magnitude1 * magnitude2);
+        
         if (test_cosine_sim > cosine_sim)
         {
             cosine_sim = test_cosine_sim;
             sim_index = index;
+        }
+
+        float dot_product_f = cblas_sdot(3, [sample avg], 1, [sample var], 1);
+        float magnitude1_f = [self computeMagnitudeOfSample_f:sample];
+        float magnitude2_f = [self computeMagnitudeOfSample_f:sample2];
+        float test_cosine_sim_f = dot_product_f/(magnitude1_f * magnitude2_f);
+        
+        if(test_cosine_sim_f > cosine_sim_f)
+        {
+            cosine_sim_f = test_cosine_sim_f;
+            sim_index_f = index;
         }
     }
     
