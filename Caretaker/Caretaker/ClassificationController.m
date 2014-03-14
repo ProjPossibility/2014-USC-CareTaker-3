@@ -8,6 +8,7 @@
 
 #import "ClassificationController.h"
 #import "DataSample.h"
+#import "AreYouOkayManager.h"
 
 //For queueing accel data
 @interface AccelDataTriplet : NSObject
@@ -22,6 +23,7 @@
 @end
 
 @implementation AccelDataTriplet : NSObject
+
 - (id)initWithX:(float)x Y:(float)y Z:(float)z
 {
     self = [super init];
@@ -48,8 +50,22 @@
 
 const int ABN_CLASS = 1;
 const int NOR_CLASS = 0;
-const float SIM_THRESHOLD = 0.98;
+const float SIM_THRESHOLD = 0.95;
+const int ACCEPT_DATA = 0;
+const int PAUSE_DATA = 1;
 
+
++ (ClassificationController*) getInstance
+{
+    static ClassificationController *instance;
+    
+    if(!instance)
+    {
+        instance = [[ClassificationController alloc] init];
+    }
+    
+    return instance;
+}
 
 - (id)init
 {
@@ -100,6 +116,11 @@ const float SIM_THRESHOLD = 0.98;
 
 - (void) incomingDataMessageX:(float)X Y:(float)Y Z:(float)Z
 {
+    // Pause the classifier while waiting for a response to a fall message
+    if(dataFlowFlag == PAUSE_DATA)
+    {
+        return;
+    }
     
     if (dataQueue.count >= 10)
     {
@@ -225,7 +246,7 @@ const float SIM_THRESHOLD = 0.98;
     for (NSUInteger index = 0; index < [samples count]; index++)
     {
         DataSample *sample2 = [samples objectAtIndex:index];
-        float dot_product = [self computeDotProductOfSample1:sample andSample2:sample2];
+        /*float dot_product = [self computeDotProductOfSample1:sample andSample2:sample2];
         float magnitude1 = [self computeMagnitudeOfSample:sample];
         float magnitude2 = [self computeMagnitudeOfSample:sample2];
         float test_cosine_sim = dot_product/(magnitude1 * magnitude2);
@@ -234,7 +255,7 @@ const float SIM_THRESHOLD = 0.98;
         {
             cosine_sim = test_cosine_sim;
             sim_index = index;
-        }
+        }*/
 
         float dot_product_f = cblas_sdot(3, [sample avg], 1, [sample2 avg], 1);
         dot_product_f += cblas_sdot(3, [sample var], 1, [sample2 var], 1);
@@ -254,8 +275,9 @@ const float SIM_THRESHOLD = 0.98;
     
     NSUInteger class = ABN_CLASS;
     
-    DataSample *similar_sample = [samples objectAtIndex:sim_index];
-    if((similar_sample.nor_weight) > (similar_sample.abn_weight) && (cosine_sim >= SIM_THRESHOLD))
+    DataSample *similar_sample = [samples objectAtIndex:sim_index_f];
+    NSLog(@"Similar sample NOR: %d ABN: %d", similar_sample.nor_weight, similar_sample.abn_weight);
+    if(similar_sample.nor_weight > similar_sample.abn_weight && (cosine_sim_f >= SIM_THRESHOLD))
     {
         class = NOR_CLASS;
     }
@@ -267,9 +289,38 @@ const float SIM_THRESHOLD = 0.98;
     else
     {
         NSLog(@"Classified as ABN");
-        //ASK ARE YOU OK
+        dataFlowFlag = PAUSE_DATA;
+        sampleInQuestion = sample;
+        existingSampleToUpdate = similar_sample;
+        cosine_sim_in_question = cosine_sim_f;
+        [[AreYouOkayManager getInstance] scheduleAreYouOkayAfter:0];
     }
 }
+
+- (void)messageYes
+{
+    NSLog(@"Received message yes.");
+    if(cosine_sim_in_question < SIM_THRESHOLD)
+    {
+        [sampleInQuestion updateWeightsABN];
+        [samples addObject:sampleInQuestion];
+    }
+    dataFlowFlag = ACCEPT_DATA;
+}
+
+- (void)messageNo
+{
+     NSLog(@"Received message no.");
+    [existingSampleToUpdate updateWeightsNOR];
+    if(cosine_sim_in_question < SIM_THRESHOLD)
+    {
+        [sampleInQuestion updateWeightsNOR];
+        [samples addObject:sampleInQuestion];
+    }
+    
+    dataFlowFlag = ACCEPT_DATA;
+}
+
 
 
 @end
