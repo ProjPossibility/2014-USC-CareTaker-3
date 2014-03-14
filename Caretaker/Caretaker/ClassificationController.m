@@ -8,6 +8,7 @@
 
 #import "ClassificationController.h"
 #import "DataSample.h"
+#import "AreYouOkayManager.h"
 
 //For queueing accel data
 @interface AccelDataTriplet : NSObject
@@ -22,6 +23,7 @@
 @end
 
 @implementation AccelDataTriplet : NSObject
+
 - (id)initWithX:(float)x Y:(float)y Z:(float)z
 {
     self = [super init];
@@ -47,7 +49,21 @@
 const int ABN_CLASS = 1;
 const int NOR_CLASS = 0;
 const float SIM_THRESHOLD = 0.98;
+const int ACCEPT_DATA = 0;
+const int PAUSE_DATA = 1;
 
+
++ (ClassificationController*) getInstance
+{
+    static ClassificationController *instance;
+    
+    if(!instance)
+    {
+        instance = [[ClassificationController alloc] init];
+    }
+    
+    return instance;
+}
 
 - (id)init
 {
@@ -98,6 +114,11 @@ const float SIM_THRESHOLD = 0.98;
 
 - (void) incomingDataMessageX:(float)X Y:(float)Y Z:(float)Z
 {
+    // Pause the classifier while waiting for a response to a fall message
+    if(dataFlowFlag == PAUSE_DATA)
+    {
+        return;
+    }
     
     if (dataQueue.count >= 10)
     {
@@ -256,9 +277,37 @@ const float SIM_THRESHOLD = 0.98;
     else
     {
         NSLog(@"Classified as ABN");
-        //ASK ARE YOU OK
+        dataFlowFlag = PAUSE_DATA;
+        sampleInQuestion = sample;
+        existingSampleToUpdate = similar_sample;
+        [[AreYouOkayManager getInstance] scheduleAreYouOkayAfter:0];
     }
 }
+
+- (void)messageYes
+{
+    NSLog(@"Received message yes.");
+    if(cosine_sim_in_question < SIM_THRESHOLD)
+    {
+        [sampleInQuestion updateWeightsABN];
+        [samples addObject:sampleInQuestion];
+    }
+    dataFlowFlag = ACCEPT_DATA;
+}
+
+- (void)messageNo
+{
+     NSLog(@"Received message no.");
+    [existingSampleToUpdate updateWeightsNOR];
+    if(cosine_sim_in_question < SIM_THRESHOLD)
+    {
+        [sampleInQuestion updateWeightsNOR];
+        [samples addObject:sampleInQuestion];
+    }
+    
+    dataFlowFlag = ACCEPT_DATA;
+}
+
 
 
 @end

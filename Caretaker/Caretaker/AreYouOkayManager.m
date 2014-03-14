@@ -8,6 +8,7 @@
 
 #import "AreYouOkayManager.h"
 #import "NotificationManager.h"
+#import "ClassificationController.h"
 
 @implementation AreYouOkayManager
 
@@ -112,15 +113,24 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    ClassificationController *classificationController = [ClassificationController getInstance];
+    
     switch(buttonIndex)
     {
         case 0:
-            QuietLog(@"Clicked YES");
+            QuietLog(@"Clicked YES, I did fall down");
             [self resetPendingNotificationLock];
+            [classificationController messageYes];
+            break;
+        case 1:
+            QuietLog(@"Clicked YES, I fell down and I'm not okay");
+            [self resetPendingNotificationLock];
+            [classificationController messageYes];
             break;
         case 2:
-            QuietLog(@"Clicked NO");
+            QuietLog(@"Clicked NO, I didn't fall down");
             [self resetPendingNotificationLock];
+            [classificationController messageNo];
             break;
         default:
             break;

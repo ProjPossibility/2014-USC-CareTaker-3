@@ -36,7 +36,7 @@
         CARETAKER_KEY_ACCEL_Z = [NSNumber numberWithInt:3];//[NSString stringWithFormat:@"%d", 3];//@(3);//[NSNumber numberWithInt:@(3)];
         
         accelLoggerPebble = [[AccelerationLogger alloc] initWithFileFlair:@"Pebble"];
-        classificationController = [[ClassificationController alloc] init];
+        classificationController = [ClassificationController getInstance];
         
         PEBBLE_ALERT_COOLDOWN = [NSNumber numberWithFloat:2];
         onAlertCooldown = NO;
@@ -131,13 +131,13 @@
     [self setTargetWatch:[[PBPebbleCentral defaultCentral] lastConnectedWatch]];
     [_targetWatch appMessagesLaunch:^(PBWatch *watch, NSError *error) {
         [_targetWatch appMessagesAddReceiveUpdateHandler:^BOOL(PBWatch *watch, NSDictionary *update) {
-            QuietLog(@"Received Message: %@", update);
+           // QuietLog(@"Received Message: %@", update);
             
             float x = (float)([[update objectForKey:CARETAKER_KEY_ACCEL_X] intValue]) / 1000.0f;
             float y = (float)([[update objectForKey:CARETAKER_KEY_ACCEL_Y] intValue]) / 1000.0f;
             float z = (float)([[update objectForKey:CARETAKER_KEY_ACCEL_Z] intValue]) / 1000.0f;
             
-            QuietLog(@"PEBBLE  x=%.2f  y=%.2f  z=%.2f", x, y, z);
+            //QuietLog(@"PEBBLE  x=%.2f  y=%.2f  z=%.2f", x, y, z);
             
             
             

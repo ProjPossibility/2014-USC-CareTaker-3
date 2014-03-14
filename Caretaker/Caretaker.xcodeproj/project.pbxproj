@@ -223,6 +223,8 @@
 				1D68B19618D273D4002048BA /* DataSample.m */,
 				1D68B18918D26A36002048BA /* ClassificationController.h */,
 				1D68B18A18D26A36002048BA /* ClassificationController.m */,
+				C9BF7B2C18CC730F00D9FAE0 /* AreYouOkayManager.h */,
+				C9BF7B2D18CC730F00D9FAE0 /* AreYouOkayManager.m */,
 				53322ABC18A84094008D39A2 /* AccelerationLogger.h */,
 				53322ABD18A84094008D39A2 /* AccelerationLogger.m */,
 				1D68B18D18D26BE6002048BA /* Queue.h */,
@@ -256,8 +258,6 @@
 				C9BF7B2518CC0BB500D9FAE0 /* UpdateReminderView.h */,
 				C9BF7B2618CC0D2F00D9FAE0 /* UpdateReminderViewPg3.h */,
 				C9BF7B2718CC0D2F00D9FAE0 /* UpdateReminderViewPg3.m */,
-				C9BF7B2C18CC730F00D9FAE0 /* AreYouOkayManager.h */,
-				C9BF7B2D18CC730F00D9FAE0 /* AreYouOkayManager.m */,
 				C96A446218CED7010085CFC7 /* MedicineReminderModel.xcdatamodeld */,
 			);
 			path = Caretaker;
