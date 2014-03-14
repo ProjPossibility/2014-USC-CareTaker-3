@@ -35,6 +35,7 @@
 @property (nonatomic, strong)   UIButton    *showAreYouOkay;
 @property (nonatomic, strong)   UIButton    *sendTextMessageButton;
 @property (nonatomic, strong)   UIButton    *setContactButton;
+@property (nonatomic, strong)   NSString    *myName;
 
 -(void) setupControls;
 -(void) startMotionDetect;

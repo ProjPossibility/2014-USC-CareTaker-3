@@ -17,7 +17,7 @@
     UIColor *careTakerRed;
 }
 
-@property (nonatomic, strong) UIView* controlView;
+@property (nonatomic, strong) UIScrollView* controlView;
 @property (nonatomic, weak) Reminder* reminder;
 @property (nonatomic, strong) UIButton *goBackButton;
 @property (nonatomic, strong) UIButton *nextButton;

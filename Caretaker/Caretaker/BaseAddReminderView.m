@@ -55,7 +55,7 @@
 {
 }
 
-- (UIView *)initializeControlViewFor:(BaseAddReminderView *)reminderView
+- (UIScrollView *)initializeControlViewFor:(BaseAddReminderView *)reminderView
 {
     UIView *newControlView = [[UIView alloc] initWithFrame:CGRectMake(0, 40, SCWIDTH, SCHEIGHT)];
     [reminderView.view addSubview:newControlView];
@@ -71,7 +71,9 @@
     [self.nextButton setBackgroundColor:careTakerRed];
     [self.nextButton addTarget:reminderView action:@selector(nextButtonAction:) forControlEvents:UIControlEventTouchUpInside];
     [newControlView addSubview:self.nextButton];
-    return newControlView;
+    UIScrollView *newUIScrollView = [[UIScrollView alloc] initWithFrame:[newControlView frame]];
+    [newUIScrollView addSubview:newControlView];
+    return newUIScrollView;
 }
 
 

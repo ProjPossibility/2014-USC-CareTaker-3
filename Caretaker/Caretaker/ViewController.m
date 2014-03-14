@@ -14,6 +14,7 @@
 #import "AddReminderViewPg1.h"
 #import "PendingRemindersView.h"
 #import "AreYouOkayManager.h"
+#import "SetNameViewController.h"
 
 
 @interface ViewController ()
@@ -157,7 +158,12 @@
     
     [self setupControls];
     [self startMotionDetect];
-    [MedicineReminder getInstance];
+    self.myName = [[MedicineReminder getInstance] readUserNameFromDatabase];
+    if(!self.myName)
+    {
+        SetNameViewController *nameViewController = [[SetNameViewController alloc] initWithViewController:self];
+        [self.navigationController pushViewController:nameViewController animated:YES];
+    }
     
 	// Do any additional setup after loading the view, typically from a nib.
 }
@@ -188,6 +194,7 @@
     QuietLog(@"ViewController is writing out data");
     
     [[MedicineReminder getInstance] dumpRemindersToDatabase];
+    [[MedicineReminder getInstance] writeUserNameToDatabase:self.myName];
     
     QuietLog(@"ViewController finished writing out data");
 }
