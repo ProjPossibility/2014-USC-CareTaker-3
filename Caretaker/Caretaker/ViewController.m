@@ -55,11 +55,31 @@
     self.showPendingRemindersButton = [self addButtonWithAttributes:@"Show Pending Reminders" withTarget:self withSelector:@selector(showPendingReminders) with:CGRectMake(0, 98, 300, 88)];
     [self.controlView addSubview:self.showPendingRemindersButton];
     
-    self.sendTextMessageButton = [self addButtonWithAttributes:@"Send Text Message" withTarget:self withSelector:@selector(sendTextMessageToNumber) with:CGRectMake(0, 196, 300, 88)];
-    [self.controlView addSubview:self.sendTextMessageButton];
-
-    self.setContactButton = [self addButtonWithAttributes:@"Set Emergency Contact" withTarget:self withSelector:@selector(showPersonPicker:) with:CGRectMake(0, 294, 300, 88)];
+    self.setContactButton = [self addButtonWithAttributes:@"Set Emergency Contact" withTarget:self withSelector:@selector(showPersonPicker:) with:CGRectMake(0, 196, 300, 88)];
     [self.controlView addSubview:self.setContactButton];
+    
+    self.sendTextMessageButton = [self addButtonWithAttributes:@"Send Text Message" withTarget:self withSelector:@selector(sendTextMessageToNumber) with:CGRectMake(0, 294, 300, 88)];
+    //[self.controlView addSubview:self.sendTextMessageButton];
+    
+    
+    
+    //labels
+    self.contactNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 365, 320, 44)];
+    self.contactNameLabel.text = @"Current Emergency Contact:";
+    self.contactNameLabel.font = [UIFont fontWithName:@"Helvetica" size:24];
+    [self.view addSubview: self.contactNameLabel];
+    
+    self.contactNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 400, 320, 44)];
+    self.contactNameLabel.text = @"Name: None";
+    self.contactNameLabel.font = [UIFont fontWithName:@"Helvetica" size:24];
+    [self.view addSubview: self.contactNameLabel];
+    
+    self.contactPhoneLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 435, 320, 44)];
+    self.contactPhoneLabel.text = @"Phone: None";
+    self.contactPhoneLabel.font = [UIFont fontWithName:@"Helvetica" size:24];
+    [self.view addSubview: self.contactPhoneLabel];
+    
+    [self updateContactLabels];
     
     areYouOkayLackOfResponse = 0;
     PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:1.5];
@@ -71,6 +91,40 @@
     //add the view to the viewcontroller
     [self.view addSubview: self.controlView];
     
+}
+
+-(void) updateContactLabels
+{
+    NSString* fullName = nil;
+    NSString* phone = nil;
+    
+    if(currentPotentialContact == nil) {
+        fullName = @"None";
+        phone = @"None";
+    }
+    else {
+        //Get contact
+        NSString* firstName = (__bridge_transfer NSString*)ABRecordCopyValue(currentPotentialContact, kABPersonFirstNameProperty);
+        NSString* lastName = (__bridge_transfer NSString*)ABRecordCopyValue(currentPotentialContact, kABPersonLastNameProperty);
+        fullName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+        
+        phone = nil;
+        ABMultiValueRef phoneNumbers = ABRecordCopyValue(currentPotentialContact, kABPersonPhoneProperty);
+        if (ABMultiValueGetCount(phoneNumbers) > 0) {
+            phone = (__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
+            //NSString *phoneDigitsOnly = [[phone componentsSeparatedByCharactersInSet:
+            //                              [[NSCharacterSet decimalDigitCharacterSet] invertedSet]]
+            //                             componentsJoinedByString:@""];
+            //phone = phoneDigitsOnly;
+        } else {
+            phone = @"None";
+        }
+        CFRelease(phoneNumbers);
+    }
+    
+    //set
+    self.contactNameLabel.text = [NSString stringWithFormat:@"Name: %@", fullName];
+    self.contactPhoneLabel.text = [NSString stringWithFormat:@"Phone: %@", phone];
 }
 
 - (void)setEmergencyContactPerson:(ABRecordRef)person
@@ -87,17 +141,18 @@
     if (ABMultiValueGetCount(phoneNumbers) > 0) {
         phone = (__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
         NSString *phoneDigitsOnly = [[phone componentsSeparatedByCharactersInSet:
-                                [[NSCharacterSet decimalDigitCharacterSet] invertedSet]]
-                               componentsJoinedByString:@""];
+                                      [[NSCharacterSet decimalDigitCharacterSet] invertedSet]]
+                                     componentsJoinedByString:@""];
         phone = phoneDigitsOnly;
     } else {
-        phone = @"[None]";
+        phone = @"None";
     }
     
-    
     [AreYouOkayManager getInstance].emergencyContactPhone = phone;
+    
     CFRelease(phoneNumbers);
     
+    [self updateContactLabels];
     QuietLog(@"Emergency Contact set as: %@ with phone: %@", fullName, phone);
 }
 
@@ -132,17 +187,17 @@
         phone = (__bridge_transfer NSString*)
         ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
     } else {
-        phone = @"[None]";
+        phone = @"None";
     }
     CFRelease(phoneNumbers);
     
     //Set up alert view
     UIAlertView *verifyAlertView = [[UIAlertView alloc]
                                     initWithTitle:@"CONFIRM"
-                                          message:[NSString stringWithFormat:@"Pick %@\n%@\nas your emergency contact?", fullName, phone]
-                                         delegate:self
-                                cancelButtonTitle:@"No"
-                                otherButtonTitles:@"Yes", nil];
+                                    message:[NSString stringWithFormat:@"Pick %@\n%@\nas your emergency contact?", fullName, phone]
+                                    delegate:self
+                                    cancelButtonTitle:@"No"
+                                    otherButtonTitles:@"Yes", nil];
     verifyAlertView.delegate = self;
     [verifyAlertView show];
     
@@ -160,7 +215,7 @@
             QuietLog(@"Clicked YES");
             [self setEmergencyContactPerson:currentPotentialContact];
             currentPotentialContact = nil;
-            [self dismissViewControllerAnimated:YES completion:nil];            
+            [self dismissViewControllerAnimated:YES completion:nil];
             break;
         default:
             break;
