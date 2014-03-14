@@ -44,9 +44,20 @@
     }
 }
 
--(void) contactEmergencyContact
+-(void)sendTextMessageToNumber
 {
-    QuietLog(@"CONTACTING EMERGENCY CONTACT");
+    NSString *restCallString = [NSString stringWithFormat:@"http://caretakerapp.herokuapp.com/helloWorld?number=%@&message=%@", self.emergencyContactPhone, @"#dead"];
+    
+    NSURL *restURL = [NSURL URLWithString:restCallString];
+    NSURLRequest *restRequest = [NSURLRequest requestWithURL:restURL];
+    
+    if(currentConnection)
+    {
+        [currentConnection cancel];
+        currentConnection = nil;
+    }
+    
+    currentConnection = [[NSURLConnection alloc] initWithRequest:restRequest delegate:self];
 }
 
 -(void) increaseAreYouOkayAlert
@@ -83,7 +94,7 @@
         {
             currentAlertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"Are you okay? 3"] delegate:self cancelButtonTitle:@"YES, I didn't fall down" otherButtonTitles:@"YES, but I did fall down", @"NO, I'm not okay", nil];
             currentAlertView.delegate = self;
-            areYouOkayTimer = [NSTimer timerWithTimeInterval:[PHONE_ALERT_COOLDOWN floatValue] target:self selector:@selector(contactEmergencyContact) userInfo:Nil repeats:NO];
+            areYouOkayTimer = [NSTimer timerWithTimeInterval:[PHONE_ALERT_COOLDOWN floatValue] target:self selector:@selector(sendTextMessageToNumber) userInfo:Nil repeats:NO];
             [[NSRunLoop currentRunLoop] addTimer:areYouOkayTimer forMode:NSRunLoopCommonModes];
             [currentAlertView show];
             break;

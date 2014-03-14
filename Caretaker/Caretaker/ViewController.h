@@ -22,7 +22,6 @@
     
     NSString *emergencyNumber;
     Reminder *newReminder;
-    NSURLConnection *currentConnection;
     
     BOOL onAlertCooldown;
 }

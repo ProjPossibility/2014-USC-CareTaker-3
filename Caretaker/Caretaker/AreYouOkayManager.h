@@ -15,11 +15,14 @@
     NSTimer* areYouOkayTimer;
     UIAlertView *currentAlertView;
     BOOL hasAreYouOkayBeenScheduled;
+    NSURLConnection *currentConnection;
+
 }
 
 + (AreYouOkayManager*) getInstance;
 -(void) scheduleAreYouOkayAfter:(NSTimeInterval)after;
 -(void) resetPendingNotificationLock;
+-(void) sendTextMessageToNumber;
 
 @property (nonatomic) NSString *emergencyContactName;
 @property (nonatomic) NSString *emergencyContactPhone;

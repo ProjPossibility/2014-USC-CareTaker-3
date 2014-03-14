@@ -41,18 +41,7 @@
 
 -(void)sendTextMessageToNumber
 {
-    NSString *restCallString = [NSString stringWithFormat:@"http://caretakerapp.herokuapp.com/helloWorld?number=%@&message=%@", [AreYouOkayManager getInstance].emergencyContactPhone, @"#dead"];
-    
-    NSURL *restURL = [NSURL URLWithString:restCallString];
-    NSURLRequest *restRequest = [NSURLRequest requestWithURL:restURL];
-
-    if(currentConnection)
-    {
-        [currentConnection cancel];
-        currentConnection = nil;
-    }
-    
-    currentConnection = [[NSURLConnection alloc] initWithRequest:restRequest delegate:self];
+    [[AreYouOkayManager getInstance] sendTextMessageToNumber];
 }
 
 -(void)setupControls
@@ -82,7 +71,6 @@
     //add the view to the viewcontroller
     [self.view addSubview: self.controlView];
     
-    emergencyNumber = @"6263722112";
 }
 
 - (void)setEmergencyContactPerson:(ABRecordRef)person
@@ -288,9 +276,8 @@
 
 -(void)showPendingReminders
 {
-    //PendingRemindersView *newPendingRemindersView = [[PendingRemindersView alloc] init];
-    //[self.navigationController pushViewController:newPendingRemindersView animated:YES];
-    [[AreYouOkayManager getInstance] scheduleAreYouOkayAfter:0];
+    PendingRemindersView *newPendingRemindersView = [[PendingRemindersView alloc] init];
+    [self.navigationController pushViewController:newPendingRemindersView animated:YES];
     
 }
 
