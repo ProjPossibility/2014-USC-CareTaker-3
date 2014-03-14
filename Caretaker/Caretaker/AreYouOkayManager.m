@@ -8,6 +8,7 @@
 
 #import "AreYouOkayManager.h"
 #import "NotificationManager.h"
+#import "ClassificationController.h"
 #import <AudioToolbox/AudioServices.h>
 
 @implementation AreYouOkayManager
@@ -80,7 +81,7 @@
     {
         case 1:
         {
-            currentAlertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"Are you okay?"] delegate:self cancelButtonTitle:@"YES, I didn't fall down" otherButtonTitles:@"YES, but I did fall down", @"NO, I'm not okay", nil];
+            currentAlertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"ALERT LEVEL 1: Are you okay?"] delegate:self cancelButtonTitle:@"YES, I didn't fall down" otherButtonTitles:@"YES, but I did fall down", @"NO, I'm not okay", nil];
             currentAlertView.delegate = self;
             areYouOkayTimer = [NSTimer timerWithTimeInterval:[PHONE_ALERT_COOLDOWN floatValue] target:self selector:@selector(increaseAreYouOkayAlert) userInfo:Nil repeats:NO];
             [[NSRunLoop currentRunLoop] addTimer:areYouOkayTimer forMode:NSRunLoopCommonModes];
@@ -89,8 +90,7 @@
         }
         case 2:
         {
-
-            currentAlertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"Are you okay? 2"] delegate:self cancelButtonTitle:@"YES, I didn't fall down" otherButtonTitles:@"YES, but I did fall down", @"NO, I'm not okay", nil];
+            currentAlertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"ALERT LEVEL 2: Are you okay?"] delegate:self cancelButtonTitle:@"YES, I didn't fall down" otherButtonTitles:@"YES, but I did fall down", @"NO, I'm not okay", nil];
             currentAlertView.delegate = self;
             
             vibrateTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(vibratePhone) userInfo:Nil repeats:YES];
@@ -102,7 +102,7 @@
         }
         case 3:
         {
-            currentAlertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"Are you okay? 3"] delegate:self cancelButtonTitle:@"YES, I didn't fall down" otherButtonTitles:@"YES, but I did fall down", @"NO, I'm not okay", nil];
+            currentAlertView = [[UIAlertView alloc] initWithTitle:@"WARNING" message:[NSString stringWithFormat:@"ALERT LEVEL 3: Are you okay?"] delegate:self cancelButtonTitle:@"YES, I didn't fall down" otherButtonTitles:@"YES, but I did fall down", @"NO, I'm not okay", nil];
             currentAlertView.delegate = self;
             areYouOkayTimer = [NSTimer timerWithTimeInterval:[PHONE_ALERT_COOLDOWN floatValue] target:self selector:@selector(sendTextMessageToNumber) userInfo:Nil repeats:NO];
             [[NSRunLoop currentRunLoop] addTimer:areYouOkayTimer forMode:NSRunLoopCommonModes];
@@ -124,15 +124,24 @@
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
+    ClassificationController *classificationController = [ClassificationController getInstance];
+
     switch(buttonIndex)
     {
-        case 0:
-            QuietLog(@"Clicked YES");
+        case 1:
+            QuietLog(@"Clicked YES, I did fall down");
             [self resetPendingNotificationLock];
+            [classificationController messageYes];
             break;
         case 2:
-            QuietLog(@"Clicked NO");
+            QuietLog(@"Clicked YES, I fell down and I'm not okay");
             [self resetPendingNotificationLock];
+            [classificationController messageYes];
+            break;
+        case 0:
+            QuietLog(@"Clicked NO, I didn't fall down");
+            [self resetPendingNotificationLock];
+            [classificationController messageNo];
             break;
         default:
             break;

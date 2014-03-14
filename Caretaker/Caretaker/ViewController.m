@@ -34,6 +34,7 @@
     [newButton addTarget:target action:selector forControlEvents:UIControlEventTouchUpInside];
     [newButton setTitle:title forState:UIControlStateNormal];
     [newButton setBackgroundColor:[UIColor colorWithRed:0.729 green:0.243f blue:0.255f alpha:1.0f]];
+    newButton.titleLabel.font = [UIFont fontWithName:@"Helvetica-Bold" size:23.0];
     [newButton layer].cornerRadius = 4;
     [newButton layer].borderWidth = 1;
     [newButton layer].borderColor = [UIColor colorWithRed:0.360784314f green:0.605882353f blue:1.0f alpha:1.0f].CGColor;
@@ -86,12 +87,17 @@
     ABMultiValueRef phoneNumbers = ABRecordCopyValue(person,
                                                      kABPersonPhoneProperty);
     if (ABMultiValueGetCount(phoneNumbers) > 0) {
-        phone = (__bridge_transfer NSString*)
-        ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
+        phone = (__bridge_transfer NSString*) ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
+        NSString *phoneDigitsOnly = [[phone componentsSeparatedByCharactersInSet:
+                                [[NSCharacterSet decimalDigitCharacterSet] invertedSet]]
+                               componentsJoinedByString:@""];
+        phone = phoneDigitsOnly;
     } else {
         phone = @"[None]";
     }
-        [AreYouOkayManager getInstance].emergencyContactName = phone;
+    
+    
+    [AreYouOkayManager getInstance].emergencyContactPhone = phone;
     CFRelease(phoneNumbers);
     
     QuietLog(@"Emergency Contact set as: %@ with phone: %@", fullName, phone);
@@ -112,14 +118,55 @@
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
-      shouldContinueAfterSelectingPerson:(ABRecordRef)person
+- (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker shouldContinueAfterSelectingPerson:(ABRecordRef)person
 {
+    currentPotentialContact = person;
     
-    [self setEmergencyContactPerson:person];
-    [self dismissViewControllerAnimated:YES completion:nil];
+    //Verify selecteion
+    NSString* firstName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
+    NSString* lastName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
+    NSString* fullName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
+    
+    NSString* phone = nil;
+    ABMultiValueRef phoneNumbers = ABRecordCopyValue(person,
+                                                     kABPersonPhoneProperty);
+    if (ABMultiValueGetCount(phoneNumbers) > 0) {
+        phone = (__bridge_transfer NSString*)
+        ABMultiValueCopyValueAtIndex(phoneNumbers, 0);
+    } else {
+        phone = @"[None]";
+    }
+    CFRelease(phoneNumbers);
+    
+    //Set up alert view
+    UIAlertView *verifyAlertView = [[UIAlertView alloc]
+                                    initWithTitle:@"CONFIRM"
+                                          message:[NSString stringWithFormat:@"Pick %@\n%@\nas your emergency contact?", fullName, phone]
+                                         delegate:self
+                                cancelButtonTitle:@"No"
+                                otherButtonTitles:@"Yes", nil];
+    verifyAlertView.delegate = self;
+    [verifyAlertView show];
     
     return NO;
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch(buttonIndex)
+    {
+        case 0:
+            QuietLog(@"Clicked NO");
+            break;
+        case 1:
+            QuietLog(@"Clicked YES");
+            [self setEmergencyContactPerson:currentPotentialContact];
+            currentPotentialContact = nil;
+            [self dismissViewControllerAnimated:YES completion:nil];            
+            break;
+        default:
+            break;
+    }
 }
 
 - (BOOL)peoplePickerNavigationController:(ABPeoplePickerNavigationController *)peoplePicker
@@ -216,22 +263,6 @@
 }
 
 
--(void) alertView: ( UIAlertView *) alertView clickedButtonAtIndex: ( NSInteger ) buttonIndex
-{
-    switch(buttonIndex)
-    {
-        case 0:
-            [areYouOkayTimer invalidate];
-            break;
-        case 1:
-            [areYouOkayTimer invalidate];
-            break;
-        default:
-            NSLog(@"THIS SHOUL NEVER EVER EVER HAPPEN");
-            break;
-    }
-}
-
 - (void)endCooldown
 {
     onAlertCooldown = NO;
@@ -263,7 +294,7 @@
          
          dispatch_async(dispatch_get_main_queue(),
                         ^{   //Will be called with data and error
-                            QuietLog(@"PHONE  X: %.2f, Y: %.2f, Z: %.2f", data.acceleration.x, data.acceleration.y, data.acceleration.z);
+                            //QuietLog(@"PHONE  X: %.2f, Y: %.2f, Z: %.2f", data.acceleration.x, data.acceleration.y, data.acceleration.z);
                             [accelLoggerPhone logData:data];
                             if((fabs(data.acceleration.z) > 2.5 || fabs(data.acceleration.x) > 2.5) && !onAlertCooldown) {
                                 //[self showAreYouOkay:nil];

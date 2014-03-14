@@ -36,7 +36,7 @@
         CARETAKER_KEY_ACCEL_Z = [NSNumber numberWithInt:3];//[NSString stringWithFormat:@"%d", 3];//@(3);//[NSNumber numberWithInt:@(3)];
         
         accelLoggerPebble = [[AccelerationLogger alloc] initWithFileFlair:@"Pebble"];
-        classificationController = [[ClassificationController alloc] init];
+        classificationController = [ClassificationController getInstance];
 
         PEBBLE_ALERT_COOLDOWN = [NSNumber numberWithFloat:2];
         onAlertCooldown = NO;
@@ -131,29 +131,29 @@
     [self setTargetWatch:[[PBPebbleCentral defaultCentral] lastConnectedWatch]];
     [_targetWatch appMessagesLaunch:^(PBWatch *watch, NSError *error) {
         [_targetWatch appMessagesAddReceiveUpdateHandler:^BOOL(PBWatch *watch, NSDictionary *update) {
-            QuietLog(@"Received Message: %@", update);
+           // QuietLog(@"Received Message: %@", update);
             
             float x = (float)([[update objectForKey:CARETAKER_KEY_ACCEL_X] intValue]) / 1000.0f;
             float y = (float)([[update objectForKey:CARETAKER_KEY_ACCEL_Y] intValue]) / 1000.0f;
             float z = (float)([[update objectForKey:CARETAKER_KEY_ACCEL_Z] intValue]) / 1000.0f;
             
-            QuietLog(@"PEBBLE  x=%.2f  y=%.2f  z=%.2f", x, y, z);
+            //QuietLog(@"PEBBLE  x=%.2f  y=%.2f  z=%.2f", x, y, z);
             
             
             
             [accelLoggerPebble logDataX:x Y:y Z:z];
             [classificationController incomingDataMessageX:x Y:y Z:z];
             
-            if((fabs(z) > 2.5 || fabs(x) > 2.5) && !onAlertCooldown) {
+            /*if((fabs(z) > 2.5 || fabs(x) > 2.5) && !onAlertCooldown) {
                 //[newViewController showAreYouOkay:nil];
                 [[AreYouOkayManager getInstance] scheduleAreYouOkayAfter:0];
-                [[NotificationManager getInstance] scheduleNewLocalNotification:@"Alert!" WithMsg:@"ALERT: PEBBLE SHAKE!" After:0];
+                //[[NotificationManager getInstance] scheduleNewLocalNotification:@"Alert!" WithMsg:@"ALERT: PEBBLE SHAKE!" After:0];
                 [accelLoggerPebble logString:@"PEBBLE SHAKE ALERT"];
                 onAlertCooldown = YES;
                 
                 NSTimer *cooldownTimer = [NSTimer timerWithTimeInterval:[PEBBLE_ALERT_COOLDOWN floatValue] target:self selector:@selector(endCooldown) userInfo:Nil repeats:NO];
                 [[NSRunLoop currentRunLoop] addTimer:cooldownTimer forMode:NSRunLoopCommonModes];
-            }
+            }*/
             
             return YES;
         }];
