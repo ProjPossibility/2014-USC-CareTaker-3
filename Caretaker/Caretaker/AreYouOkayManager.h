@@ -28,4 +28,6 @@
 @property (nonatomic) NSString *emergencyContactName;
 @property (nonatomic) NSString *emergencyContactPhone;
 
+@property (nonatomic) NSString *myName;
+
 @end

@@ -279,6 +279,7 @@
     [self setupControls];
     [self startMotionDetect];
     self.myName = [[MedicineReminder getInstance] readUserNameFromDatabase];
+    [AreYouOkayManager getInstance].myName = self.myName;
     if(!self.myName)
     {
         SetNameViewController *nameViewController = [[SetNameViewController alloc] initWithViewController:self];

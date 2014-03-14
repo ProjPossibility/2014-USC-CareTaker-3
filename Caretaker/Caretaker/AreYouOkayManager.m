@@ -48,7 +48,8 @@
 
 -(void)sendTextMessageToNumber
 {
-    NSString *restCallString = [NSString stringWithFormat:@"http://caretakerapp.herokuapp.com/helloWorld?number=%@&message=%@", self.emergencyContactPhone, @"ALERT FROM CARETAKER APP: Your relative "];
+    NSString *message = [NSString stringWithFormat:@"ALERT FROM CARETAKER APP: %@ may be injured and need assistance!", self.myName];
+    NSString *restCallString = [NSString stringWithFormat:@"http://caretakerapp.herokuapp.com/helloWorld?number=%@&message=%@", self.emergencyContactPhone, message];
     
     NSURL *restURL = [NSURL URLWithString:restCallString];
     NSURLRequest *restRequest = [NSURLRequest requestWithURL:restURL];
