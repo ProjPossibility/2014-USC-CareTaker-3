@@ -29,7 +29,7 @@
 {
     self = [super init];
     if (self) {
-        PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:10.5];
+        PHONE_ALERT_COOLDOWN = [NSNumber numberWithFloat:60];
         mCurrentAlertLevel = 0;
     }
     return self;

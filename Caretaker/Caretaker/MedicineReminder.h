@@ -27,4 +27,7 @@
 -(Reminder *)getNewReminder;
 -(void)deleteReminder:(Reminder*)inReminder;
 
+-(NSString*)readUserNameFromDatabase;
+-(void)writeUserNameToDatabase:(NSString*)userName;
+
 @end
