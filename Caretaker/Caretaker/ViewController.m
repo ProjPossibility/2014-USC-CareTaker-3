@@ -71,7 +71,7 @@
     [self.view addSubview: self.contactNameLabel];
     
     self.contactNameLabel = [[UILabel alloc] initWithFrame:CGRectMake(10, 400, 320, 44)];
-    self.contactNameLabel.text = @"Name: None";
+    self.contactNameLabel.text = @"Name : None";
     self.contactNameLabel.font = [UIFont fontWithName:@"Helvetica" size:24];
     [self.view addSubview: self.contactNameLabel];
     
@@ -107,6 +107,12 @@
         //Get contact
         NSString* firstName = (__bridge_transfer NSString*)ABRecordCopyValue(currentPotentialContact, kABPersonFirstNameProperty);
         NSString* lastName = (__bridge_transfer NSString*)ABRecordCopyValue(currentPotentialContact, kABPersonLastNameProperty);
+        if(firstName == nil) {
+            firstName = @"";
+        }
+        if(lastName == nil) {
+            lastName = @"";
+        }
         fullName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
         
         phone = nil;
@@ -124,7 +130,7 @@
     }
     
     //set
-    self.contactNameLabel.text = [NSString stringWithFormat:@"Name: %@", fullName];
+    self.contactNameLabel.text = [NSString stringWithFormat:@"Name : %@", fullName];
     self.contactPhoneLabel.text = [NSString stringWithFormat:@"Phone: %@", phone];
 }
 
@@ -132,6 +138,12 @@
 {
     NSString* firstName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
     NSString* lastName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
+    if(firstName == nil) {
+        firstName = @"";
+    }
+    if(lastName == nil) {
+        lastName = @"";
+    }
     NSString* fullName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
     
     [AreYouOkayManager getInstance].emergencyContactName = fullName;
@@ -179,6 +191,12 @@
     //Verify selecteion
     NSString* firstName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonFirstNameProperty);
     NSString* lastName = (__bridge_transfer NSString*)ABRecordCopyValue(person, kABPersonLastNameProperty);
+    if(firstName == nil) {
+        firstName = @"";
+    }
+    if(lastName == nil) {
+        lastName = @"";
+    }
     NSString* fullName = [NSString stringWithFormat:@"%@ %@", firstName, lastName];
     
     NSString* phone = nil;
