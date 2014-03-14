@@ -40,6 +40,11 @@
         parentViewController.myName = nameField.text;
         [self.navigationController popViewControllerAnimated:YES];
     }
+    else
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"NOTICE" message:[NSString stringWithFormat:@"Please enter a valid name"] delegate:self cancelButtonTitle:@"OK" otherButtonTitles: nil];
+        [alertView show];
+    }
 }
 
 - (void) dismissKeyboard
