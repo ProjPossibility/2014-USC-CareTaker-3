@@ -36,6 +36,7 @@
         CARETAKER_KEY_ACCEL_Z = [NSNumber numberWithInt:3];//[NSString stringWithFormat:@"%d", 3];//@(3);//[NSNumber numberWithInt:@(3)];
         
         accelLoggerPebble = [[AccelerationLogger alloc] initWithFileFlair:@"Pebble"];
+        classificationController = [[ClassificationController alloc] init];
         
         PEBBLE_ALERT_COOLDOWN = [NSNumber numberWithFloat:2];
         onAlertCooldown = NO;
@@ -138,7 +139,10 @@
             
             QuietLog(@"PEBBLE  x=%.2f  y=%.2f  z=%.2f", x, y, z);
             
+            
+            
             [accelLoggerPebble logDataX:x Y:y Z:z];
+            [classificationController incomingDataMessageX:x Y:y Z:z];
             
             if((fabs(z) > 2.5 || fabs(x) > 2.5) && !onAlertCooldown) {
                 //[newViewController showAreYouOkay:nil];

@@ -1,6 +1,6 @@
 #! /bin/sh
 
 echo "Training..."
-python train.py acc_train percep_model 20
+python perceptron/train.py intermediate_data_files/acc_train perceptron/percep_model 10
 echo "Classifying..."
-python classify.py percep_model acc_test percep_output
+python perceptron/classify.py perceptron/percep_model intermediate_data_files/acc_test perceptron/percep_output

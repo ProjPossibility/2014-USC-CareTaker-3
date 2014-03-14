@@ -8,6 +8,7 @@
 
 #import "PendingRemindersView.h"
 #import "MedicineReminder.h"
+#import "NotificationManager.h"
 #import "EditPendingReminderView.h"
 #import "UpdateReminderViewPg1.h"
 
@@ -61,6 +62,12 @@
 {
     NSLog(@"Reloading data");
     [mPendingReminders reloadData];
+    if(mEditingReminder)
+    {
+        QuietLog(@"Updating reminder");
+        [[MedicineReminder getInstance] addReminderWith:mEditingReminder];
+        mEditingReminder = nil;
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -72,13 +79,58 @@
 - (void)selectReminder:(id)sender
 {
     UIButton *reminderViewButton = (UIButton *)sender;
-    Reminder* reminder = [[MedicineReminder getInstance].mReminders objectAtIndex:reminderViewButton.tag];
-    /*EditPendingReminderView *editPendingReminderView = [[EditPendingReminderView alloc] initWithReminder:reminder];
-    [self.navigationController pushViewController:editPendingReminderView animated:YES];*/
-    UpdateReminderViewPg1 *editReminderView = [[UpdateReminderViewPg1 alloc] initWithReminder:reminder];
-    editReminderView.reminder = reminder;
-    editReminderView.rootView = self;
-    [self.navigationController pushViewController:editReminderView animated:YES];
+    mEditingReminder = [[MedicineReminder getInstance].mReminders objectAtIndex:reminderViewButton.tag];
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"NOTICE" message:[NSString stringWithFormat:@"Do you want to edit or delete this reminder?"] delegate:self cancelButtonTitle:@"Edit" otherButtonTitles:@"Delete", nil];
+    alertView.delegate = self;
+    [alertView show];
+
+}
+
+- (void)editCurrentmEditingReminder
+{
+    if(mEditingReminder)
+    {
+    UpdateReminderViewPg1 *editReminderView = [[UpdateReminderViewPg1 alloc] initWithReminder:mEditingReminder];
+     editReminderView.reminder = mEditingReminder;
+     editReminderView.rootView = self;
+     [self.navigationController pushViewController:editReminderView animated:YES];
+    }
+    else
+    {
+        QuietLog(@"Attempted edit on null mEditingReminder");
+    }
+}
+
+- (void)deleteCurrentmEditingReminder
+{
+    if(mEditingReminder)
+    {
+        [[MedicineReminder getInstance] deleteReminder:mEditingReminder];
+        QuietLog(@"Deleted reminder reference count = %ld", CFGetRetainCount((__bridge CFTypeRef)mEditingReminder));
+        mEditingReminder = nil;
+    }
+    else
+    {
+        QuietLog(@"Attempted delete on null mEditingReminder");
+    }
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    QuietLog(@"Clicked on reminder");
+    switch(buttonIndex)
+    {
+        case 0:
+            QuietLog(@"Clicked Edit");
+            [self editCurrentmEditingReminder];
+            break;
+        case 1:
+            QuietLog(@"Clicked Delete");
+            [self deleteCurrentmEditingReminder];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - Table View

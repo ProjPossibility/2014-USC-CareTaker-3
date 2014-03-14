@@ -78,6 +78,7 @@
 
 - (void)goBackButtonAction:(id)sender
 {
+    self.reminder.mName = nil;
     [self.navigationController popViewControllerAnimated:YES];
 }
 

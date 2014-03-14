@@ -7,11 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Reminder.h"
 
-@interface PendingRemindersView : UIViewController <UITableViewDataSource, UITableViewDelegate>
+@interface PendingRemindersView : UIViewController <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
 {
     UIButton *goBackButton;
     UIView *controlView;
     UITableView *mPendingReminders;
+    Reminder *mEditingReminder;
 }
 @end

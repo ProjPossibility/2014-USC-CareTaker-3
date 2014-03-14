@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1D68B18B18D26A36002048BA /* ClassificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D68B18A18D26A36002048BA /* ClassificationController.m */; };
+		1D68B18C18D26A36002048BA /* ClassificationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D68B18A18D26A36002048BA /* ClassificationController.m */; };
+		1D68B18F18D26BE6002048BA /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D68B18E18D26BE6002048BA /* Queue.m */; };
+		1D68B19018D26BE6002048BA /* Queue.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D68B18E18D26BE6002048BA /* Queue.m */; };
+		1D68B19718D273D4002048BA /* DataSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D68B19618D273D4002048BA /* DataSample.m */; };
+		1D68B19818D273D4002048BA /* DataSample.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D68B19618D273D4002048BA /* DataSample.m */; };
+		1D68B1A018D27F7E002048BA /* percep_model.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1D68B19F18D27F7E002048BA /* percep_model.txt */; };
+		1D68B1A118D27F7E002048BA /* percep_model.txt in Resources */ = {isa = PBXBuildFile; fileRef = 1D68B19F18D27F7E002048BA /* percep_model.txt */; };
 		1D8EDF6618A6C708009C81ED /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8EDF6518A6C708009C81ED /* Foundation.framework */; };
 		1D8EDF6818A6C708009C81ED /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8EDF6718A6C708009C81ED /* CoreGraphics.framework */; };
 		1D8EDF6A18A6C708009C81ED /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D8EDF6918A6C708009C81ED /* UIKit.framework */; };
@@ -60,6 +68,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1D68B18918D26A36002048BA /* ClassificationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClassificationController.h; sourceTree = "<group>"; };
+		1D68B18A18D26A36002048BA /* ClassificationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClassificationController.m; sourceTree = "<group>"; };
+		1D68B18D18D26BE6002048BA /* Queue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Queue.h; sourceTree = "<group>"; };
+		1D68B18E18D26BE6002048BA /* Queue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Queue.m; sourceTree = "<group>"; };
+		1D68B19518D273D3002048BA /* DataSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DataSample.h; path = ../DataSample.h; sourceTree = "<group>"; };
+		1D68B19618D273D4002048BA /* DataSample.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DataSample.m; path = ../DataSample.m; sourceTree = "<group>"; };
+		1D68B19F18D27F7E002048BA /* percep_model.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = percep_model.txt; path = ../MachineLearning/perceptron/percep_model.txt; sourceTree = "<group>"; };
 		1D8EDF6218A6C708009C81ED /* Caretaker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Caretaker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1D8EDF6518A6C708009C81ED /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D8EDF6718A6C708009C81ED /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -157,6 +172,7 @@
 		1D8EDF5918A6C708009C81ED = {
 			isa = PBXGroup;
 			children = (
+				1D68B19F18D27F7E002048BA /* percep_model.txt */,
 				53F5E51E18C9B5D1006AE4E4 /* Tools */,
 				C9E0D14F18A6DC2600A78BC1 /* Pills.png */,
 				1D8EDF6B18A6C708009C81ED /* Caretaker */,
@@ -203,6 +219,14 @@
 				53322AB918A83F56008D39A2 /* Main.storyboard */,
 				1D8EDF7418A6C708009C81ED /* AppDelegate.h */,
 				1D8EDF7518A6C708009C81ED /* AppDelegate.m */,
+				1D68B19518D273D3002048BA /* DataSample.h */,
+				1D68B19618D273D4002048BA /* DataSample.m */,
+				1D68B18918D26A36002048BA /* ClassificationController.h */,
+				1D68B18A18D26A36002048BA /* ClassificationController.m */,
+				53322ABC18A84094008D39A2 /* AccelerationLogger.h */,
+				53322ABD18A84094008D39A2 /* AccelerationLogger.m */,
+				1D68B18D18D26BE6002048BA /* Queue.h */,
+				1D68B18E18D26BE6002048BA /* Queue.m */,
 				1D8EDF7A18A6C708009C81ED /* ViewController.h */,
 				1D8EDF7B18A6C708009C81ED /* ViewController.m */,
 				1D8EDF7D18A6C708009C81ED /* Images.xcassets */,
@@ -355,6 +379,7 @@
 				1D8EDF7E18A6C708009C81ED /* Images.xcassets in Resources */,
 				1D8EDF7018A6C708009C81ED /* InfoPlist.strings in Resources */,
 				53322ABB18A83F56008D39A2 /* Main.storyboard in Resources */,
+				1D68B1A018D27F7E002048BA /* percep_model.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +388,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D8EDF8F18A6C709009C81ED /* InfoPlist.strings in Resources */,
+				1D68B1A118D27F7E002048BA /* percep_model.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -378,6 +404,8 @@
 				C9BF7B2118CC03DA00D9FAE0 /* UpdateReminderViewPg1.m in Sources */,
 				1D8EDF7C18A6C708009C81ED /* ViewController.m in Sources */,
 				C9E0D14E18A6CD8400A78BC1 /* MedicineReminder.m in Sources */,
+				1D68B18F18D26BE6002048BA /* Queue.m in Sources */,
+				1D68B18B18D26A36002048BA /* ClassificationController.m in Sources */,
 				C96A446418CED7010085CFC7 /* MedicineReminderModel.xcdatamodeld in Sources */,
 				C9BF7B2418CC0AEF00D9FAE0 /* UpdateReminderViewPg2.m in Sources */,
 				1D8EDF7618A6C708009C81ED /* AppDelegate.m in Sources */,
@@ -385,6 +413,7 @@
 				C9BF7B1818CB043D00D9FAE0 /* AddReminderViewPg3.m in Sources */,
 				53322ABE18A84094008D39A2 /* AccelerationLogger.m in Sources */,
 				53988DD918C1D15D00B7F0EA /* NotificationManager.m in Sources */,
+				1D68B19718D273D4002048BA /* DataSample.m in Sources */,
 				C96F9B2618C9DD4600EB3BE8 /* AddReminderViewPg2.m in Sources */,
 				C9BF7B2E18CC730F00D9FAE0 /* AreYouOkayManager.m in Sources */,
 				C93B931318C99F17009E90F0 /* BaseAddReminderView.m in Sources */,
@@ -398,8 +427,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1D68B19818D273D4002048BA /* DataSample.m in Sources */,
 				C9E0D16218A7C37B00A78BC1 /* Reminder.m in Sources */,
 				1D8EDF9118A6C709009C81ED /* CaretakerTests.m in Sources */,
+				1D68B18C18D26A36002048BA /* ClassificationController.m in Sources */,
+				1D68B19018D26BE6002048BA /* Queue.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
